@@ -14,9 +14,9 @@ defineEmits<{ guided: []; explore: []; exit: []; approve: [] }>();
     <p>CasinoOps connects operational signals across casino systems to identify cascading incidents, verify their root cause, predict their impact and safely test recovery strategies.</p>
     <div><button class="button" data-testid="start-guided-demo" :disabled="busy" @click="$emit('guided')">Start live demo</button><button class="button button--ghost" :disabled="busy" @click="$emit('explore')">Explore system</button></div>
   </section>
-  <section v-else-if="mode === 'guided'" class="guided-control" :class="`guided-control--${stage}`" data-testid="guided-demo" :data-stage="stage">
+  <section v-else-if="mode === 'guided'" class="guided-control" :class="`guided-control--${stage}`" data-testid="guided-demo" data-tour="guided-status" :data-stage="stage">
     <div><span class="section-label">Guided demo</span><h2>{{ guidedDemoContent[stage].title }}</h2><p>{{ error || guidedDemoContent[stage].description }}</p></div>
-    <div class="guided-actions"><span v-if="busy">Working…</span><button v-if="stage === 'awaiting_approval'" class="button" data-testid="approve-recovery" :disabled="busy" @click="$emit('approve')">Approve simulated recovery</button><button v-if="stage === 'completed' || stage === 'error'" class="button" :disabled="busy" @click="$emit('guided')">Run again</button><button class="button button--ghost" :disabled="busy" @click="$emit('exit')">Exit demo</button></div>
+    <div class="guided-actions"><span v-if="busy">Working…</span><button v-if="stage === 'awaiting_approval'" class="button" data-testid="approve-recovery" data-tour="approval" :disabled="busy" @click="$emit('approve')">Approve simulated recovery</button><button v-if="stage === 'completed' || stage === 'error'" class="button" :disabled="busy" @click="$emit('guided')">Run again</button><button class="button button--ghost" :disabled="busy" @click="$emit('exit')">Exit demo</button></div>
   </section>
   <section v-else class="explore-control"><div><span class="section-label">Explore mode</span><strong>All operator controls are available.</strong></div><button class="button button--ghost" :disabled="busy" @click="$emit('exit')">Back to demo start</button></section>
 </template>

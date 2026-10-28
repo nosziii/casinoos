@@ -31,7 +31,7 @@ docker compose up --build
 
 Open `http://127.0.0.1:8088`. Stop the stack with `docker compose down`.
 
-The opening screen offers two paths: **Guided Demo** automatically runs the deterministic incident through verification, forecast and mitigation comparison before pausing for explicit recovery approval; **Explore CasinoOps** exposes all manual operator controls.
+The opening screen offers two paths: **Guided Demo** automatically runs the deterministic incident through verification, forecast and mitigation comparison before pausing for explicit recovery approval. A six-step, skippable coach-mark tour explains each highlighted panel and directs the judge to the approval action. **Explore CasinoOps** exposes all manual operator controls.
 
 The host ports are configurable without editing the Compose file:
 

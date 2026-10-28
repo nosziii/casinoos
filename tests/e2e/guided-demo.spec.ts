@@ -9,6 +9,8 @@ test("a judge can complete and safely reset the guided incident journey", async 
 
   await page.getByTestId("start-guided-demo").click();
   const guidedDemo = page.getByTestId("guided-demo");
+  const judgeTour = page.getByTestId("judge-tour");
+  await expect(judgeTour).toHaveAttribute("data-step", "0");
   await expect(guidedDemo).toHaveAttribute("data-stage", "investigating");
   await expect(guidedDemo).toHaveAttribute("data-stage", "awaiting_approval", { timeout: 30_000 });
 
@@ -17,13 +19,22 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await expect(page.getByText(/affected players/i)).toBeVisible();
   await expect(page.getByText(/recommended/i)).toBeVisible();
 
+  for (const expectedStep of [1, 2, 3, 4]) {
+    await judgeTour.getByRole("button", { name: "Next" }).click();
+    await expect(judgeTour).toHaveAttribute("data-step", String(expectedStep));
+  }
+  await expect(judgeTour.getByText("Use the highlighted button")).toBeVisible();
+
   await page.getByRole("button", { name: "View technical trace" }).click();
   await expect(page.locator("#technical-agent-trace")).toBeVisible();
   await expect(page.locator("#technical-agent-trace > li")).not.toHaveCount(0);
 
   await page.getByTestId("approve-recovery").click();
+  await expect(judgeTour).toHaveAttribute("data-step", "5");
   await expect(guidedDemo).toHaveAttribute("data-stage", "completed", { timeout: 15_000 });
   await expect(page.getByRole("heading", { name: "Incident recovered" })).toBeVisible();
+  await judgeTour.getByRole("button", { name: "Finish tour" }).click();
+  await expect(judgeTour).toBeHidden();
 
   await page.getByRole("button", { name: "Exit demo" }).click();
   await expect(page.getByTestId("demo-landing")).toBeVisible();

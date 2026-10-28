@@ -35,6 +35,17 @@ Az E2E bevezetése két valódi integrációs hibát is feltárt és javított: 
 - tesztriport feltöltése kizárólag hiba esetén;
 - később dependency- és container image scan külön jobban.
 
+### Judge-facing coach-mark tour
+
+**Állapot: elkészült.**
+
+- a Guided Demo indításakor automatikusan megjelenik;
+- a valódi Guided Demo, Casino Brain, Investigation, Impact és Approval elemekhez rögzül;
+- az automatikus investigation befejezését megvárja;
+- az approval gombot csak kiemeli, nem kattint helyette;
+- a recovery eredménnyel zárul, bármikor átugorható;
+- Playwright E2E teszt végigjárja mind a hat lépést.
+
 ### 3. Publikus deployment smoke teszt
 
 **Állapot: hátra van.**
@@ -73,6 +84,8 @@ Az E2E bevezetése két valódi integrációs hibát is feltárt és javított: 
 - input/output token usage és latency rögzítése;
 - hiányzó vagy eltérő usage mezők biztonságos kezelése;
 - provider smoke fixture-ek bővítése regressziós esetekkel.
+
+A Baseten chat completion válaszból az input-, output- és total token mérhető; a kliens ezt már hívásonként naplózza latencyvel együtt. A válasz nem tartalmaz dollárban vagy creditben kifejezett költségmezőt, ezért a pontos credit-fogyás forrása a Baseten billing felülete. Következő fejlesztésként in-memory, majd perzisztált run-szintű usage summary készülhet; pénzügyi becslést csak hivatalos modellár megadása után szabad számolni.
 
 ### 8. Kisebb és biztonságosabb container image
 

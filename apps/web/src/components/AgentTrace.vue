@@ -13,7 +13,7 @@ const statusTone = computed(() => summary.value.status === "verified" ? "ok" : s
 </script>
 
 <template>
-  <section id="investigation" class="panel trace-panel">
+  <section id="investigation" class="panel trace-panel" data-tour="investigation">
     <header><div><span class="section-label">Investigation</span><h2>Root-cause verification</h2><p>Conclusions are checked against system dependencies and event evidence.</p></div><StatusPill :label="summary.status.toUpperCase()" :tone="statusTone" /></header>
     <div v-if="summary.status === 'ready'" class="empty">Run a scenario to observe evidence-backed root-cause verification.</div>
     <template v-else>

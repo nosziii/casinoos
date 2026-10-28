@@ -225,6 +225,7 @@ Scenario status: recovered
 - [x] judge-facing nyitóképernyő Guided Demo és Explore belépési ponttal
 - [x] automatikus incident → verification → forecast → mitigation guided flow
 - [x] kötelező operátori jóváhagyás a guided recovery előtt
+- [x] hatlépcsős, panelhez rögzített judge tour és approval coach-mark
 - [x] UI/UX V2 high-end operations control-room vizuális rendszer
 - [x] minimum 12 px technikai metadata és 15–17 px tartalmi szöveg
 - [x] kiemelt Casino Brain KPI-k és egyszerűsített investigation/agent/timeline hierarchia

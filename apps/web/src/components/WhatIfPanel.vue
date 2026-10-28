@@ -12,7 +12,7 @@ const ask = () => { const value = question.value.trim(); if (value.length >= 3) 
 </script>
 
 <template>
-  <section class="panel what-if-panel">
+  <section class="panel what-if-panel" data-tour="impact">
     <header>
       <div><span class="section-label">Impact forecast · Simulation only</span><h2>What happens if we do nothing?</h2><p>Predict how the disruption propagates over time.</p></div>
       <div class="horizon"><button v-for="minutes in [10, 20, 30]" :key="minutes" :class="{ active: duration === minutes }" @click="duration = minutes">+{{ minutes }} min</button></div>
@@ -43,7 +43,7 @@ const ask = () => { const value = question.value.trim(); if (value.length >= 3) 
           <p>Projected blocked value: {{ euros.format(strategy.projectedBlockedValue) }}</p><button class="simulate-button" :disabled="busy || simulation?.status === 'running'" @click="emit('simulate', strategy.action)">Simulate recovery</button>
         </article>
       </div>
-      <div v-if="simulation" class="recovery-status" :class="`recovery-status--${simulation.outcome}`"><div><small>DIGITAL TWIN RECOVERY</small><strong>{{ title(simulation.action) }} · {{ simulation.status }}</strong><p>{{ simulation.summary }}</p></div><div class="recovery-progress"><i :style="{ width: `${simulation.progress * 100}%` }" /></div><b>{{ Math.round(simulation.progress * 100) }}%</b></div>
+      <div v-if="simulation" class="recovery-status" data-tour="recovery" :class="`recovery-status--${simulation.outcome}`"><div><small>DIGITAL TWIN RECOVERY</small><strong>{{ title(simulation.action) }} · {{ simulation.status }}</strong><p>{{ simulation.summary }}</p></div><div class="recovery-progress"><i :style="{ width: `${simulation.progress * 100}%` }" /></div><b>{{ Math.round(simulation.progress * 100) }}%</b></div>
     </template>
   </section>
 </template>

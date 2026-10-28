@@ -8,11 +8,13 @@ import DemoModePanel from "./components/DemoModePanel.vue";
 import EventStream from "./components/EventStream.vue";
 import IncidentPanel from "./components/IncidentPanel.vue";
 import IncidentTimeline from "./components/IncidentTimeline.vue";
+import JudgeTour from "./components/JudgeTour.vue";
 import StatusPill from "./components/StatusPill.vue";
 import SystemHealth from "./components/SystemHealth.vue";
 import WhatIfPanel from "./components/WhatIfPanel.vue";
 import { useGuidedDemo } from "./composables/use-guided-demo";
 import { useCasinoStore } from "./stores/casino";
+import { summarizeInvestigation } from "./utils/agent-trace";
 import type { DemoJourneySignals } from "./utils/demo-journey";
 
 const casino = useCasinoStore();
@@ -21,7 +23,7 @@ const working = ref(false);
 const verified = computed(() => casino.agentTraces.some(({ stage, status }) => stage === "verification" && status === "success"));
 const guidedIncidentReady = computed(() => verified.value && casino.state.phase >= 3 && Boolean(casino.latestIncident));
 const recoveryComplete = computed(() => casino.state.mitigation?.status === "completed");
-const evidenceCount = computed(() => new Set(casino.agentTraces.flatMap(({ evidenceIds }) => evidenceIds)).size);
+const evidenceCount = computed(() => summarizeInvestigation(casino.agentTraces).evidenceCount);
 const { mode, stage, busy: guidedBusy, error: guidedError, startGuided, enterExplore, returnToLanding, approveRecovery } = useGuidedDemo(casino, { verified: guidedIncidentReady, comparison: computed(() => casino.mitigations), recoveryComplete });
 const busy = computed(() => working.value || guidedBusy.value);
 const journeySignals = computed<DemoJourneySignals>(() => ({
@@ -58,6 +60,7 @@ const runMitigationSimulation = (action: Parameters<typeof casino.simulateMitiga
     <WhatIfPanel :enabled="Boolean(casino.latestIncident)" :busy="busy" :prediction="casino.prediction" :comparison="casino.mitigations" :query-response="casino.queryResponse" :simulation="casino.state.mitigation" @ask="askCasinoBrain" @predict="runPrediction" @compare="runMitigations" @simulate="runMitigationSimulation" />
     <AgentTrace :traces="casino.agentTraces" />
     <IncidentTimeline :events="casino.events" />
+    <JudgeTour v-if="mode === 'guided'" :stage="stage" />
     </template>
     <footer><span>CasinoOps · Synthetic environment</span><span>No production systems connected · No autonomous production actions</span></footer>
   </main>

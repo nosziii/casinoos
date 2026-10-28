@@ -226,6 +226,17 @@ nav { min-height: 82px; display: flex; align-items: center; justify-content: spa
 .guided-actions > span { color: var(--accent); font-size: 13px; }
 .explore-control strong { display: block; margin-top: 5px; color: var(--text); font-size: 15px; }
 
+.tour-highlight { position: relative; z-index: 900; outline: 2px solid var(--accent); outline-offset: 4px; box-shadow: 0 0 0 7px rgba(69,230,164,.12), 0 18px 55px rgba(0,0,0,.45); transition: outline-color .2s ease, box-shadow .2s ease; }
+.judge-tour { position: fixed; z-index: 1000; width: min(340px, calc(100vw - 24px)); padding: 18px; color: var(--text); background: #13211f; border: 1px solid rgba(69,230,164,.45); border-radius: 9px; box-shadow: 0 20px 70px rgba(0,0,0,.55); }
+.judge-tour__meta { display: flex; justify-content: space-between; gap: 12px; color: var(--accent); font-size: 12px; font-weight: 700; }
+.judge-tour__meta b { color: var(--text-secondary); font: 600 12px var(--mono); }
+.judge-tour h2 { margin: 10px 0 8px; font-size: 20px; line-height: 1.2; }
+.judge-tour p { margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.55; }
+.judge-tour__actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; }
+.judge-tour__actions > span { color: var(--warning); font-size: 13px; text-align: right; }
+.tour-skip { border: 0; padding: 8px 0; color: var(--text-muted); background: transparent; font-size: 13px; cursor: pointer; }
+.tour-skip:hover { color: var(--text-secondary); }
+
 footer { display: flex; justify-content: space-between; gap: 20px; color: var(--text-muted); padding: 24px 0 30px; font-size: 12px; }
 
 @media (max-width: 1050px) {
@@ -256,5 +267,8 @@ footer { display: flex; justify-content: space-between; gap: 20px; color: var(--
   .mode-selector h1 { font-size: clamp(46px, 16vw, 64px); }
   .mode-selector > strong, .mode-selector p { overflow-wrap: anywhere; }
   .mode-selector .button { width: 100%; }
+  .judge-tour__actions { align-items: stretch; flex-direction: column-reverse; }
+  .judge-tour__actions .button { width: 100%; }
+  .judge-tour__actions > span { text-align: left; }
   footer { flex-direction: column; }
 }

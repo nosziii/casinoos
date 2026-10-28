@@ -7,7 +7,7 @@ const healthyCount = computed(() => props.services.filter(({ status }) => status
 </script>
 
 <template>
-  <section class="panel brain-panel" :class="{ 'brain-panel--active': incident }">
+  <section class="panel brain-panel" data-tour="casino-brain" :class="{ 'brain-panel--active': incident }">
     <header><div><span class="section-label">Casino Brain</span><h2>{{ incident ? 'Critical incident' : 'Monitoring operations' }}</h2></div><span class="brain-state">{{ incident ? 'VERIFIED' : 'LIVE' }}</span></header>
     <template v-if="incident">
       <h1>{{ incident.title }}</h1>

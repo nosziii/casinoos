@@ -153,6 +153,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
    - aktuális lépés és rövid magyarázat megjelenítése;
    - az Explore mód őrizze meg az összes jelenlegi manuális funkciót.
    - passzív, valós állapotból számított Demo Journey progress sáv — elkészült;
+   - célponthoz rögzített, átugorható judge coach-mark tour — elkészült;
 2. **Browser E2E tesztek — elkészült**
    - teljes guided demo journey;
    - reset után healthy alapállapot;
