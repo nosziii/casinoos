@@ -2,6 +2,8 @@
 
 Az aktuális megvalósítási állapot és roadmap: [PROJECT_STATUS.md](PROJECT_STATUS.md)
 
+A prioritásos hátralévő feladatok és rövid megvalósítási terv: [NEXT_STEPS.md](NEXT_STEPS.md)
+
 AI-powered casino operations digital twin. CasinoOps connects operational signals across casino systems to identify cascading incidents, verify their root cause, predict their impact and safely test recovery strategies before touching production. The judge-facing UI offers a guided demo and a full explore mode.
 
 ## Requirements
@@ -84,6 +86,15 @@ pnpm typecheck
 pnpm lint
 pnpm build
 ```
+
+Run the complete judge-facing journey in Chromium. The command reuses a healthy local stack or starts Docker Compose automatically:
+
+```bash
+pnpm exec playwright install chromium
+pnpm test:e2e
+```
+
+Set `E2E_BASE_URL` to run the same browser journey against an already deployed environment.
 
 Run the deterministic Infrastructure Agent smoke suite separately:
 

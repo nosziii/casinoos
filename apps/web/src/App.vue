@@ -19,9 +19,10 @@ const casino = useCasinoStore();
 const error = ref("");
 const working = ref(false);
 const verified = computed(() => casino.agentTraces.some(({ stage, status }) => stage === "verification" && status === "success"));
+const guidedIncidentReady = computed(() => verified.value && casino.state.phase >= 3 && Boolean(casino.latestIncident));
 const recoveryComplete = computed(() => casino.state.mitigation?.status === "completed");
 const evidenceCount = computed(() => new Set(casino.agentTraces.flatMap(({ evidenceIds }) => evidenceIds)).size);
-const { mode, stage, busy: guidedBusy, error: guidedError, startGuided, enterExplore, returnToLanding, approveRecovery } = useGuidedDemo(casino, { verified, comparison: computed(() => casino.mitigations), recoveryComplete });
+const { mode, stage, busy: guidedBusy, error: guidedError, startGuided, enterExplore, returnToLanding, approveRecovery } = useGuidedDemo(casino, { verified: guidedIncidentReady, comparison: computed(() => casino.mitigations), recoveryComplete });
 const busy = computed(() => working.value || guidedBusy.value);
 const journeySignals = computed<DemoJourneySignals>(() => ({
   scenarioStarted: casino.state.phase > 0,

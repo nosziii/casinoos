@@ -12,7 +12,7 @@ const healthyCount = computed(() => props.services.filter(({ status }) => status
     <template v-if="incident">
       <h1>{{ incident.title }}</h1>
       <p>{{ incident.summary }}</p>
-      <div class="brain-metrics"><div><strong>{{ Math.round(incident.rootCause.confidence * 100) }}%</strong><span>confidence</span></div><div><strong>{{ incident.affectedSystems.length }}</strong><span>systems affected</span></div><div><strong>{{ evidenceCount }}</strong><span>evidence signals</span></div></div>
+      <div class="brain-metrics"><div><strong data-testid="incident-confidence">{{ Math.round(incident.rootCause.confidence * 100) }}%</strong><span>confidence</span></div><div><strong>{{ incident.affectedSystems.length }}</strong><span>systems affected</span></div><div><strong>{{ evidenceCount }}</strong><span>evidence signals</span></div></div>
       <div class="root-cause"><span>Root cause</span><strong>{{ title(incident.rootCause.service) }}</strong><p>Multiple downstream failures share the same degraded authentication dependency.</p></div>
       <a class="text-action" href="#investigation">View investigation</a>
     </template>

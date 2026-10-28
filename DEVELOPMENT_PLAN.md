@@ -135,9 +135,9 @@ Az Infrastructure Agent minden vizsgálatához strukturált, Zod-validált opera
 
 A trace kizárólag auditálható műveleti adatot tartalmaz: toolnevet, validált inputot, evidence-hivatkozást, ellenőrzési eredményt és összefoglalót. Belső modellgondolatmenet vagy nyers, validálatlan érzékeny payload nem kerül bele. Az in-memory előzmény 500 elemre korlátozott.
 
-Az ütemterv 42 tételéből 36 elkészült (**86%**); a stabilizálási fázisból és az egységes provider-metrikákból összesen 6 tétel van hátra.
+Az AI-mag, a judge-facing Guided Demo, a Judge Experience V2 és a teljes browser E2E journey elkészült. A hátralévő feladatokat a prioritásos [NEXT_STEPS.md](NEXT_STEPS.md) tartja karban.
 
-Következő konkrét lépés az új keret megérkezése után: judge-facing Guided Demo és az azt lefedő browser E2E journey.
+Következő konkrét lépés: CI pipeline a lint, typecheck, unit test, production build és Playwright E2E automatikus futtatásával.
 
 ## Következő munkamenet – termékesítés és judge-facing demo
 
@@ -153,7 +153,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
    - aktuális lépés és rövid magyarázat megjelenítése;
    - az Explore mód őrizze meg az összes jelenlegi manuális funkciót.
    - passzív, valós állapotból számított Demo Journey progress sáv — elkészült;
-2. **Browser E2E tesztek**
+2. **Browser E2E tesztek — elkészült**
    - teljes guided demo journey;
    - reset után healthy alapállapot;
    - forecast, mitigation és explicit recovery approval ellenőrzése;
@@ -186,7 +186,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
 8. **Második determinisztikus incident scenario**
    - csak az elsődleges guided demo, E2E és deployment stabilizálása után;
    - ugyanazt a verifier/evidence biztonsági modellt használja.
-9. **CI pipeline**
+9. **CI pipeline — elkészült**
    - lint, typecheck, unit test, production build és browser E2E;
    - később dependency- és container image scanning.
 

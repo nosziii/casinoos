@@ -352,6 +352,8 @@ Jelenleg **41 célzott automatikus teszt** található:
 - audit trace sorrendje és belső rationale kizárása.
 - a legutóbbi investigation run kiválasztása és verified summary képzése.
 - Guided Demo tartalmi állapotai és teljes, jóváhagyásnál megálló state machine-je.
+- teljes Playwright browser journey a landingtől az approvalon és recoveryn át a healthy resetig.
+- technical trace, impact KPI-k és mitigation recommendation browser-szintű ellenőrzése.
 
 Rendszeresen futtatott ellenőrzések:
 
@@ -360,6 +362,7 @@ pnpm test
 pnpm typecheck
 pnpm lint
 pnpm build
+pnpm test:e2e
 pnpm test:ai
 docker compose build
 ```
@@ -408,8 +411,9 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 - [x] auditálható agent trace REST/WebSocket csatornával és dashboard UI-val
 - [ ] provider response-kompatibilitás és token usage ellenőrzése
 - [ ] API integration tesztek Fastify injectionnel
-- [ ] Vue komponens- és böngészős end-to-end tesztek
-- [ ] CI pipeline lint/typecheck/test/build lépésekkel
+- [x] teljes Guided Demo browser E2E Playwrighttal
+- [ ] további Vue komponens-tesztek
+- [x] CI pipeline lint/typecheck/test/build és Playwright E2E lépésekkel
 - [ ] tartós adattárolás SQLite-tal
 - [ ] incidens- és model call history perzisztálása
 - [ ] request-level API rate limiting

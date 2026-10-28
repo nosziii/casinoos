@@ -8,8 +8,10 @@
     "docker:build": "docker compose build",
     "docker:down": "docker compose down",
     "docker:up": "docker compose up --build",
-    "lint": "pnpm -r lint",
+    "lint": "pnpm -r lint && eslint playwright.config.ts tests/e2e",
     "test": "pnpm -r test",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "test:ai": "pnpm run test:ai:build && pnpm run test:ai:infrastructure && pnpm run test:ai:investigation && pnpm run test:ai:brain && pnpm run test:ai:query",
     "test:ai:build": "pnpm --filter @casino-ops/shared build && pnpm --filter @casino-ops/agents build",
     "test:ai:brain": "node --env-file-if-exists=.env packages/agents/dist/smoke-test/brain-cli.js",
@@ -19,8 +21,9 @@
     "typecheck": "pnpm -r typecheck"
   },
   "devDependencies": {
-    "@types/node": "^24.10.0",
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^24.10.0",
     "eslint": "^9.39.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2"

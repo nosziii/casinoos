@@ -9,10 +9,7 @@ export interface AgentClients {
 export function createAgentClients(config: AppConfig): AgentClients {
   if (config.AI_MODE === "mock") {
     const mock = new MockAIClient();
-    return {
-      specialist: new RateLimitedAIClient(mock, config.MAX_AGENT_CALLS_PER_MINUTE),
-      brain: new RateLimitedAIClient(mock, config.MAX_AGENT_CALLS_PER_MINUTE),
-    };
+    return { specialist: mock, brain: mock };
   }
 
   const logger = (provider: string) => (entry: ModelCallLog): void => {
