@@ -221,6 +221,7 @@ Scenario status: recovered
 - [x] REST + WebSocket Pinia store
 - [x] állandó synthetic-only / no-production biztonsági notice
 - [x] `SIMULATION ONLY` mitigation jelölés és egyértelmű `Reset demo`
+- [x] runtime állapotból számított, hétlépcsős Demo Journey progress
 
 ### 10. Docker és futtatás
 
@@ -306,7 +307,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **37 célzott automatikus teszt** található:
+Jelenleg **39 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;

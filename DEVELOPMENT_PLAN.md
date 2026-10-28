@@ -152,6 +152,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
    - guided flow: healthy → incident → agent investigation → verified root cause → 30 perces forecast → mitigation comparison → operátori jóváhagyású recovery simulation → recovered;
    - aktuális lépés és rövid magyarázat megjelenítése;
    - az Explore mód őrizze meg az összes jelenlegi manuális funkciót.
+   - passzív, valós állapotból számított Demo Journey progress sáv — elkészült;
 2. **Browser E2E tesztek**
    - teljes guided demo journey;
    - reset után healthy alapállapot;
@@ -211,6 +212,10 @@ A What-if panel a meglévő, korlátozott `/casino-brain/query` végpontot közv
 ### Elkészült demo-fejlesztés: publikus biztonsági határok
 
 A dashboard tetején állandó, jól olvasható notice jelzi, hogy a környezet kizárólag szintetikus adatot használ, nincs production rendszerhez kötve és nem hajt végre production műveletet. A Digital Twin elemzési panel külön `SIMULATION ONLY` jelölést kapott, a manuális visszaállítás pedig egyértelmű `Reset demo` elnevezéssel jelenik meg.
+
+### Elkészült demo-fejlesztés: Demo Journey progress
+
+A dashboard hétlépcsős progress sávja a tényleges runtime állapotból követi a demó történetét: healthy baseline, incident trigger, AI investigation, verified root cause, impact forecast, mitigation comparison és recovery simulation. A megjelenítés nem indít háttérműveletet, ezért a meglévő explicit operátori jóváhagyási határok változatlanok maradnak. A progress-számítás külön, automatikusan tesztelt frontend modul.
 
 ## Későbbre halasztott elemek
 

@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import AgentActivity from "./components/AgentActivity.vue";
 import AgentTrace from "./components/AgentTrace.vue";
 import DemoSafetyNotice from "./components/DemoSafetyNotice.vue";
+import DemoProgress from "./components/DemoProgress.vue";
 import EventStream from "./components/EventStream.vue";
 import IncidentPanel from "./components/IncidentPanel.vue";
 import IncidentTimeline from "./components/IncidentTimeline.vue";
@@ -28,6 +29,7 @@ const runMitigationSimulation = (action: Parameters<typeof casino.simulateMitiga
     <div v-if="error" class="error-banner">{{ error }}</div>
     <div class="hero"><div><span class="eyebrow">SYNTHETIC CASINO · SCENARIO 01</span><h1>Command center</h1><p>Observe. Understand. Simulate. Protect.</p></div><div class="phase"><small>SIMULATION PHASE</small><strong>0{{ casino.state.phase }}</strong><span>/ 03</span></div></div>
     <DemoSafetyNotice />
+    <DemoProgress :signals="{ scenarioStarted: casino.state.phase > 0, investigationStarted: casino.agentTraces.some(({ stage }) => stage === 'plan'), rootCauseVerified: casino.agentTraces.some(({ stage, status }) => stage === 'verification' && status === 'success'), forecastReady: Boolean(casino.prediction), mitigationsReady: Boolean(casino.mitigations), recoveryComplete: casino.state.mitigation?.status === 'completed' }" />
     <div class="dashboard"><SystemHealth :services="casino.state.services" /><IncidentPanel :incident="casino.latestIncident" /><EventStream :events="casino.events" /><AgentActivity :event-count="casino.events.length" :reports="casino.agentReports" /></div>
     <WhatIfPanel :enabled="Boolean(casino.latestIncident)" :busy="working" :prediction="casino.prediction" :comparison="casino.mitigations" :query-response="casino.queryResponse" :simulation="casino.state.mitigation" @ask="askCasinoBrain" @predict="runPrediction" @compare="runMitigations" @simulate="runMitigationSimulation" />
     <AgentTrace :traces="casino.agentTraces" />
