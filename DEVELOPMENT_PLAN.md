@@ -147,7 +147,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
 
 ### Prioritási sorrend
 
-1. **Guided Demo és Explore mód**
+1. **Guided Demo és Explore mód — elkészült**
    - első képernyőn világos termékleírás, `Start Guided Demo` és `Explore CasinoOps` belépési pont;
    - guided flow: healthy → incident → agent investigation → verified root cause → 30 perces forecast → mitigation comparison → operátori jóváhagyású recovery simulation → recovered;
    - aktuális lépés és rövid magyarázat megjelenítése;
@@ -216,6 +216,12 @@ A dashboard tetején állandó, jól olvasható notice jelzi, hogy a környezet 
 ### Elkészült demo-fejlesztés: Demo Journey progress
 
 A dashboard hétlépcsős progress sávja a tényleges runtime állapotból követi a demó történetét: healthy baseline, incident trigger, AI investigation, verified root cause, impact forecast, mitigation comparison és recovery simulation. A megjelenítés nem indít háttérműveletet, ezért a meglévő explicit operátori jóváhagyási határok változatlanok maradnak. A progress-számítás külön, automatikusan tesztelt frontend modul.
+
+### Elkészült demo-fejlesztés: Guided Demo és Explore mód
+
+Az első látogatót egy rövid terméküzenet és két egyértelmű belépési pont fogadja. Az Explore mód megtartja az összes manuális operátori kontrollt. A Guided Demo healthy állapotból indítja a determinisztikus auth cascade-et, megvárja az evidence-backed root-cause verifikációt, majd automatikusan elkészíti a 30 perces forecastot és a mitigation comparisont.
+
+A recovery nem indul el automatikusan: a flow az `Operator approval required` lépésnél megáll, és kizárólag az `Approve simulated recovery` gomb után futtatja a javasolt stratégiát a Digital Twinben. A folyamat újrafuttatható, megszakítható és resetelhető. A guided state machine külön composable-ban található, a teljes happy path automatikus regressziós tesztet kapott.
 
 ## Későbbre halasztott elemek
 

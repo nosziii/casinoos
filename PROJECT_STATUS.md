@@ -222,6 +222,9 @@ Scenario status: recovered
 - [x] állandó synthetic-only / no-production biztonsági notice
 - [x] `SIMULATION ONLY` mitigation jelölés és egyértelmű `Reset demo`
 - [x] runtime állapotból számított, hétlépcsős Demo Journey progress
+- [x] judge-facing nyitóképernyő Guided Demo és Explore belépési ponttal
+- [x] automatikus incident → verification → forecast → mitigation guided flow
+- [x] kötelező operátori jóváhagyás a guided recovery előtt
 
 ### 10. Docker és futtatás
 
@@ -307,7 +310,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **39 célzott automatikus teszt** található:
+Jelenleg **41 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -344,6 +347,7 @@ Jelenleg **39 célzott automatikus teszt** található:
 - aktív verifikált incidens nélküli query elutasítása.
 - audit trace sorrendje és belső rationale kizárása.
 - a legutóbbi investigation run kiválasztása és verified summary képzése.
+- Guided Demo tartalmi állapotai és teljes, jóváhagyásnál megálló state machine-je.
 
 Rendszeresen futtatott ellenőrzések:
 
