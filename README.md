@@ -89,9 +89,19 @@ Run the deterministic Infrastructure Agent smoke suite separately:
 pnpm test:ai
 ```
 
-It validates authentication correlation, an independent payment-provider incident and a healthy baseline. Live Baseten validation is opt-in and reads credentials only from the environment:
+It validates authentication correlation, an independent payment-provider incident and a healthy baseline. Live Baseten validation is opt-in and reads credentials from the ignored root `.env` file. Set these values before running it:
 
-```powershell
-$env:AI_TEST_PROVIDER="baseten"
+```env
+AI_TEST_PROVIDER=baseten
+BASETEN_API_KEY=your-generated-baseten-key
+BASETEN_BASE_URL=https://inference.baseten.co/v1
+BASETEN_MODEL=meta-models/muse-spark-open-1026
+```
+
+Then run:
+
+```bash
 pnpm test:ai
 ```
+
+Keep `AI_MODE=mock` until the separate Meta Casino Brain credentials are configured. The smoke test can use Baseten independently without enabling live mode for the full application.

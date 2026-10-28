@@ -330,6 +330,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 
 - [x] providerfüggetlen Infrastructure Agent smoke-test keretrendszer
 - [x] auth-torzítást ellenőrző payment-provider és healthy fixture
+- [x] Gitből kizárt Baseten live smoke-test környezeti konfiguráció
 - [ ] Baseten live end-to-end teszt valódi kulccsal
 - [ ] Meta Model API live end-to-end teszt valódi kulccsal
 - [ ] provider response-kompatibilitás és token usage ellenőrzése

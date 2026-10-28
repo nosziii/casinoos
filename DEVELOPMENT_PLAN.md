@@ -24,6 +24,7 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 - [x] healthy baseline fixture
 - [x] külön `pnpm test:ai` parancs
 - [x] explicit, alapból mock `AI_TEST_PROVIDER` konfiguráció
+- [x] Gitből kizárt helyi `.env` előkészítése a hackathon Baseten modellhez
 - [ ] Baseten live futtatás valódi kulccsal
 - [ ] Meta Casino Brain smoke-test runner
 - [ ] Meta live futtatás valódi kulccsal
@@ -82,7 +83,7 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 **AI readiness és live validáció**
 
-Első implementáció: elkészült a külön futtatható Infrastructure Agent smoke suite. A live provider használata opt-in, így a normál tesztfutás nem használ kreditet és nem igényel titkos kulcsot.
+Első implementáció: elkészült a külön futtatható Infrastructure Agent smoke suite. A normál alkalmazás mock módban marad, a külön smoke test pedig explicit módon használhatja a Gitből kizárt `.env` Baseten-konfigurációját.
 
 Következő konkrét lépés: a smoke suite Baseten live futtatása fejlesztői környezeti változókból, az eredmény kiértékelése, majd a Meta Casino Brain suite kialakítása.
 

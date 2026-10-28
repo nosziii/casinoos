@@ -10,7 +10,7 @@
     "docker:up": "docker compose up --build",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
-    "test:ai": "pnpm --filter @casino-os/shared build && pnpm --filter @casino-os/agents test:ai",
+    "test:ai": "pnpm --filter @casino-os/shared build && pnpm --filter @casino-os/agents build && node --env-file-if-exists=.env packages/agents/dist/smoke-test/cli.js",
     "typecheck": "pnpm -r typecheck"
   },
   "devDependencies": {
