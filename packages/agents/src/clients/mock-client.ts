@@ -114,7 +114,10 @@ function casinoBrain(payload: Record<string, unknown>): unknown {
   const operationsReport = payload.operationsReport as { affectedPlayers: number; estimatedBlockedValue: number };
   const riskReport = payload.riskReport as { riskLevel: "low" | "medium" | "high" | "critical" };
   const rootCause = infrastructureReport.suspectedRootCauses[0] ?? { service: "unknown", confidence: 0 };
-  const incidentDetected = rootCause.service !== "unknown";
+  const investigation = payload.infrastructureInvestigation as { verification?: { status?: string; finalConfidence?: number } | null } | undefined;
+  const verified = investigation?.verification?.status === "verified";
+  const incidentDetected = rootCause.service !== "unknown" && verified;
+  rootCause.confidence = Math.min(rootCause.confidence, investigation?.verification?.finalConfidence ?? 0);
   const isAuthIncident = rootCause.service === "auth-service";
   return casinoIncidentSchema.parse({
     incidentId: "INC-001",

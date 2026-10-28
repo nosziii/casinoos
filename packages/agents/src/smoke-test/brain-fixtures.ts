@@ -35,6 +35,21 @@ function input(
       summary: incidentDetected ? "Validated synthetic continuity risk." : "Risk is within normal tolerance.",
     },
     digitalTwinState: { phase: incidentDetected ? 2 : 0, services: [] },
+    infrastructureInvestigation: {
+      verification: incidentDetected ? verified(rootCause.confidence) : null,
+      evidence: [],
+    },
+  };
+}
+
+function verified(finalConfidence: number) {
+  return {
+    status: "verified" as const,
+    verificationScore: 1,
+    finalConfidence,
+    checks: [
+      "service_degradation", "dependency_match", "temporal_ordering", "evidence_minimum",
+    ].map((check) => ({ check: check as "service_degradation" | "dependency_match" | "temporal_ordering" | "evidence_minimum", passed: true, score: 1, explanation: "Verified smoke fixture.", evidenceIds: [] })),
   };
 }
 

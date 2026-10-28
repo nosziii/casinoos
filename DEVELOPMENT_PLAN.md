@@ -59,8 +59,8 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 ### 5. Casino Brain és operátori lekérdezések
 
-- [ ] evidence-aware Casino Brain
-- [ ] determinisztikus prediction és mitigation toolok
+- [x] evidence-aware Casino Brain
+- [x] determinisztikus prediction és mitigation toolok
 - [ ] természetes nyelvű `/casino-brain/query` API
 - [ ] digitális-iker szimuláció csak explicit operátori jóváhagyással
 
@@ -117,7 +117,13 @@ A runtime már a közös mock/live strukturált akcióprotokollt használja. Az 
 
 A Baseten live teszt során a modell root service state-, dependent- és recent-event toolokat használt, hat evidence-et gyűjtött, majd 1,0 verification score és 0,98 final confidence mellett verifikálta az auth cascade gyökérokát.
 
-Következő konkrét lépés: evidence-aware Casino Brain, determinisztikus prediction/mitigation toolok és a természetes nyelvű query API.
+### Evidence-aware Casino Brain eredmény
+
+A runtime csak `verified` Infrastructure investigation után hívja a Casino Braint. A Brain megkapja a teljes evidence-listát és verification eredményt; a kód determinisztikusan korlátozza a root-cause confidence-et a `finalConfidence` értékre, eltérő root service esetén hibát ad, elégtelen bizonyítékból pedig nem enged aktív incidenst létrehozni.
+
+A külön decision-support registry kizárólag `predictOutage` és `compareMitigations` read-only toolokat tartalmaz. Mindkettő 1–120 perces validált horizonttal a determinisztikus szimulátort használja. `simulateMitigation` nincs az agent allow-listben, így a végrehajtás operátori jóváhagyáshoz kötött marad. Az evidence-aware Meta live suite mindhárom fixture-rel sikeres volt.
+
+Következő konkrét lépés: a természetes nyelvű `/casino-brain/query` API megvalósítása, amely csak ezeket a read-only döntéstámogató toolokat választhatja.
 
 ## Későbbre halasztott elemek
 

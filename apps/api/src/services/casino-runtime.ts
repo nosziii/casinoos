@@ -1,5 +1,6 @@
 import {
   CasinoBrain,
+  createDecisionSupportTools,
   createReadOnlyAgentTools,
   InfrastructureInvestigationLoop,
   OperationsAgent,
@@ -8,7 +9,7 @@ import {
 } from "@casino-os/agents";
 import { EventBuffer, EventBus } from "@casino-os/events";
 import type { AgentAnalysis, CasinoEvent, CasinoIncident } from "@casino-os/shared";
-import { CasinoSimulator } from "@casino-os/simulator";
+import { CasinoSimulator, compareMitigations, predictOutage } from "@casino-os/simulator";
 import type { AppConfig } from "../config/env.js";
 import { createAgentClients } from "./ai-clients.js";
 
@@ -24,6 +25,7 @@ export class CasinoRuntime {
   readonly agentReports: AgentAnalysis[] = [];
   readonly incidents: CasinoIncident[] = [];
   readonly agentTools: AgentToolRegistry;
+  readonly decisionTools: AgentToolRegistry;
   readonly #buffer: EventBuffer;
   readonly #infrastructureInvestigator: InfrastructureInvestigationLoop;
   readonly #operationsAgent: OperationsAgent;
@@ -36,6 +38,7 @@ export class CasinoRuntime {
       getServices: () => this.simulator.getState().services,
       getEvents: () => this.simulator.getEvents(),
     });
+    this.decisionTools = createDecisionSupportTools({ predictOutage, compareMitigations });
     const clients = createAgentClients(config);
     this.#infrastructureInvestigator = new InfrastructureInvestigationLoop(clients.specialist, this.agentTools, {
       maxTurns: config.MAX_INVESTIGATION_TURNS,
@@ -78,7 +81,9 @@ export class CasinoRuntime {
       }
 
       const now = Date.now();
-      const correlated = infrastructure.incidentDetected && infrastructure.affectedServices.length >= 2;
+      const correlated = investigation.verification?.status === "verified"
+        && infrastructure.incidentDetected
+        && infrastructure.affectedServices.length >= 2;
       if (!correlated || now - this.#lastBrainCall < config.CASINO_BRAIN_COOLDOWN_MS) return;
       this.#lastBrainCall = now;
       const state = this.simulator.getState();
@@ -87,6 +92,10 @@ export class CasinoRuntime {
         operationsReport: operations,
         riskReport: risk,
         digitalTwinState: { phase: state.phase, services: state.services },
+        infrastructureInvestigation: {
+          verification: investigation.verification,
+          evidence: investigation.context?.evidence ?? [],
+        },
       });
       if (incident.incidentDetected) {
         appendBounded(this.incidents, incident, 50);

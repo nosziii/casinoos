@@ -97,6 +97,9 @@ importers:
       '@casino-os/shared':
         specifier: workspace:*
         version: link:../shared
+      '@casino-os/simulator':
+        specifier: workspace:*
+        version: link:../simulator
       openai:
         specifier: ^6.7.0
         version: 6.49.0(ws@8.22.0)(zod@4.6.7)

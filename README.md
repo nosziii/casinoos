@@ -143,3 +143,14 @@ PLAN → TOOL CALL → OBSERVE → VERIFY → REPORT
 The investigation is limited to four model turns, six tool calls and 25 seconds by default. AI requests receive a real abort signal when the total deadline expires. Failed tool validation becomes an auditable failed observation that the model may correct; it never bypasses the strict tool schema. The enforced evidence policy reads root service state, direct dependents and recent events before finishing.
 
 Run the live Baseten loop check independently with `pnpm test:ai:investigation`.
+
+## Evidence-aware Casino Brain
+
+Casino Brain runs only after the Infrastructure investigation reaches `verified` status. It receives the evidence and deterministic verification result, cannot raise confidence above `finalConfidence`, and rejects a root service that conflicts with verified infrastructure evidence.
+
+Its decision-support registry exposes only two read operations:
+
+- `predictOutage`
+- `compareMitigations`
+
+Both accept a validated 1–120 minute horizon and call deterministic simulator functions. There is deliberately no `simulateMitigation` tool; applying a strategy to the digital twin remains an explicit operator action.

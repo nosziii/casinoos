@@ -26,6 +26,7 @@ describe("multi-agent correlation", () => {
       operationsReport,
       riskReport,
       digitalTwinState: { phase: 2, services: [] },
+      infrastructureInvestigation: { verification: verified(0.94), evidence: [] },
     });
 
     expect(incident.incidentDetected).toBe(true);
@@ -34,6 +35,17 @@ describe("multi-agent correlation", () => {
     expect(incident.recommendedActions.every((action) => action.toLowerCase().includes("simulate") || !action.toLowerCase().includes("failover"))).toBe(true);
   });
 });
+
+function verified(finalConfidence: number) {
+  return {
+    status: "verified" as const,
+    verificationScore: 1,
+    finalConfidence,
+    checks: [
+      "service_degradation", "dependency_match", "temporal_ordering", "evidence_minimum",
+    ].map((check) => ({ check: check as "service_degradation" | "dependency_match" | "temporal_ordering" | "evidence_minimum", passed: true, score: 1, explanation: "Verified fixture.", evidenceIds: [] })),
+  };
+}
 
 function event(
   domain: CasinoEvent["domain"],
