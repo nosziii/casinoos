@@ -2,7 +2,7 @@
 
 Az aktuális megvalósítási állapot és roadmap: [PROJECT_STATUS.md](PROJECT_STATUS.md)
 
-AI-powered casino operations digital twin. The current milestone implements the deterministic authentication cascade, three parallel specialist agents, Casino Brain correlation, mock/live AI modes, structured Zod validation, REST/WebSocket delivery and a live Vue operations dashboard.
+AI-powered casino operations digital twin. CasinoOps connects operational signals across casino systems to identify cascading incidents, verify their root cause, predict their impact and safely test recovery strategies before touching production. The judge-facing UI offers a guided demo and a full explore mode.
 
 ## Requirements
 

@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import type { CasinoIncident } from "@casino-ops/shared";
-defineProps<{ incident?: CasinoIncident }>();
+import type { CasinoIncident, ServiceState } from "@casino-ops/shared";
+import { computed } from "vue";
+const props = defineProps<{ incident?: CasinoIncident; services: ServiceState[]; evidenceCount: number }>();
 const title = (id: string) => id.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+const healthyCount = computed(() => props.services.filter(({ status }) => status === "healthy").length);
 </script>
 
 <template>
   <section class="panel brain-panel" :class="{ 'brain-panel--active': incident }">
-    <header><span class="eyebrow">CASINO BRAIN</span><span class="brain-state">{{ incident ? 'CORRELATED INCIDENT' : 'MONITORING' }}</span></header>
+    <header><div><span class="section-label">Casino Brain</span><h2>{{ incident ? 'Critical incident' : 'Monitoring operations' }}</h2></div><span class="brain-state">{{ incident ? 'VERIFIED' : 'LIVE' }}</span></header>
     <template v-if="incident">
       <h1>{{ incident.title }}</h1>
       <p>{{ incident.summary }}</p>
-      <div class="confidence"><span>Root-cause confidence</span><strong>{{ Math.round(incident.rootCause.confidence * 100) }}%</strong><div><i :style="{ width: `${incident.rootCause.confidence * 100}%` }" /></div></div>
-      <div class="brain-details"><div><small>PROBABLE ROOT CAUSE</small><strong>{{ title(incident.rootCause.service) }}</strong></div><div><small>AFFECTED SYSTEMS</small><span class="tags"><b v-for="service in incident.affectedSystems" :key="service">{{ title(service) }}</b></span></div></div>
+      <div class="brain-metrics"><div><strong>{{ Math.round(incident.rootCause.confidence * 100) }}%</strong><span>confidence</span></div><div><strong>{{ incident.affectedSystems.length }}</strong><span>systems affected</span></div><div><strong>{{ evidenceCount }}</strong><span>evidence signals</span></div></div>
+      <div class="root-cause"><span>Root cause</span><strong>{{ title(incident.rootCause.service) }}</strong><p>Multiple downstream failures share the same degraded authentication dependency.</p></div>
+      <a class="text-action" href="#investigation">View investigation</a>
     </template>
-    <div v-else class="brain-empty"><div class="radar" /><h1>All systems operational</h1><p>Start the cascade scenario to observe multi-system correlation.</p></div>
+    <div v-else class="brain-empty"><h1>No correlated incidents detected.</h1><p>CasinoOps is monitoring dependencies, service health and operational signals across six critical systems.</p><div class="brain-metrics"><div><strong>{{ healthyCount }}/{{ services.length || 6 }}</strong><span>systems healthy</span></div><div><strong>0</strong><span>active incidents</span></div><div><strong>Live</strong><span>continuous analysis</span></div></div></div>
   </section>
 </template>

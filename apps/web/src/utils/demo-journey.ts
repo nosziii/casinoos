@@ -16,7 +16,7 @@ export function buildDemoJourney(signals: DemoJourneySignals): DemoJourneyStep[]
   return [
     { label: "Healthy baseline", complete: signals.scenarioStarted },
     { label: "Incident triggered", complete: signals.scenarioStarted },
-    { label: "AI investigation", complete: signals.investigationStarted },
+    { label: "Incident investigation", complete: signals.investigationStarted },
     { label: "Root cause verified", complete: signals.rootCauseVerified },
     { label: "Impact forecast", complete: signals.forecastReady },
     { label: "Mitigations compared", complete: signals.mitigationsReady },

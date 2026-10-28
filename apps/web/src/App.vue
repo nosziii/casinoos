@@ -20,6 +20,7 @@ const error = ref("");
 const working = ref(false);
 const verified = computed(() => casino.agentTraces.some(({ stage, status }) => stage === "verification" && status === "success"));
 const recoveryComplete = computed(() => casino.state.mitigation?.status === "completed");
+const evidenceCount = computed(() => new Set(casino.agentTraces.flatMap(({ evidenceIds }) => evidenceIds)).size);
 const { mode, stage, busy: guidedBusy, error: guidedError, startGuided, enterExplore, returnToLanding, approveRecovery } = useGuidedDemo(casino, { verified, comparison: computed(() => casino.mitigations), recoveryComplete });
 const busy = computed(() => working.value || guidedBusy.value);
 const journeySignals = computed<DemoJourneySignals>(() => ({
@@ -40,18 +41,23 @@ const runMitigationSimulation = (action: Parameters<typeof casino.simulateMitiga
 
 <template>
   <main class="shell">
-    <nav><div class="brand"><span>CO</span><div><strong>CASINO<span>OPS</span></strong><small>AI-POWERED OPERATIONS DIGITAL TWIN</small></div></div><div class="nav-actions"><StatusPill :label="casino.connected ? 'LIVE LINK' : 'OFFLINE'" :tone="casino.connected ? 'ok' : 'danger'" /><template v-if="mode === 'explore'"><button class="button button--ghost" :disabled="busy" @click="act(casino.reset)">Reset demo</button><button class="button" :disabled="busy || casino.state.running" @click="act(casino.runScenario)">{{ casino.state.running ? 'Scenario running' : 'Run auth cascade' }}</button></template></div></nav>
+    <nav><div class="brand"><span>CO</span><div><strong>CASINO<span>OPS</span></strong><small>CASINO OPERATIONS INTELLIGENCE</small></div></div><div class="nav-actions"><StatusPill :label="casino.connected ? 'LIVE LINK' : 'OFFLINE'" :tone="casino.connected ? 'ok' : 'danger'" /><template v-if="mode === 'explore'"><button class="button button--ghost" :disabled="busy" @click="act(casino.reset)">Reset demo</button><button class="button" :disabled="busy || casino.state.running" @click="act(casino.runScenario)">{{ casino.state.running ? 'Scenario running' : 'Run auth cascade' }}</button></template></div></nav>
     <div v-if="error" class="error-banner">{{ error }}</div>
-    <div class="hero"><div><span class="eyebrow">SYNTHETIC CASINO · SCENARIO 01</span><h1>{{ mode === 'landing' ? 'AI-Powered Casino Operations Digital Twin' : 'Command center' }}</h1><p>Observe. Understand. Simulate. Protect.</p></div><div v-if="mode !== 'landing'" class="phase"><small>SIMULATION PHASE</small><strong>0{{ casino.state.phase }}</strong><span>/ 03</span></div></div>
+    <template v-if="mode === 'landing'">
+      <DemoModePanel :mode="mode" :stage="stage" :busy="busy" :error="guidedError" @guided="startGuided" @explore="enterExplore" @exit="returnToLanding" @approve="approveRecovery" />
+      <SystemHealth :services="casino.state.services" />
+      <DemoSafetyNotice />
+    </template>
+    <template v-if="mode !== 'landing'">
+    <div class="hero"><div><span class="section-label">Operational digital twin</span><h1>Casino Operations Intelligence</h1><p>Understand what failed. Know what happens next.</p></div><div class="phase"><small>Scenario phase</small><strong>0{{ casino.state.phase }}</strong><span>/ 03</span></div></div>
     <DemoSafetyNotice />
     <DemoModePanel :mode="mode" :stage="stage" :busy="busy" :error="guidedError" @guided="startGuided" @explore="enterExplore" @exit="returnToLanding" @approve="approveRecovery" />
-    <template v-if="mode !== 'landing'">
     <DemoProgress :signals="journeySignals" />
-    <div class="dashboard"><SystemHealth :services="casino.state.services" /><IncidentPanel :incident="casino.latestIncident" /><EventStream :events="casino.events" /><AgentActivity :event-count="casino.events.length" :reports="casino.agentReports" /></div>
+    <div class="dashboard"><IncidentPanel :incident="casino.latestIncident" :services="casino.state.services" :evidence-count="evidenceCount" /><SystemHealth :services="casino.state.services" /><AgentActivity :event-count="casino.events.length" :reports="casino.agentReports" /><EventStream :events="casino.events" /></div>
     <WhatIfPanel :enabled="Boolean(casino.latestIncident)" :busy="busy" :prediction="casino.prediction" :comparison="casino.mitigations" :query-response="casino.queryResponse" :simulation="casino.state.mitigation" @ask="askCasinoBrain" @predict="runPrediction" @compare="runMitigations" @simulate="runMitigationSimulation" />
     <AgentTrace :traces="casino.agentTraces" />
     <IncidentTimeline :events="casino.events" />
     </template>
-    <footer><span>CASINOOPS / SYNTHETIC DATA ONLY</span><span>AI MODE: MOCK · NO PRODUCTION ACTIONS</span></footer>
+    <footer><span>CasinoOps · Synthetic environment</span><span>No production systems connected · No autonomous production actions</span></footer>
   </main>
 </template>

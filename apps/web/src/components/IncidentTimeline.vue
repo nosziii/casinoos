@@ -10,7 +10,7 @@ const label = (type: string) => type.replaceAll("_", " ");
 
 <template>
   <section class="panel timeline-panel">
-    <header><span class="eyebrow">INCIDENT LIFECYCLE</span><h2>Incident timeline</h2></header>
+    <header><div><span class="section-label">Sequence of events</span><h2>Incident timeline</h2></div></header>
     <div v-if="!timeline.length" class="empty">Timeline events appear when the scenario starts.</div>
     <div v-else class="timeline-track">
       <article v-for="event in timeline" :key="event.id" :class="`timeline-item timeline-item--${event.severity}`">

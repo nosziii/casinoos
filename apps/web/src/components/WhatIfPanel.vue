@@ -14,13 +14,13 @@ const ask = () => { const value = question.value.trim(); if (value.length >= 3) 
 <template>
   <section class="panel what-if-panel">
     <header>
-      <div><span class="eyebrow">ACCELERATED DIGITAL TWIN · SIMULATION ONLY</span><h2>What happens if we do nothing?</h2></div>
+      <div><span class="section-label">Impact forecast · Simulation only</span><h2>What happens if we do nothing?</h2><p>Predict how the disruption propagates over time.</p></div>
       <div class="horizon"><button v-for="minutes in [10, 20, 30]" :key="minutes" :class="{ active: duration === minutes }" @click="duration = minutes">+{{ minutes }} min</button></div>
     </header>
     <div v-if="!enabled" class="what-if-locked">Run the auth cascade and wait for Casino Brain correlation to unlock predictive simulation.</div>
     <template v-else>
       <form class="brain-query" @submit.prevent="ask">
-        <label for="casino-brain-question">Ask the Digital Twin</label>
+        <label for="casino-brain-question">Ask CasinoOps</label>
         <div><input id="casino-brain-question" v-model="question" type="text" minlength="3" maxlength="500" placeholder="Ask CasinoOps…" :disabled="busy"><button class="button" type="submit" :disabled="busy || question.trim().length < 3">Ask CasinoOps</button></div>
         <button type="button" class="query-preset" :disabled="busy" @click="question = 'What happens if we do nothing for 30 minutes?'; ask()">Predict +30 min</button>
       </form>

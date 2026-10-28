@@ -163,7 +163,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
    - simulator state, eventek, agent riportok, investigation trace és incidensek ürítése;
    - mind a hat service visszaállítása healthy állapotba;
    - több egymást követő zsűritagi futtatás biztonságos kezelése.
-4. **UI olvashatósági és vizuális hierarchia redesign**
+4. **UI olvashatósági és vizuális hierarchia redesign — elkészült V2**
    - a jelenlegi sötét command-center arculat megtartása;
    - desktop body text legalább 14–16 px, fontos esemény 16–18 px, panel heading 18–22 px, KPI 30–48 px;
    - közel fehér primary text és erősebb kontraszt;
@@ -222,6 +222,14 @@ A dashboard hétlépcsős progress sávja a tényleges runtime állapotból köv
 Az első látogatót egy rövid terméküzenet és két egyértelmű belépési pont fogadja. Az Explore mód megtartja az összes manuális operátori kontrollt. A Guided Demo healthy állapotból indítja a determinisztikus auth cascade-et, megvárja az evidence-backed root-cause verifikációt, majd automatikusan elkészíti a 30 perces forecastot és a mitigation comparisont.
 
 A recovery nem indul el automatikusan: a flow az `Operator approval required` lépésnél megáll, és kizárólag az `Approve simulated recovery` gomb után futtatja a javasolt stratégiát a Digital Twinben. A folyamat újrafuttatható, megszakítható és resetelhető. A guided state machine külön composable-ban található, a teljes happy path automatikus regressziós tesztet kapott.
+
+### Elkészült mérföldkő: CasinoOps UI/UX V2 – Judge Experience
+
+A frontend vizuális nyelve a korábbi cyberpunk/HUD jelleg helyett high-end casino operations control room irányt követ. A scanline és panelrács textúrák megszűntek; a felület egységes sötét surface-rendszert, világos primary szöveget és visszafogott casino green accentet használ. A monospace kizárólag időbélyeghez, eventhez, evidence-hez és technikai státuszhoz maradt meg.
+
+A nyitóképernyő tíz másodpercen belül elmondja a termék értékét, két egyértelmű belépési pontot ad, és már a CTA-k alatt megmutatja a hat kritikus rendszer élő állapotát. Az operációs nézetben a Casino Brain lett a vizuális központ, nagy confidence-, affected-system- és evidence-KPI-kkal. A specialisták, investigation summary, impact forecast és timeline 15–17 px-es törzsszöveget, 20–24 px-es panelcímeket és videóban is olvasható KPI-kat kaptak.
+
+A technikai trace és az operational event stream változatlanul elérhető, de másodlagos információs szinten marad. A változtatás kizárólag prezentációs réteg: az evidence-verifikáció, a determinisztikus számítások és az operátori approval boundary nem módosult.
 
 ## Későbbre halasztott elemek
 

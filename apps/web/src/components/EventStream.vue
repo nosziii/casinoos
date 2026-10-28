@@ -6,7 +6,7 @@ const time = (timestamp: string) => new Date(timestamp).toLocaleTimeString("en-G
 
 <template>
   <section class="panel stream-panel">
-    <header><span class="eyebrow">REAL-TIME TELEMETRY</span><h2>Live event stream</h2></header>
+    <header><div><span class="section-label">Operational signals</span><h2>Live events</h2><p>Recent changes from connected casino systems.</p></div></header>
     <div class="stream" aria-live="polite">
       <div v-if="!events.length" class="empty">Waiting for simulation events…</div>
       <article v-for="event in [...events].reverse()" :key="event.id" class="event-row">
@@ -16,4 +16,3 @@ const time = (timestamp: string) => new Date(timestamp).toLocaleTimeString("en-G
     </div>
   </section>
 </template>
-

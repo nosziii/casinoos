@@ -13,15 +13,15 @@ const statusTone = computed(() => summary.value.status === "verified" ? "ok" : s
 </script>
 
 <template>
-  <section class="panel trace-panel">
-    <header><div><span class="eyebrow">AI INVESTIGATION</span><h2>Root-cause verification</h2></div><StatusPill :label="summary.status.toUpperCase()" :tone="statusTone" /></header>
+  <section id="investigation" class="panel trace-panel">
+    <header><div><span class="section-label">Investigation</span><h2>Root-cause verification</h2><p>Conclusions are checked against system dependencies and event evidence.</p></div><StatusPill :label="summary.status.toUpperCase()" :tone="statusTone" /></header>
     <div v-if="summary.status === 'ready'" class="empty">Run a scenario to observe evidence-backed root-cause verification.</div>
     <template v-else>
       <div class="investigation-summary">
-        <div class="investigation-hypothesis"><small>HYPOTHESIS</small><strong>{{ summary.hypothesis }}</strong></div>
-        <div><small>EVIDENCE</small><strong>{{ summary.evidenceCount }}</strong><span>signals</span></div>
-        <div><small>VERIFICATION</small><strong>{{ summary.checks.filter(({ passed }) => passed).length }} / {{ summary.checks.length || 4 }}</strong><span>checks passed</span></div>
-        <div><small>CONFIDENCE</small><strong>{{ summary.confidencePercent === null ? '—' : `${summary.confidencePercent}%` }}</strong><span>evidence-adjusted</span></div>
+        <div class="investigation-hypothesis"><small>Root-cause hypothesis</small><strong>{{ summary.hypothesis }}</strong></div>
+        <div><small>Evidence</small><strong>{{ summary.evidenceCount }}</strong><span>independent signals</span></div>
+        <div><small>Verification</small><strong>{{ summary.checks.filter(({ passed }) => passed).length }} / {{ summary.checks.length || 4 }}</strong><span>checks passed</span></div>
+        <div><small>Confidence</small><strong>{{ summary.confidencePercent === null ? '—' : `${summary.confidencePercent}%` }}</strong><span>evidence-adjusted</span></div>
       </div>
       <div v-if="summary.checks.length" class="investigation-checks">
         <span v-for="check in summary.checks" :key="check.check" :class="{ passed: check.passed }">{{ check.passed ? '✓' : '×' }} {{ check.check.replaceAll('_', ' ') }}</span>

@@ -12,7 +12,7 @@ const activeIndex = computed(() => {
 
 <template>
   <section class="demo-progress" aria-label="Demo journey progress">
-    <header><div><span class="eyebrow">DEMO JOURNEY</span><strong>Step {{ activeIndex + 1 }} / {{ steps.length }}</strong></div><span>{{ steps[activeIndex]?.label }}</span></header>
+    <header><div><span class="section-label">Demo progress</span><strong>Step {{ activeIndex + 1 }} / {{ steps.length }}</strong></div><span>{{ steps[activeIndex]?.label }}</span></header>
     <ol>
       <li v-for="(step, index) in steps" :key="step.label" :class="{ complete: step.complete, active: index === activeIndex }"><i>{{ step.complete ? '✓' : index + 1 }}</i><span>{{ step.label }}</span></li>
     </ol>

@@ -225,6 +225,10 @@ Scenario status: recovered
 - [x] judge-facing nyitóképernyő Guided Demo és Explore belépési ponttal
 - [x] automatikus incident → verification → forecast → mitigation guided flow
 - [x] kötelező operátori jóváhagyás a guided recovery előtt
+- [x] UI/UX V2 high-end operations control-room vizuális rendszer
+- [x] minimum 12 px technikai metadata és 15–17 px tartalmi szöveg
+- [x] kiemelt Casino Brain KPI-k és egyszerűsített investigation/agent/timeline hierarchia
+- [x] technikai monospace és trace elkülönítése az elsődleges termékfelülettől
 
 ### 10. Docker és futtatás
 
@@ -374,7 +378,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 | 6. Casino Brain | kész | mock és Meta live smoke suite ellenőrzött |
 | 7. What-if simulator | kész | determinisztikus 1–120 perces prediction |
 | 8. Mitigation engine | kész | ranking és recovery simulation |
-| 9. Visual polish | részben kész | dashboard/timeline kész, további animáció lehetséges |
+| 9. Visual polish | kész | UI/UX V2 judge-facing control-room felület |
 | 10. Digital Twin visualization | nincs kész | 2D/3D casino floor még nincs |
 | SAM 3.1 extension | nincs kész | opcionális későbbi fázis |
 
