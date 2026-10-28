@@ -14,7 +14,7 @@ const ask = () => { const value = question.value.trim(); if (value.length >= 3) 
 <template>
   <section class="panel what-if-panel">
     <header>
-      <div><span class="eyebrow">ACCELERATED DIGITAL TWIN</span><h2>What happens if we do nothing?</h2></div>
+      <div><span class="eyebrow">ACCELERATED DIGITAL TWIN · SIMULATION ONLY</span><h2>What happens if we do nothing?</h2></div>
       <div class="horizon"><button v-for="minutes in [10, 20, 30]" :key="minutes" :class="{ active: duration === minutes }" @click="duration = minutes">+{{ minutes }} min</button></div>
     </header>
     <div v-if="!enabled" class="what-if-locked">Run the auth cascade and wait for Casino Brain correlation to unlock predictive simulation.</div>
@@ -40,7 +40,7 @@ const ask = () => { const value = question.value.trim(); if (value.length >= 3) 
         <article v-for="strategy in comparison.strategies" :key="strategy.action" :class="{ recommended: strategy.recommended }">
           <span v-if="strategy.recommended">RECOMMENDED</span><small>{{ title(strategy.action) }}</small><strong>{{ strategy.title }}</strong>
           <div><b>{{ Math.round(strategy.estimatedRecovery * 100) }}%</b> recovery · {{ strategy.risk }} risk · {{ strategy.recoveryTimeMinutes }}m</div>
-          <p>Projected blocked value: {{ euros.format(strategy.projectedBlockedValue) }}</p><button class="simulate-button" :disabled="busy || simulation?.status === 'running'" @click="emit('simulate', strategy.action)">Simulate</button>
+          <p>Projected blocked value: {{ euros.format(strategy.projectedBlockedValue) }}</p><button class="simulate-button" :disabled="busy || simulation?.status === 'running'" @click="emit('simulate', strategy.action)">Simulate recovery</button>
         </article>
       </div>
       <div v-if="simulation" class="recovery-status" :class="`recovery-status--${simulation.outcome}`"><div><small>DIGITAL TWIN RECOVERY</small><strong>{{ title(simulation.action) }} · {{ simulation.status }}</strong><p>{{ simulation.summary }}</p></div><div class="recovery-progress"><i :style="{ width: `${simulation.progress * 100}%` }" /></div><b>{{ Math.round(simulation.progress * 100) }}%</b></div>

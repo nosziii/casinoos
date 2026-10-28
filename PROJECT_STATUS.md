@@ -219,6 +219,8 @@ Scenario status: recovered
 - [x] incidens- és recovery timeline
 - [x] reszponzív layout
 - [x] REST + WebSocket Pinia store
+- [x] állandó synthetic-only / no-production biztonsági notice
+- [x] `SIMULATION ONLY` mitigation jelölés és egyértelmű `Reset demo`
 
 ### 10. Docker és futtatás
 

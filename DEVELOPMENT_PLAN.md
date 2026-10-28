@@ -179,8 +179,8 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
 7. **Publikus deployment – `casinoops.tech`**
    - a demo közvetlenül a fő domainen;
    - HTTPS, konfiguráció- és secret-ellenőrzés;
-   - látható `Demo-only synthetic data / No production systems connected` notice;
-   - mitigationnél `SIMULATION ONLY` badge;
+   - látható `Demo-only synthetic data / No production systems connected` notice — elkészült;
+   - mitigationnél `SIMULATION ONLY` badge — elkészült;
    - healthcheck és ismételhető smoke teszt.
 8. **Második determinisztikus incident scenario**
    - csak az elsődleges guided demo, E2E és deployment stabilizálása után;
@@ -207,6 +207,10 @@ Az Investigation panel most a legutóbbi agentfutásból külön, judge-facing �
 ### Elkészült demo-fejlesztés: Ask the Digital Twin
 
 A What-if panel a meglévő, korlátozott `/casino-brain/query` végpontot közvetlenül elérhetővé teszi. Az operátor természetes nyelvű kérdést írhat be vagy használhatja a `Predict +30 min` gyorsműveletet. A strukturált planner továbbra is csak a read-only `predictOutage` és `compareMitigations` toolok közül választhat; a dashboard a validált választ, az eredménykártyákat és az operátori jóváhagyás szükségességét együtt jeleníti meg.
+
+### Elkészült demo-fejlesztés: publikus biztonsági határok
+
+A dashboard tetején állandó, jól olvasható notice jelzi, hogy a környezet kizárólag szintetikus adatot használ, nincs production rendszerhez kötve és nem hajt végre production műveletet. A Digital Twin elemzési panel külön `SIMULATION ONLY` jelölést kapott, a manuális visszaállítás pedig egyértelmű `Reset demo` elnevezéssel jelenik meg.
 
 ## Későbbre halasztott elemek
 
