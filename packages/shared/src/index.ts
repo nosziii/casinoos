@@ -1,5 +1,6 @@
 export * from "./schemas/casino-event.js";
 export * from "./schemas/casino-incident.js";
+export * from "./schemas/casino-brain-query.js";
 export * from "./schemas/infrastructure-report.js";
 export * from "./schemas/investigation.js";
 export * from "./schemas/mitigation.js";

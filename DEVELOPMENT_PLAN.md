@@ -61,8 +61,8 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 - [x] evidence-aware Casino Brain
 - [x] determinisztikus prediction és mitigation toolok
-- [ ] természetes nyelvű `/casino-brain/query` API
-- [ ] digitális-iker szimuláció csak explicit operátori jóváhagyással
+- [x] természetes nyelvű `/casino-brain/query` API
+- [x] digitális-iker szimuláció csak explicit operátori jóváhagyással
 
 ### 6. Auditálható trace és UI
 
@@ -123,7 +123,13 @@ A runtime csak `verified` Infrastructure investigation után hívja a Casino Bra
 
 A külön decision-support registry kizárólag `predictOutage` és `compareMitigations` read-only toolokat tartalmaz. Mindkettő 1–120 perces validált horizonttal a determinisztikus szimulátort használja. `simulateMitigation` nincs az agent allow-listben, így a végrehajtás operátori jóváhagyáshoz kötött marad. Az evidence-aware Meta live suite mindhárom fixture-rel sikeres volt.
 
-Következő konkrét lépés: a természetes nyelvű `/casino-brain/query` API megvalósítása, amely csak ezeket a read-only döntéstámogató toolokat választhatja.
+### Természetes nyelvű Casino Brain query eredmény
+
+A `POST /casino-brain/query` végpont csak aktív, verifikált incidens mellett fut. A strukturált planner kizárólag `predictOutage` vagy `compareMitigations` toolt és 1–120 perces horizontot választhat; a választott számítást a determinisztikus registry végzi. A válasz nem szabad LLM-generált számítás, hanem validált szimulátor-outputból készült sablon.
+
+A mitigation eredmény mindig `requiresOperatorApproval: true`, és az agent registry nem tartalmaz végrehajtási toolt. A Meta live smoke helyesen választotta a 45 perces prediction és 30 perces mitigation comparison útvonalat.
+
+Következő konkrét lépés: auditálható agent trace WebSocket eseményekkel és dashboard megjelenítéssel.
 
 ## Későbbre halasztott elemek
 

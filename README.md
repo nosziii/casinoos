@@ -154,3 +154,13 @@ Its decision-support registry exposes only two read operations:
 - `compareMitigations`
 
 Both accept a validated 1–120 minute horizon and call deterministic simulator functions. There is deliberately no `simulateMitigation` tool; applying a strategy to the digital twin remains an explicit operator action.
+
+Ask a natural-language decision-support question after a verified incident exists:
+
+```bash
+curl -X POST http://127.0.0.1:3000/casino-brain/query \
+  -H "content-type: application/json" \
+  -d '{"query":"What happens if the outage continues for 45 minutes?"}'
+```
+
+The planner can select only prediction or mitigation comparison. Mitigation responses set `requiresOperatorApproval: true`; they never execute the recommended strategy. Run `pnpm test:ai:query` for the two-query Meta live smoke test.

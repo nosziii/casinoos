@@ -26,10 +26,23 @@ export class MockAIClient implements AIClient {
             ? casinoBrain(payload)
             : request.agent === "infrastructure-investigator"
               ? investigationAction(payload)
+              : request.agent === "casino-brain-query-planner"
+                ? casinoBrainQueryPlan(payload)
             : undefined;
     if (!result) throw new Error(`Unsupported mock agent: ${request.agent}`);
     return request.schema.parse(result);
   }
+}
+
+function casinoBrainQueryPlan(payload: Record<string, unknown>): unknown {
+  const query = typeof payload.query === "string" ? payload.query.toLowerCase() : "";
+  const duration = Number(query.match(/\b(\d{1,3})\b/)?.[1] ?? 30);
+  const mitigation = /(mitigation|strategy|strategies|recovery|recommend|enyh|stratégi|helyreáll)/.test(query);
+  return {
+    toolName: mitigation ? "compareMitigations" : "predictOutage",
+    durationMinutes: Math.min(120, Math.max(1, duration)),
+    rationale: mitigation ? "Compare deterministic mitigation strategies." : "Project deterministic outage impact.",
+  };
 }
 
 function investigationAction(payload: Record<string, unknown>): unknown {

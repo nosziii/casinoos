@@ -4,6 +4,7 @@ export * from "./clients/mock-client.js";
 export * from "./clients/meta-client.js";
 export * from "./clients/rate-limited-client.js";
 export * from "./casino-brain.js";
+export * from "./casino-brain-query.js";
 export * from "./infrastructure-agent.js";
 export * from "./operations-agent.js";
 export * from "./risk-agent.js";

@@ -248,6 +248,7 @@ WebSocket: ws://127.0.0.1:3000/ws
 | POST | `/simulation/predict` | kész | determinisztikus what-if előrejelzés |
 | POST | `/simulation/mitigations` | kész | mitigation stratégiák rangsorolása |
 | POST | `/simulation/mitigations/:action/simulate` | kész | stratégia futtatása a digitális ikerben |
+| POST | `/casino-brain/query` | kész | természetes nyelvű read-only prediction vagy mitigation comparison |
 | GET | `/events` | kész | generált események |
 | GET | `/agent-reports` | kész | specialist riportok |
 | GET | `/incidents` | kész | Casino Brain incidensek |
@@ -283,7 +284,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **31 célzott automatikus teszt** található:
+Jelenleg **34 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -315,6 +316,9 @@ Jelenleg **31 célzott automatikus teszt** található:
 - mitigation-végrehajtás és túl nagy horizont elutasítása;
 - Casino Brain confidence determinisztikus korlátozása;
 - insufficient evidence esetén aktív Brain incident blokkolása.
+- természetes nyelvű prediction kérdés routingja;
+- természetes nyelvű mitigation kérdés routingja és approval flag;
+- aktív verifikált incidens nélküli query elutasítása.
 
 Rendszeresen futtatott ellenőrzések:
 
@@ -366,6 +370,8 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 - [x] evidence-aware Casino Brain és determinisztikus confidence cap
 - [x] read-only prediction és mitigation decision-support toolok
 - [x] agent oldali mitigation-végrehajtás tiltása
+- [x] természetes nyelvű Casino Brain query API
+- [x] Meta live query planner validáció
 - [ ] provider response-kompatibilitás és token usage ellenőrzése
 - [ ] API integration tesztek Fastify injectionnel
 - [ ] Vue komponens- és böngészős end-to-end tesztek

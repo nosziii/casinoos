@@ -1,5 +1,6 @@
 import {
   CasinoBrain,
+  CasinoBrainQueryService,
   createDecisionSupportTools,
   createReadOnlyAgentTools,
   InfrastructureInvestigationLoop,
@@ -31,6 +32,7 @@ export class CasinoRuntime {
   readonly #operationsAgent: OperationsAgent;
   readonly #riskAgent: RiskAgent;
   readonly #brain: CasinoBrain;
+  readonly #brainQuery: CasinoBrainQueryService;
   #lastBrainCall = 0;
 
   constructor(config: AppConfig, hooks: RuntimeHooks = {}) {
@@ -48,6 +50,7 @@ export class CasinoRuntime {
     this.#operationsAgent = new OperationsAgent(clients.specialist);
     this.#riskAgent = new RiskAgent(clients.specialist);
     this.#brain = new CasinoBrain(clients.brain);
+    this.#brainQuery = new CasinoBrainQueryService(clients.brain, this.decisionTools);
     this.#buffer = new EventBuffer({
       maxSize: config.MAX_EVENT_BATCH_SIZE,
       flushIntervalMs: config.AGENT_FLUSH_INTERVAL_MS,
@@ -112,6 +115,10 @@ export class CasinoRuntime {
 
   async flush(): Promise<void> {
     await this.#buffer.flush();
+  }
+
+  queryCasinoBrain(query: string, incident: CasinoIncident) {
+    return this.#brainQuery.query(query, incident);
   }
 
   reset(): void {

@@ -3,6 +3,7 @@ import websocket from "@fastify/websocket";
 import Fastify from "fastify";
 import { loadConfig } from "./config/env.js";
 import { registerDigitalTwinRoutes } from "./routes/digital-twin.js";
+import { registerCasinoBrainQueryRoute } from "./routes/casino-brain-query.js";
 import { CasinoRuntime } from "./services/casino-runtime.js";
 
 const config = loadConfig();
@@ -26,6 +27,7 @@ app.get("/events", async () => runtime.simulator.getEvents());
 app.get("/agent-reports", async () => runtime.agentReports);
 app.get("/incidents", async () => runtime.incidents);
 registerDigitalTwinRoutes(app, runtime, broadcast);
+registerCasinoBrainQueryRoute(app, runtime);
 app.post("/simulation/start", async () => {
   runtime.simulator.start();
   return runtime.simulator.getState();
