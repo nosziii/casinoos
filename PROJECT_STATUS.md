@@ -240,6 +240,7 @@ Scenario status: recovered
 - [x] dashboard checklist-, evidence- és verifier-megjelenítés
 - [x] verified badge
 - [x] érzékeny részletek redakciója és belső modellgondolatmenet kizárása
+- [x] judge-facing investigation summary és másodlagos technikai trace
 
 Aktuális címek:
 
@@ -301,7 +302,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **35 célzott automatikus teszt** található:
+Jelenleg **37 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -337,6 +338,7 @@ Jelenleg **35 célzott automatikus teszt** található:
 - természetes nyelvű mitigation kérdés routingja és approval flag;
 - aktív verifikált incidens nélküli query elutasítása.
 - audit trace sorrendje és belső rationale kizárása.
+- a legutóbbi investigation run kiválasztása és verified summary képzése.
 
 Rendszeresen futtatott ellenőrzések:
 

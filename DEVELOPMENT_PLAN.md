@@ -141,7 +141,7 @@ Következő konkrét lépés az új keret megérkezése után: judge-facing Guid
 
 ## Következő munkamenet – termékesítés és judge-facing demo
 
-**Állapot: feladatlistára téve, az 5 órás keret újratöltődéséig nem kezdjük el.**
+**Állapot: megkezdve; a kis, önálló demófejlesztésekkel haladunk tovább.**
 
 A hackathon AI-magja feature-complete állapotú. A következő munkamenetben nem új AI-képességeket építünk, hanem a meglévő determinisztikus auth cascade köré készítünk könnyen érthető, publikus demóélményt.
 
@@ -168,7 +168,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
    - közel fehér primary text és erősebb kontraszt;
    - monospace csak timestamp, event ID, trace és technikai metadata esetén;
    - nagy, videón is olvasható impact- és recovery-KPI-k.
-5. **Investigation summary elsődleges nézet**
+5. **Investigation summary elsődleges nézet — elkészült**
    - hypothesis, evidence count, verification checks, confidence és `VERIFIED` státusz nagy kártyán;
    - a részletes `PLAN / TOOL CALL / OBSERVATION` trace másodlagos `View technical trace` interakció mögött;
    - nagy Infrastructure Agent progress kártya és Casino Brain „wow” állapot.
@@ -199,6 +199,10 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
 ### Következő munkamenet elfogadási feltétele
 
 A zsűritag README nélkül, a nyitóképernyőről indulva végig tudja futtatni a teljes auth cascade történetet, érti a verifikált gyökérokot és az üzleti hatást, majd explicit jóváhagyással kizárólag a digitális ikerben szimulálja a helyreállítást. Mindezt egy automatikus browser E2E teszt is igazolja.
+
+### Elkészült demo-fejlesztés: Investigation summary
+
+Az Investigation panel most a legutóbbi agentfutásból külön, judge-facing összefoglalót képez: kiemeli a hipotézist, az egyedi evidence-ek számát, a verifier ellenőrzéseinek állását, az evidence-adjusted confidence értéket és a végső státuszt. A részletes audit trace megmaradt, de alapértelmezetten rejtett, és a `View technical trace` gombbal nyitható meg. Az összefoglaló-képzés külön, újrafelhasználható és automatikusan tesztelt frontend modul.
 
 ## Későbbre halasztott elemek
 
