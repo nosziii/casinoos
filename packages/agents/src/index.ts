@@ -14,3 +14,6 @@ export * from "./smoke-test/types.js";
 export * from "./smoke-test/brain-fixtures.js";
 export * from "./smoke-test/brain-runner.js";
 export * from "./smoke-test/brain-types.js";
+export * from "./tools/read-only-tools.js";
+export * from "./tools/registry.js";
+export * from "./tools/types.js";

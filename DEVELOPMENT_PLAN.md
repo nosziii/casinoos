@@ -32,13 +32,13 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 ### 2. Read-only agent tool layer
 
-- [ ] providerfüggetlen `AgentToolRegistry`
-- [ ] `getServiceState`
-- [ ] `getDependencies`
-- [ ] `getDependents`
-- [ ] `getRecentEvents`
-- [ ] argumentum- és eredményvalidáció
-- [ ] eredményméret-korlát és adatredakció
+- [x] providerfüggetlen `AgentToolRegistry`
+- [x] `getServiceState`
+- [x] `getDependencies`
+- [x] `getDependents`
+- [x] `getRecentEvents`
+- [x] argumentum- és eredményvalidáció
+- [x] eredményméret-korlát és adatredakció
 
 ### 3. Investigation és evidence modell
 
@@ -103,7 +103,11 @@ A három hívás teljes futási ideje körülbelül 11,2 másodperc volt. A stru
 
 Az első kompatibilitási futás feltárta, hogy a Casino Brain prompt nem tartalmazta a kötelező JSON-mezőket. A teljes struktúra explicit leírása után a három Meta hívás körülbelül 20,5 másodperc alatt sikeresen teljesült. Az AI-kliensek 30 másodperces request timeoutot kaptak.
 
-Következő konkrét lépés: a read-only agent tool layer és az `AgentToolRegistry` megvalósítása.
+### Read-only tool layer eredmény
+
+A runtime registry kizárólag a négy engedélyezett lekérdezést tartalmazza, és a szimulátor klónozott, aktuális snapshotjait használja. Az input alapértelmezett maximuma 4 KiB, az outputé 16 KiB. Ismeretlen tool, extra argumentum és túlméretes payload strukturált hibával leáll. A token-, secret-, password- és hasonló mezők az agent előtt redaktálódnak.
+
+Következő konkrét lépés: az `InvestigationContext`, evidence modell és determinisztikus verifier megvalósítása, mielőtt az Infrastructure Agent tool loopot kap.
 
 ## Későbbre halasztott elemek
 

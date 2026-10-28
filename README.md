@@ -114,3 +114,14 @@ pnpm test:ai:brain
 ```
 
 The combined `pnpm test:ai` command runs both suites. Meta configuration uses `META_MODEL_API_KEY`, `META_BASE_URL`, and `META_MODEL` from the ignored root `.env` file. Model requests have a 30-second client timeout and one schema-level retry.
+
+## Read-only agent tools
+
+The API runtime owns a provider-independent allow-listed tool registry backed by cloned digital-twin snapshots:
+
+- `getServiceState`
+- `getDependencies`
+- `getDependents`
+- `getRecentEvents`
+
+Tool inputs and outputs are Zod-validated, payload size is bounded, and sensitive values are redacted. The registry currently exposes no mutation or real-infrastructure operation; it is the deterministic foundation for the upcoming Infrastructure Agent investigation loop.

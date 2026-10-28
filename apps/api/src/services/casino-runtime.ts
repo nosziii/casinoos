@@ -1,4 +1,11 @@
-import { CasinoBrain, InfrastructureAgent, OperationsAgent, RiskAgent } from "@casino-os/agents";
+import {
+  CasinoBrain,
+  createReadOnlyAgentTools,
+  InfrastructureAgent,
+  OperationsAgent,
+  RiskAgent,
+  type AgentToolRegistry,
+} from "@casino-os/agents";
 import { EventBuffer, EventBus } from "@casino-os/events";
 import type { AgentAnalysis, CasinoEvent, CasinoIncident } from "@casino-os/shared";
 import { CasinoSimulator } from "@casino-os/simulator";
@@ -16,6 +23,7 @@ export class CasinoRuntime {
   readonly simulator = new CasinoSimulator(this.eventBus);
   readonly agentReports: AgentAnalysis[] = [];
   readonly incidents: CasinoIncident[] = [];
+  readonly agentTools: AgentToolRegistry;
   readonly #buffer: EventBuffer;
   readonly #infrastructureAgent: InfrastructureAgent;
   readonly #operationsAgent: OperationsAgent;
@@ -24,6 +32,10 @@ export class CasinoRuntime {
   #lastBrainCall = 0;
 
   constructor(config: AppConfig, hooks: RuntimeHooks = {}) {
+    this.agentTools = createReadOnlyAgentTools({
+      getServices: () => this.simulator.getState().services,
+      getEvents: () => this.simulator.getEvents(),
+    });
     const clients = createAgentClients(config);
     this.#infrastructureAgent = new InfrastructureAgent(clients.specialist);
     this.#operationsAgent = new OperationsAgent(clients.specialist);

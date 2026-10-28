@@ -283,7 +283,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **10 célzott automatikus teszt** található:
+Jelenleg **14 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -295,6 +295,10 @@ Jelenleg **10 célzott automatikus teszt** található:
 - túl nagy prediction horizon elutasítása.
 - Infrastructure Agent smoke suite auth, payment-provider és healthy fixture-rel.
 - Casino Brain smoke suite auth, payment-provider és healthy fixture-rel.
+- read-only tool allow-list és registry listing;
+- dependency/dependent feloldás aktuális snapshotból;
+- bounded event filtering és érzékeny mezők redakciója;
+- unknown tool, extra argumentum és túlméretes output elutasítása.
 
 Rendszeresen futtatott ellenőrzések:
 
@@ -334,6 +338,9 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 - [x] Gitből kizárt Baseten live smoke-test környezeti konfiguráció
 - [x] Baseten live smoke teszt valódi kulccsal, három fixture-rel
 - [x] Meta Model API live smoke teszt valódi kulccsal, három fixture-rel
+- [x] providerfüggetlen read-only `AgentToolRegistry`
+- [x] service state, dependency, dependent és recent event toolok
+- [x] tool payload limit, strict validáció és redakció
 - [ ] provider response-kompatibilitás és token usage ellenőrzése
 - [ ] API integration tesztek Fastify injectionnel
 - [ ] Vue komponens- és böngészős end-to-end tesztek
