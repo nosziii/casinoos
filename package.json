@@ -1,0 +1,23 @@
+{
+  "name": "casino-os",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --parallel --filter @casino-os/api --filter @casino-os/web dev",
+    "docker:build": "docker compose build",
+    "docker:down": "docker compose down",
+    "docker:up": "docker compose up --build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "test:ai": "pnpm --filter @casino-os/shared build && pnpm --filter @casino-os/agents test:ai",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2"
+  }
+}
