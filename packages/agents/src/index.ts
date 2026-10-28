@@ -17,3 +17,6 @@ export * from "./smoke-test/brain-types.js";
 export * from "./tools/read-only-tools.js";
 export * from "./tools/registry.js";
 export * from "./tools/types.js";
+export * from "./investigation/context.js";
+export * from "./investigation/evidence-store.js";
+export * from "./investigation/verifier.js";

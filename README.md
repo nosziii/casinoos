@@ -125,3 +125,9 @@ The API runtime owns a provider-independent allow-listed tool registry backed by
 - `getRecentEvents`
 
 Tool inputs and outputs are Zod-validated, payload size is bounded, and sensitive values are redacted. The registry currently exposes no mutation or real-infrastructure operation; it is the deterministic foundation for the upcoming Infrastructure Agent investigation loop.
+
+## Evidence verification
+
+Investigations use shared Zod schemas for the hypothesis, checklist, tool calls, evidence provenance and status. Evidence receives a deterministic immutable ID, is deduplicated by ID, and retains the read-only tool and input that produced it.
+
+The deterministic verifier checks root-service degradation, dependency evidence, temporal ordering and a minimum of three unique evidence items from at least two evidence kinds. A root cause cannot become `verified` without degradation and dependency evidence. Otherwise the result is explicitly `insufficient_evidence` or `rejected`; final confidence is model confidence multiplied by the verification score.

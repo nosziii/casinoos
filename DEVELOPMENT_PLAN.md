@@ -42,12 +42,12 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 ### 3. Investigation és evidence modell
 
-- [ ] `InvestigationContext`
-- [ ] megváltoztathatatlan evidence ID és provenance
-- [ ] hipotézisek és checklist
-- [ ] `insufficient_evidence` kimenet
-- [ ] determinisztikus verifier
-- [ ] verifikált confidence számítás
+- [x] `InvestigationContext`
+- [x] megváltoztathatatlan evidence ID és provenance
+- [x] hipotézisek és checklist
+- [x] `insufficient_evidence` kimenet
+- [x] determinisztikus verifier
+- [x] verifikált confidence számítás
 
 ### 4. Infrastructure Agent tool loop
 
@@ -107,7 +107,11 @@ Az első kompatibilitási futás feltárta, hogy a Casino Brain prompt nem tarta
 
 A runtime registry kizárólag a négy engedélyezett lekérdezést tartalmazza, és a szimulátor klónozott, aktuális snapshotjait használja. Az input alapértelmezett maximuma 4 KiB, az outputé 16 KiB. Ismeretlen tool, extra argumentum és túlméretes payload strukturált hibával leáll. A token-, secret-, password- és hasonló mezők az agent előtt redaktálódnak.
 
-Következő konkrét lépés: az `InvestigationContext`, evidence modell és determinisztikus verifier megvalósítása, mielőtt az Infrastructure Agent tool loopot kap.
+### Investigation és verification eredmény
+
+Az evidence ID a validált tartalom és provenance SHA-256 lenyomatából képződik, az evidence snapshotok immutable formában kerülnek kiadásra. A verifier 35% degradáció-, 30% dependency-, 20% időrend- és 15% evidence-minimum súlyozást használ. Legalább három egyedi evidence szükséges legalább két evidence típusból; duplikált ID-val a minimum nem növelhető. A végső confidence a modell confidence és a verification score szorzata.
+
+Következő konkrét lépés: a korlátozott Infrastructure Agent tool loop megvalósítása maximum 4 körrel, 6 tool call-lal és teljes futási időkorláttal.
 
 ## Későbbre halasztott elemek
 
