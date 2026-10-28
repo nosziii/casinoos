@@ -315,7 +315,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 | 1. Foundation | kész | monorepo, API, frontend, WebSocket, config |
 | 2. Casino simulator | kész | determinisztikus auth cascade |
 | 3. Live dashboard | kész | service health és live event stream |
-| 4. Infrastructure Agent | részben kész | mock ellenőrzött, Baseten live teszt hátra van |
+| 4. Infrastructure Agent | kész | mock és Baseten live smoke suite ellenőrzött |
 | 5. Multi-agent system | kész | három specialist strukturált riporttal |
 | 6. Casino Brain | részben kész | mock ellenőrzött, Meta live teszt hátra van |
 | 7. What-if simulator | kész | determinisztikus 1–120 perces prediction |
@@ -331,7 +331,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 - [x] providerfüggetlen Infrastructure Agent smoke-test keretrendszer
 - [x] auth-torzítást ellenőrző payment-provider és healthy fixture
 - [x] Gitből kizárt Baseten live smoke-test környezeti konfiguráció
-- [ ] Baseten live end-to-end teszt valódi kulccsal
+- [x] Baseten live smoke teszt valódi kulccsal, három fixture-rel
 - [ ] Meta Model API live end-to-end teszt valódi kulccsal
 - [ ] provider response-kompatibilitás és token usage ellenőrzése
 - [ ] API integration tesztek Fastify injectionnel

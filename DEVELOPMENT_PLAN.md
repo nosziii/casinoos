@@ -25,7 +25,7 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 - [x] külön `pnpm test:ai` parancs
 - [x] explicit, alapból mock `AI_TEST_PROVIDER` konfiguráció
 - [x] Gitből kizárt helyi `.env` előkészítése a hackathon Baseten modellhez
-- [ ] Baseten live futtatás valódi kulccsal
+- [x] Baseten live futtatás valódi kulccsal
 - [ ] Meta Casino Brain smoke-test runner
 - [ ] Meta live futtatás valódi kulccsal
 - [ ] token-, latency-, retry- és schema-validációs metrikák egységes tárolása
@@ -85,7 +85,17 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 Első implementáció: elkészült a külön futtatható Infrastructure Agent smoke suite. A normál alkalmazás mock módban marad, a külön smoke test pedig explicit módon használhatja a Gitből kizárt `.env` Baseten-konfigurációját.
 
-Következő konkrét lépés: a smoke suite Baseten live futtatása fejlesztői környezeti változókból, az eredmény kiértékelése, majd a Meta Casino Brain suite kialakítása.
+### Legutóbbi live validáció
+
+2026-10-28-án a `meta-models/muse-spark-open-1026` modellen mindhárom Infrastructure Agent fixture sikeresen lefutott:
+
+- auth cascade: helyes `auth-service` gyökérok, 0,98 confidence;
+- payment-provider degradation: helyes `payment-provider` gyökérok, auth-tévesztés nélkül, 0,95 confidence;
+- healthy baseline: helyesen nem jelzett incidenst, 0,99 confidence.
+
+A három hívás teljes futási ideje körülbelül 11,2 másodperc volt. A strukturált JSON-válasz kompatibilis volt a jelenlegi Zod-sémával.
+
+Következő konkrét lépés: a Meta Casino Brain smoke suite kialakítása, majd a read-only agent tool layer megvalósítása.
 
 ## Későbbre halasztott elemek
 
