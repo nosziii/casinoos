@@ -137,7 +137,68 @@ A trace kizárólag auditálható műveleti adatot tartalmaz: toolnevet, validá
 
 Az ütemterv 42 tételéből 36 elkészült (**86%**); a stabilizálási fázisból és az egységes provider-metrikákból összesen 6 tétel van hátra.
 
-Következő konkrét lépés: stabilizálás API-integrációs tesztekkel és CI pipeline-nal.
+Következő konkrét lépés az új keret megérkezése után: judge-facing Guided Demo és az azt lefedő browser E2E journey.
+
+## Következő munkamenet – termékesítés és judge-facing demo
+
+**Állapot: feladatlistára téve, az 5 órás keret újratöltődéséig nem kezdjük el.**
+
+A hackathon AI-magja feature-complete állapotú. A következő munkamenetben nem új AI-képességeket építünk, hanem a meglévő determinisztikus auth cascade köré készítünk könnyen érthető, publikus demóélményt.
+
+### Prioritási sorrend
+
+1. **Guided Demo és Explore mód**
+   - első képernyőn világos termékleírás, `Start Guided Demo` és `Explore CasinoOps` belépési pont;
+   - guided flow: healthy → incident → agent investigation → verified root cause → 30 perces forecast → mitigation comparison → operátori jóváhagyású recovery simulation → recovered;
+   - aktuális lépés és rövid magyarázat megjelenítése;
+   - az Explore mód őrizze meg az összes jelenlegi manuális funkciót.
+2. **Browser E2E tesztek**
+   - teljes guided demo journey;
+   - reset után healthy alapállapot;
+   - forecast, mitigation és explicit recovery approval ellenőrzése;
+   - technikai trace megnyitása.
+3. **Demo reset és publikus működés**
+   - jól látható `Reset Demo` művelet;
+   - simulator state, eventek, agent riportok, investigation trace és incidensek ürítése;
+   - mind a hat service visszaállítása healthy állapotba;
+   - több egymást követő zsűritagi futtatás biztonságos kezelése.
+4. **UI olvashatósági és vizuális hierarchia redesign**
+   - a jelenlegi sötét command-center arculat megtartása;
+   - desktop body text legalább 14–16 px, fontos esemény 16–18 px, panel heading 18–22 px, KPI 30–48 px;
+   - közel fehér primary text és erősebb kontraszt;
+   - monospace csak timestamp, event ID, trace és technikai metadata esetén;
+   - nagy, videón is olvasható impact- és recovery-KPI-k.
+5. **Investigation summary elsődleges nézet**
+   - hypothesis, evidence count, verification checks, confidence és `VERIFIED` státusz nagy kártyán;
+   - a részletes `PLAN / TOOL CALL / OBSERVATION` trace másodlagos `View technical trace` interakció mögött;
+   - nagy Infrastructure Agent progress kártya és Casino Brain „wow” állapot.
+6. **Természetes nyelvű Digital Twin kérdés UI**
+   - `Ask CasinoOps…` input;
+   - előre definiált `Predict +30 min` gyorsművelet;
+   - a háttérben változatlanul a determinisztikus `predictOutage` és `compareMitigations` fusson.
+7. **Publikus deployment – `casinoops.tech`**
+   - a demo közvetlenül a fő domainen;
+   - HTTPS, konfiguráció- és secret-ellenőrzés;
+   - látható `Demo-only synthetic data / No production systems connected` notice;
+   - mitigationnél `SIMULATION ONLY` badge;
+   - healthcheck és ismételhető smoke teszt.
+8. **Második determinisztikus incident scenario**
+   - csak az elsődleges guided demo, E2E és deployment stabilizálása után;
+   - ugyanazt a verifier/evidence biztonsági modellt használja.
+9. **CI pipeline**
+   - lint, typecheck, unit test, production build és browser E2E;
+   - később dependency- és container image scanning.
+
+### Későbbre sorolt stabilizálási elemek
+
+- provider comparison;
+- teljes model call history;
+- további backend AI-képességek;
+- külön marketingoldal, ha a fő demo elkészülte után marad idő.
+
+### Következő munkamenet elfogadási feltétele
+
+A zsűritag README nélkül, a nyitóképernyőről indulva végig tudja futtatni a teljes auth cascade történetet, érti a verifikált gyökérokot és az üzleti hatást, majd explicit jóváhagyással kizárólag a digitális ikerben szimulálja a helyreállítást. Mindezt egy automatikus browser E2E teszt is igazolja.
 
 ## Későbbre halasztott elemek
 
