@@ -1,4 +1,4 @@
-import type { AgentAnalysis, AgentTraceEvent, CasinoEvent, CasinoIncident, MitigationAction, MitigationComparison, SimulationPrediction } from "@casino-ops/shared";
+import type { AgentAnalysis, AgentTraceEvent, CasinoBrainQueryResponse, CasinoEvent, CasinoIncident, MitigationAction, MitigationComparison, SimulationPrediction } from "@casino-ops/shared";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import type { SimulationState, SocketMessage } from "../types";
@@ -13,6 +13,7 @@ export const useCasinoStore = defineStore("casino", () => {
   const incidents = ref<CasinoIncident[]>([]);
   const prediction = ref<SimulationPrediction>();
   const mitigations = ref<MitigationComparison>();
+  const queryResponse = ref<CasinoBrainQueryResponse>();
   const connected = ref(false);
   let socket: WebSocket | undefined;
 
@@ -71,6 +72,7 @@ export const useCasinoStore = defineStore("casino", () => {
     incidents.value = [];
     prediction.value = undefined;
     mitigations.value = undefined;
+    queryResponse.value = undefined;
     await post("/api/simulation/scenario/auth-cascade-failure");
     await refreshState();
   }
@@ -83,15 +85,25 @@ export const useCasinoStore = defineStore("casino", () => {
     incidents.value = [];
     prediction.value = undefined;
     mitigations.value = undefined;
+    queryResponse.value = undefined;
     await refreshState();
   }
 
   async function predict(durationMinutes: number): Promise<void> {
+    queryResponse.value = undefined;
     prediction.value = await post<SimulationPrediction>("/api/simulation/predict", { durationMinutes });
   }
 
   async function compareMitigations(durationMinutes: number): Promise<void> {
+    queryResponse.value = undefined;
     mitigations.value = await post<MitigationComparison>("/api/simulation/mitigations", { durationMinutes });
+  }
+
+  async function askCasinoBrain(query: string): Promise<void> {
+    const response = await post<CasinoBrainQueryResponse>("/api/casino-brain/query", { query });
+    queryResponse.value = response;
+    if (response.toolName === "predictOutage") prediction.value = response.result;
+    else mitigations.value = response.result;
   }
 
   async function simulateMitigation(action: MitigationAction): Promise<void> {
@@ -102,10 +114,11 @@ export const useCasinoStore = defineStore("casino", () => {
     const response = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
     if (!response.ok) {
       const problem = await response.json().catch(() => ({})) as { error?: string };
-      throw new Error(problem.error === "NO_ACTIVE_INCIDENT" ? "Run the incident scenario first" : `Request failed: ${response.status}`);
+      const incidentRequired = problem.error === "NO_ACTIVE_INCIDENT" || problem.error === "NO_VERIFIED_INCIDENT";
+      throw new Error(incidentRequired ? "Wait for a verified incident before querying the Digital Twin" : `Request failed: ${response.status}`);
     }
     return response.json() as Promise<T>;
   }
 
-  return { state, events, agentReports, agentTraces, incidents, prediction, mitigations, connected, latestIncident, initialize, runScenario, reset, predict, compareMitigations, simulateMitigation };
+  return { state, events, agentReports, agentTraces, incidents, prediction, mitigations, queryResponse, connected, latestIncident, initialize, runScenario, reset, predict, compareMitigations, askCasinoBrain, simulateMitigation };
 });

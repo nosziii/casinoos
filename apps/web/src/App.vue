@@ -17,6 +17,7 @@ onMounted(async () => { try { await casino.initialize(); } catch (cause) { error
 async function act(operation: () => Promise<void>): Promise<void> { working.value = true; error.value = ""; try { await operation(); } catch (cause) { error.value = cause instanceof Error ? cause.message : "Action failed"; } finally { working.value = false; } }
 const runPrediction = (minutes: number) => act(() => casino.predict(minutes));
 const runMitigations = (minutes: number) => act(() => casino.compareMitigations(minutes));
+const askCasinoBrain = (query: string) => act(() => casino.askCasinoBrain(query));
 const runMitigationSimulation = (action: Parameters<typeof casino.simulateMitigation>[0]) => act(() => casino.simulateMitigation(action));
 </script>
 
@@ -26,7 +27,7 @@ const runMitigationSimulation = (action: Parameters<typeof casino.simulateMitiga
     <div v-if="error" class="error-banner">{{ error }}</div>
     <div class="hero"><div><span class="eyebrow">SYNTHETIC CASINO · SCENARIO 01</span><h1>Command center</h1><p>Observe. Understand. Simulate. Protect.</p></div><div class="phase"><small>SIMULATION PHASE</small><strong>0{{ casino.state.phase }}</strong><span>/ 03</span></div></div>
     <div class="dashboard"><SystemHealth :services="casino.state.services" /><IncidentPanel :incident="casino.latestIncident" /><EventStream :events="casino.events" /><AgentActivity :event-count="casino.events.length" :reports="casino.agentReports" /></div>
-    <WhatIfPanel :enabled="Boolean(casino.latestIncident)" :busy="working" :prediction="casino.prediction" :comparison="casino.mitigations" :simulation="casino.state.mitigation" @predict="runPrediction" @compare="runMitigations" @simulate="runMitigationSimulation" />
+    <WhatIfPanel :enabled="Boolean(casino.latestIncident)" :busy="working" :prediction="casino.prediction" :comparison="casino.mitigations" :query-response="casino.queryResponse" :simulation="casino.state.mitigation" @ask="askCasinoBrain" @predict="runPrediction" @compare="runMitigations" @simulate="runMitigationSimulation" />
     <AgentTrace :traces="casino.agentTraces" />
     <IncidentTimeline :events="casino.events" />
     <footer><span>CASINOOPS / SYNTHETIC DATA ONLY</span><span>AI MODE: MOCK · NO PRODUCTION ACTIONS</span></footer>

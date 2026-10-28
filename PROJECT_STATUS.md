@@ -212,6 +212,8 @@ Scenario status: recovered
 - [x] három agent aktivitása
 - [x] Casino Brain incidenspanel
 - [x] what-if impact kártyák és grafikon
+- [x] természetes nyelvű `Ask CasinoOps` Digital Twin kérdésmező
+- [x] 30 perces gyors-előrejelzés és strukturált Casino Brain válaszkártya
 - [x] mitigation összehasonlító kártyák
 - [x] recovery progress
 - [x] incidens- és recovery timeline

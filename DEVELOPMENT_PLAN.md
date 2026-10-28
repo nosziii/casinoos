@@ -172,7 +172,7 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
    - hypothesis, evidence count, verification checks, confidence és `VERIFIED` státusz nagy kártyán;
    - a részletes `PLAN / TOOL CALL / OBSERVATION` trace másodlagos `View technical trace` interakció mögött;
    - nagy Infrastructure Agent progress kártya és Casino Brain „wow” állapot.
-6. **Természetes nyelvű Digital Twin kérdés UI**
+6. **Természetes nyelvű Digital Twin kérdés UI — elkészült**
    - `Ask CasinoOps…` input;
    - előre definiált `Predict +30 min` gyorsművelet;
    - a háttérben változatlanul a determinisztikus `predictOutage` és `compareMitigations` fusson.
@@ -203,6 +203,10 @@ A zsűritag README nélkül, a nyitóképernyőről indulva végig tudja futtatn
 ### Elkészült demo-fejlesztés: Investigation summary
 
 Az Investigation panel most a legutóbbi agentfutásból külön, judge-facing összefoglalót képez: kiemeli a hipotézist, az egyedi evidence-ek számát, a verifier ellenőrzéseinek állását, az evidence-adjusted confidence értéket és a végső státuszt. A részletes audit trace megmaradt, de alapértelmezetten rejtett, és a `View technical trace` gombbal nyitható meg. Az összefoglaló-képzés külön, újrafelhasználható és automatikusan tesztelt frontend modul.
+
+### Elkészült demo-fejlesztés: Ask the Digital Twin
+
+A What-if panel a meglévő, korlátozott `/casino-brain/query` végpontot közvetlenül elérhetővé teszi. Az operátor természetes nyelvű kérdést írhat be vagy használhatja a `Predict +30 min` gyorsműveletet. A strukturált planner továbbra is csak a read-only `predictOutage` és `compareMitigations` toolok közül választhat; a dashboard a validált választ, az eredménykártyákat és az operátori jóváhagyás szükségességét együtt jeleníti meg.
 
 ## Későbbre halasztott elemek
 

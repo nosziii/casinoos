@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import type { MitigationAction, MitigationComparison, MitigationSimulation, SimulationPrediction } from "@casino-ops/shared";
+import type { CasinoBrainQueryResponse, MitigationAction, MitigationComparison, MitigationSimulation, SimulationPrediction } from "@casino-ops/shared";
 import { ref } from "vue";
 
-defineProps<{ enabled: boolean; busy: boolean; prediction?: SimulationPrediction; comparison?: MitigationComparison; simulation: MitigationSimulation | null }>();
-const emit = defineEmits<{ predict: [minutes: number]; compare: [minutes: number]; simulate: [action: MitigationAction] }>();
+defineProps<{ enabled: boolean; busy: boolean; prediction?: SimulationPrediction; comparison?: MitigationComparison; queryResponse?: CasinoBrainQueryResponse; simulation: MitigationSimulation | null }>();
+const emit = defineEmits<{ ask: [query: string]; predict: [minutes: number]; compare: [minutes: number]; simulate: [action: MitigationAction] }>();
 const duration = ref(30);
+const question = ref("What happens if we do nothing for 30 minutes?");
 const euros = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
 const title = (value: string) => value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+const ask = () => { const value = question.value.trim(); if (value.length >= 3) emit("ask", value); };
 </script>
 
 <template>
@@ -17,6 +19,15 @@ const title = (value: string) => value.replaceAll("_", " ").replace(/\b\w/g, (le
     </header>
     <div v-if="!enabled" class="what-if-locked">Run the auth cascade and wait for Casino Brain correlation to unlock predictive simulation.</div>
     <template v-else>
+      <form class="brain-query" @submit.prevent="ask">
+        <label for="casino-brain-question">Ask the Digital Twin</label>
+        <div><input id="casino-brain-question" v-model="question" type="text" minlength="3" maxlength="500" placeholder="Ask CasinoOps…" :disabled="busy"><button class="button" type="submit" :disabled="busy || question.trim().length < 3">Ask CasinoOps</button></div>
+        <button type="button" class="query-preset" :disabled="busy" @click="question = 'What happens if we do nothing for 30 minutes?'; ask()">Predict +30 min</button>
+      </form>
+      <div v-if="queryResponse" class="brain-answer">
+        <div><small>CASINO BRAIN · {{ queryResponse.toolName === 'predictOutage' ? 'IMPACT FORECAST' : 'RECOVERY OPTIONS' }}</small><strong>{{ queryResponse.answer }}</strong></div>
+        <span v-if="queryResponse.requiresOperatorApproval">OPERATOR APPROVAL REQUIRED</span><span v-else>READ-ONLY ANALYSIS</span>
+      </div>
       <div class="simulation-actions"><button class="button" :disabled="busy" @click="emit('predict', duration)">Run forecast</button><button class="button button--ghost" :disabled="busy || !prediction" @click="emit('compare', duration)">Compare mitigations</button></div>
       <div v-if="prediction" class="forecast-grid">
         <div><small>AFFECTED PLAYERS</small><strong>{{ prediction.affectedPlayers }}</strong></div>
