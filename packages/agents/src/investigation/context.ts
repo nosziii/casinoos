@@ -1,7 +1,7 @@
 import {
   investigationContextSchema,
   type InvestigationContext,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 
 export interface CreateInvestigationInput {
   id: string;

@@ -6,7 +6,7 @@ import {
   type RootCauseClaim,
   type VerificationCheck,
   type VerificationResult,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 
 const WEIGHTS = { service_degradation: 0.35, dependency_match: 0.3, temporal_ordering: 0.2, evidence_minimum: 0.15 } as const;
 

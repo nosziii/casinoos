@@ -1,4 +1,4 @@
-import type { AgentAnalysis, CasinoEvent, CasinoIncident, MitigationAction, MitigationComparison, SimulationPrediction } from "@casino-os/shared";
+import type { AgentAnalysis, AgentTraceEvent, CasinoEvent, CasinoIncident, MitigationAction, MitigationComparison, SimulationPrediction } from "@casino-ops/shared";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import type { SimulationState, SocketMessage } from "../types";
@@ -9,6 +9,7 @@ export const useCasinoStore = defineStore("casino", () => {
   const state = ref<SimulationState>(emptyState);
   const events = ref<CasinoEvent[]>([]);
   const agentReports = ref<AgentAnalysis[]>([]);
+  const agentTraces = ref<AgentTraceEvent[]>([]);
   const incidents = ref<CasinoIncident[]>([]);
   const prediction = ref<SimulationPrediction>();
   const mitigations = ref<MitigationComparison>();
@@ -18,16 +19,17 @@ export const useCasinoStore = defineStore("casino", () => {
   const latestIncident = computed(() => incidents.value.at(-1));
 
   async function initialize(): Promise<void> {
-    const [stateResponse, eventResponse, agentResponse, incidentResponse] = await Promise.all([
-      fetch("/api/simulation/state"), fetch("/api/events"), fetch("/api/agent-reports"), fetch("/api/incidents"),
+    const [stateResponse, eventResponse, agentResponse, incidentResponse, traceResponse] = await Promise.all([
+      fetch("/api/simulation/state"), fetch("/api/events"), fetch("/api/agent-reports"), fetch("/api/incidents"), fetch("/api/agent-traces"),
     ]);
-    if (![stateResponse, eventResponse, agentResponse, incidentResponse].every((response) => response.ok)) {
-      throw new Error("CasinoOS API is unavailable");
+    if (![stateResponse, eventResponse, agentResponse, incidentResponse, traceResponse].every((response) => response.ok)) {
+      throw new Error("CasinoOps API is unavailable");
     }
     state.value = await stateResponse.json() as SimulationState;
     events.value = await eventResponse.json() as CasinoEvent[];
     agentReports.value = await agentResponse.json() as AgentAnalysis[];
     incidents.value = await incidentResponse.json() as CasinoIncident[];
+    agentTraces.value = await traceResponse.json() as AgentTraceEvent[];
     connect();
   }
 
@@ -46,6 +48,8 @@ export const useCasinoStore = defineStore("casino", () => {
       void refreshState();
     } else if (message.type === "agent.analysis") {
       agentReports.value = [...agentReports.value.slice(-29), message.payload];
+    } else if (message.type === "agent.trace") {
+      agentTraces.value = [...agentTraces.value.slice(-99), message.payload];
     } else if (message.type === "incident.detected") {
       incidents.value = [...incidents.value.slice(-9), message.payload];
     } else if (message.type === "simulation.prediction") {
@@ -63,6 +67,7 @@ export const useCasinoStore = defineStore("casino", () => {
   async function runScenario(): Promise<void> {
     events.value = [];
     agentReports.value = [];
+    agentTraces.value = [];
     incidents.value = [];
     prediction.value = undefined;
     mitigations.value = undefined;
@@ -74,6 +79,7 @@ export const useCasinoStore = defineStore("casino", () => {
     await post("/api/simulation/reset");
     events.value = [];
     agentReports.value = [];
+    agentTraces.value = [];
     incidents.value = [];
     prediction.value = undefined;
     mitigations.value = undefined;
@@ -101,5 +107,5 @@ export const useCasinoStore = defineStore("casino", () => {
     return response.json() as Promise<T>;
   }
 
-  return { state, events, agentReports, incidents, prediction, mitigations, connected, latestIncident, initialize, runScenario, reset, predict, compareMitigations, simulateMitigation };
+  return { state, events, agentReports, agentTraces, incidents, prediction, mitigations, connected, latestIncident, initialize, runScenario, reset, predict, compareMitigations, simulateMitigation };
 });

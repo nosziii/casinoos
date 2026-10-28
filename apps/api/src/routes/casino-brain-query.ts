@@ -1,4 +1,4 @@
-import { casinoBrainQueryRequestSchema } from "@casino-os/shared";
+import { casinoBrainQueryRequestSchema } from "@casino-ops/shared";
 import type { FastifyInstance } from "fastify";
 import type { CasinoRuntime } from "../services/casino-runtime.js";
 

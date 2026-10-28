@@ -1,5 +1,5 @@
-import type { CasinoIncident } from "@casino-os/shared";
-import { compareMitigations, predictOutage } from "@casino-os/simulator";
+import type { CasinoIncident } from "@casino-ops/shared";
+import { compareMitigations, predictOutage } from "@casino-ops/simulator";
 import { describe, expect, it } from "vitest";
 import { CasinoBrainQueryService } from "./casino-brain-query.js";
 import { MockAIClient } from "./clients/mock-client.js";

@@ -1,4 +1,4 @@
-import type { AgentAnalysis, CasinoEvent, CasinoIncident, MitigationComparison, MitigationSimulation, ServiceState, SimulationPrediction } from "@casino-os/shared";
+import type { AgentAnalysis, AgentTraceEvent, CasinoEvent, CasinoIncident, MitigationComparison, MitigationSimulation, ServiceState, SimulationPrediction } from "@casino-ops/shared";
 
 export interface SimulationState {
   running: boolean;
@@ -12,6 +12,7 @@ export interface SimulationState {
 export type SocketMessage =
   | { type: "casino.event"; payload: CasinoEvent }
   | { type: "agent.analysis"; payload: AgentAnalysis }
+  | { type: "agent.trace"; payload: AgentTraceEvent }
   | { type: "incident.detected"; payload: CasinoIncident }
   | { type: "simulation.prediction"; payload: SimulationPrediction }
   | { type: "simulation.mitigation"; payload: MitigationComparison }

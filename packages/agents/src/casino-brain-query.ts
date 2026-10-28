@@ -4,7 +4,7 @@ import {
   simulationPredictionSchema,
   type CasinoBrainQueryResponse,
   type CasinoIncident,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 import { z } from "zod";
 import type { AIClient } from "./clients/ai-client.js";
 import { completeWithRetry } from "./structured-completion.js";
@@ -16,7 +16,7 @@ const queryPlanSchema = z.object({
   rationale: z.string().min(1).max(500),
 }).strict();
 
-const SYSTEM_PROMPT = `You plan one read-only CasinoOS decision-support query for a verified synthetic incident.
+const SYSTEM_PROMPT = `You plan one read-only CasinoOps decision-support query for a verified synthetic incident.
 Return only JSON: {"toolName":"predictOutage"|"compareMitigations","durationMinutes":1..120,"rationale":"..."}.
 Use predictOutage for impact, forecast, player, transaction or financial questions. Use compareMitigations for
 strategy, recovery, recommendation or mitigation comparisons. Extract an explicit duration; otherwise use 30.

@@ -1,4 +1,4 @@
-# CasinoOS – fejlesztési terv
+# CasinoOps – fejlesztési terv
 
 Utolsó frissítés: **2026-10-28**
 
@@ -66,10 +66,10 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 ### 6. Auditálható trace és UI
 
-- [ ] agent trace WebSocket esemény
-- [ ] terv, checklist, tool call, megfigyelés és evidence megjelenítése
-- [ ] verifier eredmény és verified badge
-- [ ] belső chain-of-thought helyett auditálható operatív trace
+- [x] agent trace WebSocket esemény
+- [x] terv, checklist, tool call, megfigyelés és evidence megjelenítése
+- [x] verifier eredmény és verified badge
+- [x] belső chain-of-thought helyett auditálható operatív trace
 
 ### 7. Stabilizálás
 
@@ -81,7 +81,7 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 ## Aktuális mérföldkő
 
-**AI readiness és live validáció**
+**Auditálható trace és UI**
 
 Első implementáció: elkészült a külön futtatható Infrastructure Agent smoke suite. A normál alkalmazás mock módban marad, a külön smoke test pedig explicit módon használhatja a Gitből kizárt `.env` Baseten-konfigurációját.
 
@@ -129,7 +129,15 @@ A `POST /casino-brain/query` végpont csak aktív, verifikált incidens mellett 
 
 A mitigation eredmény mindig `requiresOperatorApproval: true`, és az agent registry nem tartalmaz végrehajtási toolt. A Meta live smoke helyesen választotta a 45 perces prediction és 30 perces mitigation comparison útvonalat.
 
-Következő konkrét lépés: auditálható agent trace WebSocket eseményekkel és dashboard megjelenítéssel.
+### Auditálható agent trace eredmény
+
+Az Infrastructure Agent minden vizsgálatához strukturált, Zod-validált operatív trace készül. A `plan`, `tool_call`, `observation`, `verification` és `report` lépések REST-en és WebSocketen is elérhetők, a dashboard pedig megjeleníti a checklistet, az evidence ID-kat, a verifier ellenőrzéseit és a `VERIFIED` állapotot.
+
+A trace kizárólag auditálható műveleti adatot tartalmaz: toolnevet, validált inputot, evidence-hivatkozást, ellenőrzési eredményt és összefoglalót. Belső modellgondolatmenet vagy nyers, validálatlan érzékeny payload nem kerül bele. Az in-memory előzmény 500 elemre korlátozott.
+
+Az ütemterv 42 tételéből 36 elkészült (**86%**); a stabilizálási fázisból és az egységes provider-metrikákból összesen 6 tétel van hátra.
+
+Következő konkrét lépés: stabilizálás API-integrációs tesztekkel és CI pipeline-nal.
 
 ## Későbbre halasztott elemek
 

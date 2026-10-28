@@ -1,8 +1,8 @@
-import { riskReportSchema, type CasinoEvent, type RiskReport } from "@casino-os/shared";
+import { riskReportSchema, type CasinoEvent, type RiskReport } from "@casino-ops/shared";
 import type { AIClient } from "./clients/ai-client.js";
 import { completeWithRetry } from "./structured-completion.js";
 
-const SYSTEM_PROMPT = `You are the CasinoOS Risk Agent. Analyze only the supplied synthetic events.
+const SYSTEM_PROMPT = `You are the CasinoOps Risk Agent. Analyze only the supplied synthetic events.
 Assess financial exposure, compliance impact, critical dependencies and escalation need.
 Return strict JSON with riskLevel, financialExposure, criticalSystems, recommendedEscalation and summary.`;
 

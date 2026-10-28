@@ -1,12 +1,12 @@
-# CasinoOS – projektstátusz
+# CasinoOps – projektstátusz
 
 Utolsó frissítés: **2026-10-28**
 
-Ez a dokumentum a CasinoOS aktuális megvalósítási állapotának elsődleges nyilvántartása. Minden érdemi új funkció, architekturális változás vagy elkészült mérföldkő után frissítendő.
+Ez a dokumentum a CasinoOps aktuális megvalósítási állapotának elsődleges nyilvántartása. Minden érdemi új funkció, architekturális változás vagy elkészült mérföldkő után frissítendő.
 
 ## Rövid összefoglaló
 
-A CasinoOS jelenleg egy lokálisan és Docker Compose-zal futtatható, determinisztikus casino operations digital twin prototípus. A rendszer képes:
+A CasinoOps jelenleg egy lokálisan és Docker Compose-zal futtatható, determinisztikus casino operations digital twin prototípus. A rendszer képes:
 
 - authentication cascade incidenst generálni;
 - az eseményeket valós időben továbbítani;
@@ -16,6 +16,9 @@ A CasinoOS jelenleg egy lokálisan és Docker Compose-zal futtatható, determini
 - öt mitigation stratégiát összehasonlítani;
 - a kiválasztott stratégiát kizárólag a digitális ikerben lefuttatni;
 - a teljes incidens- és helyreállítási folyamatot dashboardon megjeleníteni.
+- az Infrastructure Agent teljes operatív vizsgálati trace-ét auditálható módon megjeleníteni.
+
+A termék új neve **CasinoOps — AI-Powered Casino Operations Digital Twin**. A munkakönyvtár és a GitHub repository technikai neve kompatibilitási okból továbbra is `casinoos`.
 
 Az alapértelmezett `AI_MODE=mock`, ezért a teljes demó API-kredit felhasználása nélkül futtatható.
 
@@ -115,7 +118,7 @@ Agentek:
 - [x] Risk Agent
 - [x] Casino Brain
 
-Megjegyzés: a teljes agentlánc mock módban ellenőrzött. A Baseten- és Meta-kliensek implementálva vannak, de valódi API-kulcsokkal még nem történt end-to-end validáció.
+Megjegyzés: a teljes agentlánc mock módban ellenőrzött. A Baseten Infrastructure Agent és a Meta Casino Brain külön live smoke suite-ja valódi API-kulcsokkal is sikeresen lefutott; a normál fejlesztői és Docker indítás továbbra is költségmentes mock módot használ.
 
 ### 5. Casino Brain korreláció
 
@@ -227,6 +230,17 @@ Scenario status: recovered
 - [x] `no-new-privileges`
 - [x] konfigurálható portok
 
+### 11. Auditálható agent trace
+
+- [x] közös, Zod-validált trace séma
+- [x] `plan`, `tool_call`, `observation`, `verification` és `report` lépések
+- [x] bounded in-memory trace history
+- [x] `GET /agent-traces` REST végpont
+- [x] `agent.trace` WebSocket esemény
+- [x] dashboard checklist-, evidence- és verifier-megjelenítés
+- [x] verified badge
+- [x] érzékeny részletek redakciója és belső modellgondolatmenet kizárása
+
 Aktuális címek:
 
 ```text
@@ -251,6 +265,7 @@ WebSocket: ws://127.0.0.1:3000/ws
 | POST | `/casino-brain/query` | kész | természetes nyelvű read-only prediction vagy mitigation comparison |
 | GET | `/events` | kész | generált események |
 | GET | `/agent-reports` | kész | specialist riportok |
+| GET | `/agent-traces` | kész | auditálható Infrastructure Agent vizsgálati lépések |
 | GET | `/incidents` | kész | Casino Brain incidensek |
 | WS | `/ws` | kész | valós idejű eseménycsatorna |
 
@@ -259,6 +274,7 @@ WebSocket message típusok:
 ```text
 casino.event
 agent.analysis
+agent.trace
 incident.detected
 simulation.state
 simulation.prediction
@@ -281,10 +297,11 @@ simulation.mitigation
 - [x] clickjacking- és MIME sniffing-védelem
 - [x] kamera, mikrofon és geolocation tiltása
 - [x] localhost-only Docker port binding
+- [x] audit trace redakció és chain-of-thought kizárása
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **34 célzott automatikus teszt** található:
+Jelenleg **35 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -319,6 +336,7 @@ Jelenleg **34 célzott automatikus teszt** található:
 - természetes nyelvű prediction kérdés routingja;
 - természetes nyelvű mitigation kérdés routingja és approval flag;
 - aktív verifikált incidens nélküli query elutasítása.
+- audit trace sorrendje és belső rationale kizárása.
 
 Rendszeresen futtatott ellenőrzések:
 
@@ -372,6 +390,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 - [x] agent oldali mitigation-végrehajtás tiltása
 - [x] természetes nyelvű Casino Brain query API
 - [x] Meta live query planner validáció
+- [x] auditálható agent trace REST/WebSocket csatornával és dashboard UI-val
 - [ ] provider response-kompatibilitás és token usage ellenőrzése
 - [ ] API integration tesztek Fastify injectionnel
 - [ ] Vue komponens- és böngészős end-to-end tesztek

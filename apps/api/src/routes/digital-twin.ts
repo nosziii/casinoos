@@ -1,5 +1,5 @@
-import { mitigationActionSchema } from "@casino-os/shared";
-import { compareMitigations, predictOutage } from "@casino-os/simulator";
+import { mitigationActionSchema } from "@casino-ops/shared";
+import { compareMitigations, predictOutage } from "@casino-ops/simulator";
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 import type { CasinoRuntime } from "../services/casino-runtime.js";

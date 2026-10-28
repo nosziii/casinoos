@@ -1,4 +1,4 @@
-import type { CasinoEvent, ServiceState } from "@casino-os/shared";
+import type { CasinoEvent, ServiceState } from "@casino-ops/shared";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import { createReadOnlyAgentTools } from "./read-only-tools.js";

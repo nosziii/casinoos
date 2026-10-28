@@ -1,4 +1,4 @@
-import type { CasinoEvent, ServiceState } from "@casino-os/shared";
+import type { CasinoEvent, ServiceState } from "@casino-ops/shared";
 import { describe, expect, it } from "vitest";
 import { createInvestigationContext } from "./context.js";
 import { EvidenceStore } from "./evidence-store.js";

@@ -1,8 +1,8 @@
-import { infrastructureReportSchema, type CasinoEvent, type InfrastructureReport } from "@casino-os/shared";
+import { infrastructureReportSchema, type CasinoEvent, type InfrastructureReport } from "@casino-ops/shared";
 import type { AIClient } from "./clients/ai-client.js";
 import { completeWithRetry } from "./structured-completion.js";
 
-const SYSTEM_PROMPT = `You are the CasinoOS Infrastructure Agent.
+const SYSTEM_PROMPT = `You are the CasinoOps Infrastructure Agent.
 Analyze only the supplied synthetic operational events. Correlate dependency, latency and timeout failures.
 Return a JSON object matching this exact shape: incidentDetected boolean, confidence number 0..1,
 summary string, suspectedRootCauses array of {service, confidence}, affectedServices string array,

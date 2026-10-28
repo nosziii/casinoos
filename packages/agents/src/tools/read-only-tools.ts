@@ -4,7 +4,7 @@ import {
   serviceStateSchema,
   type CasinoEvent,
   type ServiceState,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 import { z } from "zod";
 import { AgentToolRegistry, type AgentToolRegistryOptions } from "./registry.js";
 

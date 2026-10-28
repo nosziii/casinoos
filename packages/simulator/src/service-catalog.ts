@@ -1,4 +1,4 @@
-import type { ServiceState } from "@casino-os/shared";
+import type { ServiceState } from "@casino-ops/shared";
 
 export function createHealthyServices(): Map<string, ServiceState> {
   const services: ServiceState[] = [

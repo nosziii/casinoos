@@ -1,4 +1,4 @@
-import type { CasinoDomain, CasinoEvent } from "@casino-os/shared";
+import type { CasinoDomain, CasinoEvent } from "@casino-ops/shared";
 
 export type EventHandler = (event: CasinoEvent) => void | Promise<void>;
 export type Unsubscribe = () => void;

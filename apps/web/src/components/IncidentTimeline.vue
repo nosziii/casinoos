@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CasinoEvent } from "@casino-os/shared";
+import type { CasinoEvent } from "@casino-ops/shared";
 import { computed } from "vue";
 
 const props = defineProps<{ events: CasinoEvent[] }>();

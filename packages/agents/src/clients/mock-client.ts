@@ -3,7 +3,7 @@ import {
   infrastructureReportSchema,
   operationsReportSchema,
   riskReportSchema,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 import type { AIClient, CompletionRequest } from "./ai-client.js";
 
 interface MockEvent {

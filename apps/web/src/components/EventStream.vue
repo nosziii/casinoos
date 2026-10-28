@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CasinoEvent } from "@casino-os/shared";
+import type { CasinoEvent } from "@casino-ops/shared";
 defineProps<{ events: CasinoEvent[] }>();
 const time = (timestamp: string) => new Date(timestamp).toLocaleTimeString("en-GB", { hour12: false });
 </script>

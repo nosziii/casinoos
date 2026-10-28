@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CasinoIncident } from "@casino-os/shared";
+import type { CasinoIncident } from "@casino-ops/shared";
 defineProps<{ incident?: CasinoIncident }>();
 const title = (id: string) => id.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 </script>

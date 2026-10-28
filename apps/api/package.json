@@ -1,5 +1,5 @@
 {
-  "name": "@casino-os/api",
+  "name": "@casino-ops/api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -12,10 +12,10 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@casino-os/agents": "workspace:*",
-    "@casino-os/events": "workspace:*",
-    "@casino-os/shared": "workspace:*",
-    "@casino-os/simulator": "workspace:*",
+    "@casino-ops/agents": "workspace:*",
+    "@casino-ops/events": "workspace:*",
+    "@casino-ops/shared": "workspace:*",
+    "@casino-ops/simulator": "workspace:*",
     "@fastify/websocket": "^11.2.0",
     "dotenv": "^17.2.3",
     "fastify": "^5.6.2",

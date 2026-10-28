@@ -3,7 +3,7 @@ import {
   investigationEvidenceSchema,
   type EvidenceProvenance,
   type InvestigationEvidence,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 import { redactSensitiveValues } from "../tools/redaction.js";
 
 type EvidenceDraft = InvestigationEvidence extends infer T

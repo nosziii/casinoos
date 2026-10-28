@@ -26,16 +26,16 @@ importers:
 
   apps/api:
     dependencies:
-      '@casino-os/agents':
+      '@casino-ops/agents':
         specifier: workspace:*
         version: link:../../packages/agents
-      '@casino-os/events':
+      '@casino-ops/events':
         specifier: workspace:*
         version: link:../../packages/events
-      '@casino-os/shared':
+      '@casino-ops/shared':
         specifier: workspace:*
         version: link:../../packages/shared
-      '@casino-os/simulator':
+      '@casino-ops/simulator':
         specifier: workspace:*
         version: link:../../packages/simulator
       '@fastify/websocket':
@@ -63,7 +63,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@casino-os/shared':
+      '@casino-ops/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@vitejs/plugin-vue':
@@ -94,10 +94,10 @@ importers:
 
   packages/agents:
     dependencies:
-      '@casino-os/shared':
+      '@casino-ops/shared':
         specifier: workspace:*
         version: link:../shared
-      '@casino-os/simulator':
+      '@casino-ops/simulator':
         specifier: workspace:*
         version: link:../simulator
       openai:
@@ -113,7 +113,7 @@ importers:
 
   packages/events:
     dependencies:
-      '@casino-os/shared':
+      '@casino-ops/shared':
         specifier: workspace:*
         version: link:../shared
     devDependencies:
@@ -133,10 +133,10 @@ importers:
 
   packages/simulator:
     dependencies:
-      '@casino-os/events':
+      '@casino-ops/events':
         specifier: workspace:*
         version: link:../events
-      '@casino-os/shared':
+      '@casino-ops/shared':
         specifier: workspace:*
         version: link:../shared
     devDependencies:

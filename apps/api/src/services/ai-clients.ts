@@ -1,4 +1,4 @@
-import { BasetenClient, MetaClient, MockAIClient, RateLimitedAIClient, type AIClient, type ModelCallLog } from "@casino-os/agents";
+import { BasetenClient, MetaClient, MockAIClient, RateLimitedAIClient, type AIClient, type ModelCallLog } from "@casino-ops/agents";
 import type { AppConfig } from "../config/env.js";
 
 export interface AgentClients {

@@ -1,4 +1,4 @@
-import { simulationPredictionSchema, type SimulationPrediction } from "@casino-os/shared";
+import { simulationPredictionSchema, type SimulationPrediction } from "@casino-ops/shared";
 
 const PLAYER_ANCHORS = [
   { minute: 0, players: 37 },

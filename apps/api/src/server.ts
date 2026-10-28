@@ -19,6 +19,7 @@ const runtime = new CasinoRuntime(config, {
   onEvent: (event) => broadcast("casino.event", event),
   onAgentAnalysis: (analysis) => broadcast("agent.analysis", analysis),
   onIncident: (incident) => broadcast("incident.detected", incident),
+  onAgentTrace: (trace) => broadcast("agent.trace", trace),
 });
 
 app.get("/health", async () => ({ status: "ok", aiMode: config.AI_MODE }));
@@ -26,6 +27,7 @@ app.get("/simulation/state", async () => runtime.simulator.getState());
 app.get("/events", async () => runtime.simulator.getEvents());
 app.get("/agent-reports", async () => runtime.agentReports);
 app.get("/incidents", async () => runtime.incidents);
+app.get("/agent-traces", async () => runtime.agentTraces);
 registerDigitalTwinRoutes(app, runtime, broadcast);
 registerCasinoBrainQueryRoute(app, runtime);
 app.post("/simulation/start", async () => {

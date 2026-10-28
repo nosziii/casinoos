@@ -1,5 +1,5 @@
 {
-  "name": "@casino-os/simulator",
+  "name": "@casino-ops/simulator",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,8 +17,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@casino-os/events": "workspace:*",
-    "@casino-os/shared": "workspace:*"
+    "@casino-ops/events": "workspace:*",
+    "@casino-ops/shared": "workspace:*"
   },
   "devDependencies": { "vitest": "^4.0.3" }
 }

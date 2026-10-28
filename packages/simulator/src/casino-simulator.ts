@@ -1,5 +1,5 @@
-import { EventBus } from "@casino-os/events";
-import type { CasinoEvent, MitigationAction, MitigationSimulation, ServiceState } from "@casino-os/shared";
+import { EventBus } from "@casino-ops/events";
+import type { CasinoEvent, MitigationAction, MitigationSimulation, ServiceState } from "@casino-ops/shared";
 import { applyRecoveryStep } from "./mitigation-recovery.js";
 import { createHealthyServices } from "./service-catalog.js";
 import { applyAuthCascadePhase, AUTH_CASCADE_SCENARIO, createAuthCascadeEvents } from "./scenarios/auth-cascade-failure.js";

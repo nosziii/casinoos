@@ -1,5 +1,5 @@
 {
-  "name": "@casino-os/agents",
+  "name": "@casino-ops/agents",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -18,8 +18,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@casino-os/shared": "workspace:*",
-    "@casino-os/simulator": "workspace:*",
+    "@casino-ops/shared": "workspace:*",
+    "@casino-ops/simulator": "workspace:*",
     "openai": "^6.7.0",
     "zod": "^4.1.12"
   },

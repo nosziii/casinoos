@@ -1,8 +1,8 @@
-import { operationsReportSchema, type CasinoEvent, type OperationsReport } from "@casino-os/shared";
+import { operationsReportSchema, type CasinoEvent, type OperationsReport } from "@casino-ops/shared";
 import type { AIClient } from "./clients/ai-client.js";
 import { completeWithRetry } from "./structured-completion.js";
 
-const SYSTEM_PROMPT = `You are the CasinoOS Operations Agent. Analyze only the supplied synthetic events.
+const SYSTEM_PROMPT = `You are the CasinoOps Operations Agent. Analyze only the supplied synthetic events.
 Estimate player impact, failed transactions, blocked value, failed registrations and support load.
 Return strict JSON with incidentDetected, affectedPlayers, failedTransactions, estimatedBlockedValue,
 supportLoadIncrease and summary. Never invent infrastructure actions.`;

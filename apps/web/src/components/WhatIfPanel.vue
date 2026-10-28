@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MitigationAction, MitigationComparison, MitigationSimulation, SimulationPrediction } from "@casino-os/shared";
+import type { MitigationAction, MitigationComparison, MitigationSimulation, SimulationPrediction } from "@casino-ops/shared";
 import { ref } from "vue";
 
 defineProps<{ enabled: boolean; busy: boolean; prediction?: SimulationPrediction; comparison?: MitigationComparison; simulation: MitigationSimulation | null }>();

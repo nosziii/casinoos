@@ -4,7 +4,8 @@ import {
   type InfrastructureReport,
   type InvestigationContext,
   type VerificationResult,
-} from "@casino-os/shared";
+  type AgentTraceEvent,
+} from "@casino-ops/shared";
 import type { AIClient } from "../clients/ai-client.js";
 import type { AgentToolRegistry } from "../tools/registry.js";
 import { completeWithRetry } from "../structured-completion.js";
@@ -14,6 +15,7 @@ import { createInvestigationContext } from "./context.js";
 import { mapToolResultToEvidence } from "./evidence-mapper.js";
 import { EvidenceStore } from "./evidence-store.js";
 import { verifyRootCause } from "./verifier.js";
+import { AgentTraceEmitter } from "./trace.js";
 
 const ACTION_PROMPT = `You investigate a synthetic casino incident using only the allow-listed read-only tools.
 Return exactly one JSON action. Use {"action":"call_tool","rationale":"...","toolName":"...","input":{...}}
@@ -30,6 +32,7 @@ export interface InvestigationLoopOptions {
   maxToolCalls?: number;
   maxDurationMs?: number;
   now?: () => string;
+  onTrace?: (event: AgentTraceEvent) => void;
 }
 
 export interface InfrastructureInvestigationResult {
@@ -72,6 +75,11 @@ export class InfrastructureInvestigationLoop {
   async #runLoop(report: InfrastructureReport, rootCause: { service: string; confidence: number }, maxTurns: number, maxToolCalls: number, signal: AbortSignal): Promise<InfrastructureInvestigationResult> {
     const now = this.options.now ?? (() => new Date().toISOString());
     let context = createInvestigationContext({ id: `inv-${eventsKey(report)}`, rootCauseService: rootCause.service, statement: report.summary, timestamp: now() });
+    const trace = new AgentTraceEmitter(context.id, now, this.options.onTrace);
+    trace.emit("plan", `Investigate ${rootCause.service} as the suspected root service.`, "info", [], {
+      affectedServices: report.affectedServices,
+      checklist: context.checklist.map(({ description }) => description),
+    });
     const store = new EvidenceStore();
     let termination: InfrastructureInvestigationResult["termination"] = "turn_limit";
     for (let turn = 1; turn <= maxTurns; turn += 1) {
@@ -85,18 +93,23 @@ export class InfrastructureInvestigationLoop {
       context = updateContext(context, { turn, status: "investigating", updatedAt: now() });
       if (action.action === "finish") { termination = "finished"; break; }
       if (context.toolCalls.length >= maxToolCalls) { termination = "tool_limit"; break; }
+      trace.emit("tool_call", `Call read-only tool ${action.toolName}.`, "info", [], { toolName: action.toolName });
       try {
         const result = await this.tools.execute(action.toolName, action.input);
         const evidence = mapToolResultToEvidence(result, { toolName: action.toolName, toolInput: action.input, capturedAt: now() }, store);
         context = recordToolCall(context, turn, action.toolName, action.input, "succeeded", evidence.map(({ id }) => id), now());
         context = updateContext(context, { evidence: store.list() });
+        trace.emit("observation", `${action.toolName} returned ${evidence.length} evidence item(s).`, "success", evidence.map(({ id }) => id), { toolName: action.toolName, input: action.input });
       } catch (error) {
         const message = error instanceof Error ? error.message : "Unknown tool execution error";
         context = recordToolCall(context, turn, action.toolName, action.input, "failed", [], now(), message);
+        trace.emit("observation", `${action.toolName} was rejected by tool validation.`, "error", [], { toolName: action.toolName });
       }
     }
     const verification = verifyRootCause({ serviceId: rootCause.service, affectedServiceIds: report.affectedServices, modelConfidence: rootCause.confidence }, store.list());
+    trace.emit("verification", `Verification completed with status ${verification.status}.`, verification.status === "verified" ? "success" : "error", store.list().map(({ id }) => id), { verificationScore: verification.verificationScore, finalConfidence: verification.finalConfidence, checks: verification.checks });
     context = finalizeContext(context, verification, now());
+    trace.emit("report", `Infrastructure report finalized with ${termination} termination.`, verification.status === "verified" ? "success" : "error", [], { termination, confidence: verification.finalConfidence });
     return { report: { ...report, confidence: verification.finalConfidence }, context, verification, termination };
   }
 

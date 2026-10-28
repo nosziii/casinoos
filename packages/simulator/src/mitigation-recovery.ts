@@ -1,4 +1,4 @@
-import type { EventSeverity, MitigationAction, MitigationSimulation, ServiceState } from "@casino-os/shared";
+import type { EventSeverity, MitigationAction, MitigationSimulation, ServiceState } from "@casino-ops/shared";
 
 export interface RecoveryStep {
   type: string;

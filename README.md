@@ -1,4 +1,4 @@
-# CasinoOS
+# CasinoOps — AI-Powered Casino Operations Digital Twin
 
 Az aktuális megvalósítási állapot és roadmap: [PROJECT_STATUS.md](PROJECT_STATUS.md)
 
@@ -44,7 +44,7 @@ Start the deterministic scenario:
 curl -X POST http://127.0.0.1:3000/simulation/scenario/auth-cascade-failure
 ```
 
-Inspect generated events at `GET /events`, specialist output at `GET /agent-reports`, and correlated Casino Brain output at `GET /incidents`. WebSocket clients can connect to `ws://127.0.0.1:3000/ws`.
+Inspect generated events at `GET /events`, specialist output at `GET /agent-reports`, auditable investigation steps at `GET /agent-traces`, and correlated Casino Brain output at `GET /incidents`. WebSocket clients can connect to `ws://127.0.0.1:3000/ws`.
 
 After Casino Brain detects an incident, run deterministic digital-twin analysis:
 
@@ -143,6 +143,10 @@ PLAN → TOOL CALL → OBSERVE → VERIFY → REPORT
 The investigation is limited to four model turns, six tool calls and 25 seconds by default. AI requests receive a real abort signal when the total deadline expires. Failed tool validation becomes an auditable failed observation that the model may correct; it never bypasses the strict tool schema. The enforced evidence policy reads root service state, direct dependents and recent events before finishing.
 
 Run the live Baseten loop check independently with `pnpm test:ai:investigation`.
+
+## Auditable agent trace
+
+Each Infrastructure Agent investigation publishes validated `plan`, `tool_call`, `observation`, `verification`, and `report` events through REST and WebSocket. The dashboard shows the investigation checklist, evidence IDs, verifier checks, and verified status. The trace intentionally contains operational facts only—never hidden model reasoning or raw secrets—and its in-memory history is bounded.
 
 ## Evidence-aware Casino Brain
 

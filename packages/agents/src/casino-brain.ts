@@ -7,7 +7,7 @@ import {
   type RiskReport,
   type ServiceState,
   type VerificationResult,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 import type { AIClient } from "./clients/ai-client.js";
 import { completeWithRetry } from "./structured-completion.js";
 

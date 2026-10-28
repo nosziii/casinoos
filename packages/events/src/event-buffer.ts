@@ -1,4 +1,4 @@
-import type { CasinoEvent } from "@casino-os/shared";
+import type { CasinoEvent } from "@casino-ops/shared";
 
 export interface EventBufferOptions {
   maxSize: number;

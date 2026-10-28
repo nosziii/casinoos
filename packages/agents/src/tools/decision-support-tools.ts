@@ -3,7 +3,7 @@ import {
   simulationPredictionSchema,
   type MitigationComparison,
   type SimulationPrediction,
-} from "@casino-os/shared";
+} from "@casino-ops/shared";
 import { z } from "zod";
 import { AgentToolRegistry, type AgentToolRegistryOptions } from "./registry.js";
 

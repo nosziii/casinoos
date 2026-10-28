@@ -12,5 +12,5 @@ WORKDIR /app
 COPY --from=build --chown=node:node /app /app
 USER node
 EXPOSE 3000
-CMD ["pnpm", "--filter", "@casino-os/api", "start"]
+CMD ["pnpm", "--filter", "@casino-ops/api", "start"]
 

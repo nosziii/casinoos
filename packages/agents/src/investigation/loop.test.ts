@@ -1,3 +1,4 @@
+import type { AgentTraceEvent } from "@casino-ops/shared";
 import type { CompletionRequest, AIClient } from "../clients/ai-client.js";
 import { describe, expect, it } from "vitest";
 import { MockAIClient } from "../clients/mock-client.js";
@@ -17,13 +18,18 @@ const fixedNow = () => "2026-10-28T10:01:00.000Z";
 describe("InfrastructureInvestigationLoop", () => {
   it("runs plan, tool observation, verification and report with the mock protocol", async () => {
     const tools = createReadOnlyAgentTools({ getServices: () => structuredClone(services), getEvents: () => structuredClone(authEvents) });
-    const result = await new InfrastructureInvestigationLoop(new MockAIClient(), tools, { now: fixedNow }).investigate(authEvents);
+    const traces: AgentTraceEvent[] = [];
+    const result = await new InfrastructureInvestigationLoop(new MockAIClient(), tools, { now: fixedNow, onTrace: (trace) => traces.push(trace) }).investigate(authEvents);
 
     expect(result.termination).toBe("finished");
     expect(result.verification?.status).toBe("verified");
     expect(result.context?.toolCalls).toHaveLength(3);
     expect(result.context?.turn).toBe(4);
     expect(result.report.confidence).toBe(result.verification?.finalConfidence);
+    expect(traces.map(({ stage }) => stage)).toEqual([
+      "plan", "tool_call", "observation", "tool_call", "observation", "tool_call", "observation", "verification", "report",
+    ]);
+    expect(JSON.stringify(traces)).not.toContain("rationale");
   });
 
   it("returns no_incident without tool calls for a healthy baseline", async () => {

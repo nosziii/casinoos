@@ -1,4 +1,4 @@
-import { casinoEventSchema, serviceStateSchema, type EvidenceProvenance, type InvestigationEvidence } from "@casino-os/shared";
+import { casinoEventSchema, serviceStateSchema, type EvidenceProvenance, type InvestigationEvidence } from "@casino-ops/shared";
 import { z } from "zod";
 import type { AgentToolResult } from "../tools/types.js";
 import { EvidenceStore } from "./evidence-store.js";

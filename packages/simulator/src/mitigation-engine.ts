@@ -1,4 +1,4 @@
-import { mitigationComparisonSchema, type MitigationAction, type MitigationComparison } from "@casino-os/shared";
+import { mitigationComparisonSchema, type MitigationAction, type MitigationComparison } from "@casino-ops/shared";
 import { predictOutage } from "./prediction-engine.js";
 
 interface StrategyDefinition {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AgentAnalysis, SpecialistAgentName } from "@casino-os/shared";
+import type { AgentAnalysis, SpecialistAgentName } from "@casino-ops/shared";
 import StatusPill from "./StatusPill.vue";
 const props = defineProps<{ eventCount: number; reports: AgentAnalysis[] }>();
 const agents: Array<{ id: SpecialistAgentName; initials: string; title: string; focus: string }> = [

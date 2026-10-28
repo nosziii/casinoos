@@ -1,4 +1,4 @@
-import { EventBus } from "@casino-os/events";
+import { EventBus } from "@casino-ops/events";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CasinoSimulator } from "./casino-simulator.js";
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ServiceState } from "@casino-os/shared";
+import type { ServiceState } from "@casino-ops/shared";
 import StatusPill from "./StatusPill.vue";
 
 defineProps<{ services: ServiceState[] }>();

@@ -1,5 +1,5 @@
 import type { CasinoBrainInput } from "../casino-brain.js";
-import type { CasinoIncident } from "@casino-os/shared";
+import type { CasinoIncident } from "@casino-ops/shared";
 
 export interface BrainSmokeExpectation {
   incidentDetected: boolean;

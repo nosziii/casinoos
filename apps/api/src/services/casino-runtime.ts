@@ -7,10 +7,10 @@ import {
   OperationsAgent,
   RiskAgent,
   type AgentToolRegistry,
-} from "@casino-os/agents";
-import { EventBuffer, EventBus } from "@casino-os/events";
-import type { AgentAnalysis, CasinoEvent, CasinoIncident } from "@casino-os/shared";
-import { CasinoSimulator, compareMitigations, predictOutage } from "@casino-os/simulator";
+} from "@casino-ops/agents";
+import { EventBuffer, EventBus } from "@casino-ops/events";
+import type { AgentAnalysis, AgentTraceEvent, CasinoEvent, CasinoIncident } from "@casino-ops/shared";
+import { CasinoSimulator, compareMitigations, predictOutage } from "@casino-ops/simulator";
 import type { AppConfig } from "../config/env.js";
 import { createAgentClients } from "./ai-clients.js";
 
@@ -18,6 +18,7 @@ export interface RuntimeHooks {
   onEvent?: (event: CasinoEvent) => void;
   onAgentAnalysis?: (analysis: AgentAnalysis) => void;
   onIncident?: (incident: CasinoIncident) => void;
+  onAgentTrace?: (trace: AgentTraceEvent) => void;
 }
 
 export class CasinoRuntime {
@@ -25,6 +26,7 @@ export class CasinoRuntime {
   readonly simulator = new CasinoSimulator(this.eventBus);
   readonly agentReports: AgentAnalysis[] = [];
   readonly incidents: CasinoIncident[] = [];
+  readonly agentTraces: AgentTraceEvent[] = [];
   readonly agentTools: AgentToolRegistry;
   readonly decisionTools: AgentToolRegistry;
   readonly #buffer: EventBuffer;
@@ -46,6 +48,10 @@ export class CasinoRuntime {
       maxTurns: config.MAX_INVESTIGATION_TURNS,
       maxToolCalls: config.MAX_INVESTIGATION_TOOL_CALLS,
       maxDurationMs: config.INVESTIGATION_TIMEOUT_MS,
+      onTrace: (trace) => {
+        appendBounded(this.agentTraces, trace, 500);
+        hooks.onAgentTrace?.(trace);
+      },
     });
     this.#operationsAgent = new OperationsAgent(clients.specialist);
     this.#riskAgent = new RiskAgent(clients.specialist);
@@ -125,6 +131,7 @@ export class CasinoRuntime {
     this.simulator.reset();
     this.agentReports.length = 0;
     this.incidents.length = 0;
+    this.agentTraces.length = 0;
     this.#lastBrainCall = 0;
   }
 

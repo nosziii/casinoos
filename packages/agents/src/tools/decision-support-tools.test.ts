@@ -1,4 +1,4 @@
-import { compareMitigations, predictOutage } from "@casino-os/simulator";
+import { compareMitigations, predictOutage } from "@casino-ops/simulator";
 import { describe, expect, it } from "vitest";
 import { createDecisionSupportTools } from "./decision-support-tools.js";
 

@@ -1,4 +1,4 @@
-import type { CasinoEvent, InfrastructureReport } from "@casino-os/shared";
+import type { CasinoEvent, InfrastructureReport } from "@casino-ops/shared";
 
 export interface InfrastructureSmokeExpectation {
   incidentDetected: boolean;

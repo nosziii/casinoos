@@ -1,4 +1,4 @@
-import type { CasinoDomain, CasinoEvent, EventSeverity, ServiceState } from "@casino-os/shared";
+import type { CasinoDomain, CasinoEvent, EventSeverity, ServiceState } from "@casino-ops/shared";
 
 interface EventDefinition {
   domain: CasinoDomain;

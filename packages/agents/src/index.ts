@@ -25,3 +25,4 @@ export * from "./investigation/verifier.js";
 export * from "./investigation/action.js";
 export * from "./investigation/evidence-mapper.js";
 export * from "./investigation/loop.js";
+export * from "./investigation/trace.js";

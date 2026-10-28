@@ -1,4 +1,4 @@
-import type { CasinoEvent } from "@casino-os/shared";
+import type { CasinoEvent } from "@casino-ops/shared";
 import { describe, expect, it } from "vitest";
 import { CasinoBrain } from "./casino-brain.js";
 import { MockAIClient } from "./clients/mock-client.js";
