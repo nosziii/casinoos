@@ -283,7 +283,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **9 célzott automatikus teszt** található:
+Jelenleg **10 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -294,6 +294,7 @@ Jelenleg **9 célzott automatikus teszt** található:
 - mitigation ranking;
 - túl nagy prediction horizon elutasítása.
 - Infrastructure Agent smoke suite auth, payment-provider és healthy fixture-rel.
+- Casino Brain smoke suite auth, payment-provider és healthy fixture-rel.
 
 Rendszeresen futtatott ellenőrzések:
 
@@ -317,7 +318,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 | 3. Live dashboard | kész | service health és live event stream |
 | 4. Infrastructure Agent | kész | mock és Baseten live smoke suite ellenőrzött |
 | 5. Multi-agent system | kész | három specialist strukturált riporttal |
-| 6. Casino Brain | részben kész | mock ellenőrzött, Meta live teszt hátra van |
+| 6. Casino Brain | kész | mock és Meta live smoke suite ellenőrzött |
 | 7. What-if simulator | kész | determinisztikus 1–120 perces prediction |
 | 8. Mitigation engine | kész | ranking és recovery simulation |
 | 9. Visual polish | részben kész | dashboard/timeline kész, további animáció lehetséges |
@@ -332,7 +333,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 - [x] auth-torzítást ellenőrző payment-provider és healthy fixture
 - [x] Gitből kizárt Baseten live smoke-test környezeti konfiguráció
 - [x] Baseten live smoke teszt valódi kulccsal, három fixture-rel
-- [ ] Meta Model API live end-to-end teszt valódi kulccsal
+- [x] Meta Model API live smoke teszt valódi kulccsal, három fixture-rel
 - [ ] provider response-kompatibilitás és token usage ellenőrzése
 - [ ] API integration tesztek Fastify injectionnel
 - [ ] Vue komponens- és böngészős end-to-end tesztek

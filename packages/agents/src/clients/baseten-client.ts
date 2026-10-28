@@ -5,6 +5,7 @@ export interface BasetenClientOptions {
   apiKey: string;
   baseURL: string;
   model: string;
+  timeoutMs?: number;
   logger?: (entry: ModelCallLog) => void;
 }
 
@@ -26,7 +27,12 @@ export class BasetenClient implements AIClient {
   constructor(options: BasetenClientOptions) {
     if (!options.apiKey) throw new Error("BASETEN_API_KEY is required in live mode");
     this.#options = options;
-    this.#openai = new OpenAI({ apiKey: options.apiKey, baseURL: options.baseURL });
+    this.#openai = new OpenAI({
+      apiKey: options.apiKey,
+      baseURL: options.baseURL,
+      timeout: options.timeoutMs ?? 30_000,
+      maxRetries: 0,
+    });
   }
 
   async complete<T>(request: CompletionRequest<T>): Promise<T> {
@@ -69,4 +75,3 @@ export class BasetenClient implements AIClient {
 function safeError(error: unknown): string {
   return error instanceof Error ? error.message : "Unknown model error";
 }
-

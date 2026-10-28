@@ -105,3 +105,12 @@ pnpm test:ai
 ```
 
 Keep `AI_MODE=mock` until the separate Meta Casino Brain credentials are configured. The smoke test can use Baseten independently without enabling live mode for the full application.
+
+Run either live suite independently when diagnosing a provider:
+
+```bash
+pnpm test:ai:infrastructure
+pnpm test:ai:brain
+```
+
+The combined `pnpm test:ai` command runs both suites. Meta configuration uses `META_MODEL_API_KEY`, `META_BASE_URL`, and `META_MODEL` from the ignored root `.env` file. Model requests have a 30-second client timeout and one schema-level retry.

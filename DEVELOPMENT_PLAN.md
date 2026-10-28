@@ -26,8 +26,8 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 - [x] explicit, alapból mock `AI_TEST_PROVIDER` konfiguráció
 - [x] Gitből kizárt helyi `.env` előkészítése a hackathon Baseten modellhez
 - [x] Baseten live futtatás valódi kulccsal
-- [ ] Meta Casino Brain smoke-test runner
-- [ ] Meta live futtatás valódi kulccsal
+- [x] Meta Casino Brain smoke-test runner
+- [x] Meta live futtatás valódi kulccsal
 - [ ] token-, latency-, retry- és schema-validációs metrikák egységes tárolása
 
 ### 2. Read-only agent tool layer
@@ -95,7 +95,15 @@ Első implementáció: elkészült a külön futtatható Infrastructure Agent sm
 
 A három hívás teljes futási ideje körülbelül 11,2 másodperc volt. A strukturált JSON-válasz kompatibilis volt a jelenlegi Zod-sémával.
 
-Következő konkrét lépés: a Meta Casino Brain smoke suite kialakítása, majd a read-only agent tool layer megvalósítása.
+2026-10-28-án a `muse-wonder-1.0` modellen a Casino Brain mindhárom fixture-je is sikeresen lefutott:
+
+- auth cascade: az `auth-service` gyökérok és a specialist impact értékek megmaradtak;
+- payment-provider degradation: a `payment-provider` gyökérok auth-tévesztés nélkül megmaradt;
+- healthy baseline: nem keletkezett téves incidens, a gyökérok `unknown`, confidence 0 lett.
+
+Az első kompatibilitási futás feltárta, hogy a Casino Brain prompt nem tartalmazta a kötelező JSON-mezőket. A teljes struktúra explicit leírása után a három Meta hívás körülbelül 20,5 másodperc alatt sikeresen teljesült. Az AI-kliensek 30 másodperces request timeoutot kaptak.
+
+Következő konkrét lépés: a read-only agent tool layer és az `AgentToolRegistry` megvalósítása.
 
 ## Későbbre halasztott elemek
 

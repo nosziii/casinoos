@@ -96,25 +96,35 @@ function casinoBrain(payload: Record<string, unknown>): unknown {
   const operationsReport = payload.operationsReport as { affectedPlayers: number; estimatedBlockedValue: number };
   const riskReport = payload.riskReport as { riskLevel: "low" | "medium" | "high" | "critical" };
   const rootCause = infrastructureReport.suspectedRootCauses[0] ?? { service: "unknown", confidence: 0 };
+  const incidentDetected = rootCause.service !== "unknown";
+  const isAuthIncident = rootCause.service === "auth-service";
   return casinoIncidentSchema.parse({
     incidentId: "INC-001",
-    incidentDetected: rootCause.service !== "unknown",
+    incidentDetected,
     severity: riskReport.riskLevel,
-    title: "Authentication Cascade Failure",
-    summary: "Payment, KYC, cashier and registration failures originate from degradation of the shared authentication service.",
+    title: incidentDetected ? `${displayName(rootCause.service)} Incident` : "No Active Incident",
+    summary: incidentDetected
+      ? `Specialist reports correlate the operational impact with ${rootCause.service}.`
+      : "Specialist reports and digital-twin state show no active incident.",
     rootCause,
     affectedSystems: infrastructureReport.affectedServices,
-    recommendedActions: [
-      "Simulate failover of authentication traffic to the secondary service",
-      "Queue new KYC requests in the digital twin",
-      "Notify synthetic casino operations",
-    ],
+    recommendedActions: incidentDetected
+      ? [
+          `Simulate mitigation for ${rootCause.service} in the digital twin`,
+          isAuthIncident ? "Queue new KYC requests in the digital twin" : "Monitor synthetic payment recovery",
+          "Notify synthetic casino operations",
+        ]
+      : ["Continue synthetic monitoring"],
     operationalImpact: {
       affectedPlayers: operationsReport.affectedPlayers,
       estimatedBlockedValue: operationsReport.estimatedBlockedValue,
       riskLevel: riskReport.riskLevel,
     },
   });
+}
+
+function displayName(service: string): string {
+  return service.split("-").map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(" ");
 }
 
 function getEvents(payload: Record<string, unknown>): MockEvent[] {

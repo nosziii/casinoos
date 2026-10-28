@@ -11,3 +11,6 @@ export * from "./structured-completion.js";
 export * from "./smoke-test/fixtures.js";
 export * from "./smoke-test/runner.js";
 export * from "./smoke-test/types.js";
+export * from "./smoke-test/brain-fixtures.js";
+export * from "./smoke-test/brain-runner.js";
+export * from "./smoke-test/brain-types.js";
