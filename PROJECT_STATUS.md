@@ -283,7 +283,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **20 célzott automatikus teszt** található:
+Jelenleg **26 célzott automatikus teszt** található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -305,6 +305,11 @@ Jelenleg **20 célzott automatikus teszt** található:
 - elégtelen evidence felismerése;
 - duplikált evidence ID-k figyelmen kívül hagyása;
 - ellentmondó root-cause claim elutasítása.
+- teljes mock investigation loop és verified report;
+- healthy batch toolhívás nélküli lezárása;
+- insufficient-evidence investigation ág;
+- turn- és tool-call-limit betartása;
+- teljes futási timeout és folyamatban lévő AI-kérés abortálása.
 
 Rendszeresen futtatott ellenőrzések:
 
@@ -350,6 +355,9 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 - [x] `InvestigationContext`, checklist és evidence provenance
 - [x] determinisztikus root-cause verifier és confidence számítás
 - [x] `insufficient_evidence` és `rejected` állapotok
+- [x] Infrastructure Agent `PLAN → TOOL → OBSERVE → VERIFY → REPORT` loop
+- [x] 4 körös, 6 tool callos és 25 másodperces hard limit
+- [x] közös mock/live akcióprotokoll és Baseten live validáció
 - [ ] provider response-kompatibilitás és token usage ellenőrzése
 - [ ] API integration tesztek Fastify injectionnel
 - [ ] Vue komponens- és böngészős end-to-end tesztek

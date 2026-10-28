@@ -20,3 +20,6 @@ export * from "./tools/types.js";
 export * from "./investigation/context.js";
 export * from "./investigation/evidence-store.js";
 export * from "./investigation/verifier.js";
+export * from "./investigation/action.js";
+export * from "./investigation/evidence-mapper.js";
+export * from "./investigation/loop.js";

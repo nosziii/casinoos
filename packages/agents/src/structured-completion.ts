@@ -6,6 +6,7 @@ export interface StructuredCompletion<T> {
   systemPrompt: string;
   payload: unknown;
   schema: ZodType<T>;
+  signal?: AbortSignal;
 }
 
 export async function completeWithRetry<T>(client: AIClient, input: StructuredCompletion<T>): Promise<T> {
@@ -14,11 +15,12 @@ export async function completeWithRetry<T>(client: AIClient, input: StructuredCo
     systemPrompt: input.systemPrompt,
     userPrompt: JSON.stringify(input.payload),
     schema: input.schema,
+    ...(input.signal ? { signal: input.signal } : {}),
   };
   try {
     return await client.complete(request);
   } catch {
+    if (input.signal?.aborted) throw input.signal.reason;
     return client.complete(request);
   }
 }
-

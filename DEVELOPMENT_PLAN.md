@@ -51,11 +51,11 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 
 ### 4. Infrastructure Agent tool loop
 
-- [ ] `PLAN → TOOL CALL → OBSERVE → VERIFY → REPORT`
-- [ ] maximum 4 kör és 6 tool call
-- [ ] teljes futási időkorlát
-- [ ] mock és live kliens közös protokollja
-- [ ] negatív és elégtelen bizonyítékú regressziós tesztek
+- [x] `PLAN → TOOL CALL → OBSERVE → VERIFY → REPORT`
+- [x] maximum 4 kör és 6 tool call
+- [x] teljes futási időkorlát
+- [x] mock és live kliens közös protokollja
+- [x] negatív és elégtelen bizonyítékú regressziós tesztek
 
 ### 5. Casino Brain és operátori lekérdezések
 
@@ -111,7 +111,13 @@ A runtime registry kizárólag a négy engedélyezett lekérdezést tartalmazza,
 
 Az evidence ID a validált tartalom és provenance SHA-256 lenyomatából képződik, az evidence snapshotok immutable formában kerülnek kiadásra. A verifier 35% degradáció-, 30% dependency-, 20% időrend- és 15% evidence-minimum súlyozást használ. Legalább három egyedi evidence szükséges legalább két evidence típusból; duplikált ID-val a minimum nem növelhető. A végső confidence a modell confidence és a verification score szorzata.
 
-Következő konkrét lépés: a korlátozott Infrastructure Agent tool loop megvalósítása maximum 4 körrel, 6 tool call-lal és teljes futási időkorláttal.
+### Infrastructure Agent tool loop eredmény
+
+A runtime már a közös mock/live strukturált akcióprotokollt használja. Az alapértelmezett hard limit 4 kör, 6 tool call és 25 másodperc; a deadline AbortSignal segítségével a folyamatban lévő AI-kérést is megszakítja. A strict validációval elutasított tool call auditálható hibaként visszakerül a kontextusba, így javítható, de nem kerülhető meg.
+
+A Baseten live teszt során a modell root service state-, dependent- és recent-event toolokat használt, hat evidence-et gyűjtött, majd 1,0 verification score és 0,98 final confidence mellett verifikálta az auth cascade gyökérokát.
+
+Következő konkrét lépés: evidence-aware Casino Brain, determinisztikus prediction/mitigation toolok és a természetes nyelvű query API.
 
 ## Későbbre halasztott elemek
 

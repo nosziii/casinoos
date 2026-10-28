@@ -1,7 +1,7 @@
 import {
   CasinoBrain,
   createReadOnlyAgentTools,
-  InfrastructureAgent,
+  InfrastructureInvestigationLoop,
   OperationsAgent,
   RiskAgent,
   type AgentToolRegistry,
@@ -25,7 +25,7 @@ export class CasinoRuntime {
   readonly incidents: CasinoIncident[] = [];
   readonly agentTools: AgentToolRegistry;
   readonly #buffer: EventBuffer;
-  readonly #infrastructureAgent: InfrastructureAgent;
+  readonly #infrastructureInvestigator: InfrastructureInvestigationLoop;
   readonly #operationsAgent: OperationsAgent;
   readonly #riskAgent: RiskAgent;
   readonly #brain: CasinoBrain;
@@ -37,7 +37,11 @@ export class CasinoRuntime {
       getEvents: () => this.simulator.getEvents(),
     });
     const clients = createAgentClients(config);
-    this.#infrastructureAgent = new InfrastructureAgent(clients.specialist);
+    this.#infrastructureInvestigator = new InfrastructureInvestigationLoop(clients.specialist, this.agentTools, {
+      maxTurns: config.MAX_INVESTIGATION_TURNS,
+      maxToolCalls: config.MAX_INVESTIGATION_TOOL_CALLS,
+      maxDurationMs: config.INVESTIGATION_TIMEOUT_MS,
+    });
     this.#operationsAgent = new OperationsAgent(clients.specialist);
     this.#riskAgent = new RiskAgent(clients.specialist);
     this.#brain = new CasinoBrain(clients.brain);
@@ -57,11 +61,12 @@ export class CasinoRuntime {
   async #analyzeBatch(events: CasinoEvent[], config: AppConfig, hooks: RuntimeHooks): Promise<void> {
     if (!config.AI_ENABLED) return;
     try {
-      const [infrastructure, operations, risk] = await Promise.all([
-        this.#infrastructureAgent.analyze(events),
+      const [investigation, operations, risk] = await Promise.all([
+        this.#infrastructureInvestigator.investigate(events),
         this.#operationsAgent.analyze(events),
         this.#riskAgent.analyze(events),
       ]);
+      const infrastructure = investigation.report;
       const analyses: AgentAnalysis[] = [
         { agent: "infrastructure-agent", report: infrastructure },
         { agent: "operations-agent", report: operations },

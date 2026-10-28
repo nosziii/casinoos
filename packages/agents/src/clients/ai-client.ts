@@ -5,9 +5,9 @@ export interface CompletionRequest<T> {
   systemPrompt: string;
   userPrompt: string;
   schema: ZodType<T>;
+  signal?: AbortSignal;
 }
 
 export interface AIClient {
   complete<T>(request: CompletionRequest<T>): Promise<T>;
 }
-

@@ -15,14 +15,14 @@ export class InfrastructureAgent {
     this.#client = client;
   }
 
-  async analyze(events: CasinoEvent[]): Promise<InfrastructureReport> {
+  async analyze(events: CasinoEvent[], signal?: AbortSignal): Promise<InfrastructureReport> {
     if (events.length === 0) throw new Error("InfrastructureAgent requires at least one event");
     return completeWithRetry(this.#client, {
       agent: "infrastructure-agent",
       systemPrompt: SYSTEM_PROMPT,
       payload: { events },
       schema: infrastructureReportSchema,
+      ...(signal ? { signal } : {}),
     });
   }
 }
-

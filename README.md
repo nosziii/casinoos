@@ -131,3 +131,15 @@ Tool inputs and outputs are Zod-validated, payload size is bounded, and sensitiv
 Investigations use shared Zod schemas for the hypothesis, checklist, tool calls, evidence provenance and status. Evidence receives a deterministic immutable ID, is deduplicated by ID, and retains the read-only tool and input that produced it.
 
 The deterministic verifier checks root-service degradation, dependency evidence, temporal ordering and a minimum of three unique evidence items from at least two evidence kinds. A root cause cannot become `verified` without degradation and dependency evidence. Otherwise the result is explicitly `insufficient_evidence` or `rejected`; final confidence is model confidence multiplied by the verification score.
+
+## Infrastructure investigation loop
+
+The runtime Infrastructure Agent uses the same structured action protocol in mock and live modes:
+
+```text
+PLAN → TOOL CALL → OBSERVE → VERIFY → REPORT
+```
+
+The investigation is limited to four model turns, six tool calls and 25 seconds by default. AI requests receive a real abort signal when the total deadline expires. Failed tool validation becomes an auditable failed observation that the model may correct; it never bypasses the strict tool schema. The enforced evidence policy reads root service state, direct dependents and recent events before finishing.
+
+Run the live Baseten loop check independently with `pnpm test:ai:investigation`.

@@ -46,7 +46,7 @@ export class BasetenClient implements AIClient {
           { role: "system", content: request.systemPrompt },
           { role: "user", content: request.userPrompt },
         ],
-      });
+      }, { signal: request.signal });
       const content = response.choices[0]?.message.content;
       if (!content) throw new Error("Model returned no content");
       const result = request.schema.parse(JSON.parse(content));

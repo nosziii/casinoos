@@ -34,7 +34,7 @@ export function createReadOnlyAgentTools(
   const registry = new AgentToolRegistry(options);
   registry.register({
     name: "getServiceState",
-    description: "Read the current state of one synthetic casino service.",
+    description: "Read one synthetic casino service. Input: {serviceId: string}.",
     inputSchema: serviceInputSchema,
     outputSchema: serviceResultSchema,
     execute: ({ serviceId }) => {
@@ -44,7 +44,7 @@ export function createReadOnlyAgentTools(
   });
   registry.register({
     name: "getDependencies",
-    description: "Read the current states of a service's direct dependencies.",
+    description: "Read direct dependencies. Input: {serviceId: string}.",
     inputSchema: serviceInputSchema,
     outputSchema: relatedServicesResultSchema,
     execute: ({ serviceId }) => {
@@ -55,7 +55,7 @@ export function createReadOnlyAgentTools(
   });
   registry.register({
     name: "getDependents",
-    description: "Read services that directly depend on the selected service.",
+    description: "Read direct dependents. Input: {serviceId: string}.",
     inputSchema: serviceInputSchema,
     outputSchema: relatedServicesResultSchema,
     execute: ({ serviceId }) => ({
@@ -65,7 +65,7 @@ export function createReadOnlyAgentTools(
   });
   registry.register({
     name: "getRecentEvents",
-    description: "Read a bounded newest-first list of synthetic operational events.",
+    description: "Read newest-first events. Input: {limit: 1..50, source?: string, domain?: casino domain}.",
     inputSchema: recentEventsInputSchema,
     outputSchema: recentEventsResultSchema,
     execute: ({ limit, source: eventSource, domain }) => {

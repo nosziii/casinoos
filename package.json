@@ -10,10 +10,11 @@
     "docker:up": "docker compose up --build",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
-    "test:ai": "pnpm run test:ai:build && pnpm run test:ai:infrastructure && pnpm run test:ai:brain",
+    "test:ai": "pnpm run test:ai:build && pnpm run test:ai:infrastructure && pnpm run test:ai:investigation && pnpm run test:ai:brain",
     "test:ai:build": "pnpm --filter @casino-os/shared build && pnpm --filter @casino-os/agents build",
     "test:ai:brain": "node --env-file-if-exists=.env packages/agents/dist/smoke-test/brain-cli.js",
     "test:ai:infrastructure": "node --env-file-if-exists=.env packages/agents/dist/smoke-test/cli.js",
+    "test:ai:investigation": "node --env-file-if-exists=.env packages/agents/dist/smoke-test/investigation-cli.js",
     "typecheck": "pnpm -r typecheck"
   },
   "devDependencies": {

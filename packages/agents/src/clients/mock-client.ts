@@ -24,10 +24,28 @@ export class MockAIClient implements AIClient {
           ? risk(payload)
           : request.agent === "casino-brain"
             ? casinoBrain(payload)
+            : request.agent === "infrastructure-investigator"
+              ? investigationAction(payload)
             : undefined;
     if (!result) throw new Error(`Unsupported mock agent: ${request.agent}`);
     return request.schema.parse(result);
   }
+}
+
+function investigationAction(payload: Record<string, unknown>): unknown {
+  const hypothesis = payload.hypothesis as { rootCauseService?: string } | undefined;
+  const rootCauseService = hypothesis?.rootCauseService ?? "unknown";
+  const toolCalls = Array.isArray(payload.toolCalls) ? payload.toolCalls as Array<{ toolName?: string }> : [];
+  if (!toolCalls.some(({ toolName }) => toolName === "getServiceState")) {
+    return { action: "call_tool", rationale: "Confirm the suspected root service state.", toolName: "getServiceState", input: { serviceId: rootCauseService } };
+  }
+  if (!toolCalls.some(({ toolName }) => toolName === "getDependents")) {
+    return { action: "call_tool", rationale: "Confirm direct downstream dependencies.", toolName: "getDependents", input: { serviceId: rootCauseService } };
+  }
+  if (!toolCalls.some(({ toolName }) => toolName === "getRecentEvents")) {
+    return { action: "call_tool", rationale: "Confirm event ordering for the incident.", toolName: "getRecentEvents", input: { limit: 20 } };
+  }
+  return { action: "finish", rationale: "Service, dependency and event evidence have been collected." };
 }
 
 function infrastructure(payload: Record<string, unknown>): unknown {
