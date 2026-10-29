@@ -8,6 +8,8 @@ Egy zsűritag előismeret nélkül, tíz másodpercen belül értse meg a Casino
 
 ## Háromperces narratíva
 
+A részletes shot list, angol narráció, FilmCraft workflow és export checklist a [DEMO_VIDEO_PLAN.md](DEMO_VIDEO_PLAN.md) dokumentumban található.
+
 | Idő | Kép | Narráció |
 |---:|---|---|
 | 0:00–0:20 | Nyitóképernyő és hat healthy rendszer | A kaszinó kritikus operációi egészségesek, a CasinoOps folyamatosan figyeli a jeleket és függőségeket. |
