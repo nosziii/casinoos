@@ -87,17 +87,17 @@ FilmCraft is suitable for this edit, but it is still alpha software. Keep the pr
 
 ## Acceptance checklist
 
-- [ ] Final runtime is between 2:50 and 2:58.
-- [ ] The first ten seconds explain the product and show the healthy baseline.
-- [ ] `LIVE AI` and `LIVE LINK` are readable in at least one shot.
-- [ ] Authentication is unambiguously shown as the verified root cause.
-- [ ] Evidence and verification are understandable without reading the technical trace.
-- [ ] +30 minute impact KPIs remain readable in a 1080p upload.
-- [ ] Operator approval is visibly required before recovery.
-- [ ] Recovery returns every service and graph path to healthy.
-- [ ] Synthetic-data and no-production-action disclaimers are visible.
-- [ ] Captions match the final voice-over.
-- [ ] No secret, API key, server console, personal notification or unrelated browser tab appears.
+- [x] Final runtime is between 2:50 and 2:58.
+- [x] The first ten seconds explain the product and identify both AI model roles and the verifier.
+- [x] `LIVE AI` and `LIVE LINK` are readable in at least one shot.
+- [x] Authentication is unambiguously shown as the verified root cause.
+- [x] Evidence and verification are understandable without reading the technical trace.
+- [x] +30 minute impact KPIs remain readable in the exported 1080p file.
+- [x] Operator approval is visibly required before recovery.
+- [x] Recovery returns every service and graph path to healthy.
+- [x] Synthetic-data and no-production-action disclaimers are visible.
+- [x] Captions match the final voice-over.
+- [x] No secret, API key, server console, personal notification or unrelated browser tab appears.
 - [ ] Final MP4 plays correctly from start to finish on another device.
 
 ## Production status
@@ -111,15 +111,21 @@ The third FilmCraft edit is complete as a low-load review build:
 - Captions: ten burned-in summary cues, styled at 34 px with a restrained lower background.
 - Visual polish: controlled zooms around incident detection, verification, impact KPIs, approval and recovery.
 - Chapters: short `DETECT`, `VERIFY`, `PREDICT` and `TEST RECOVERY` overlays.
+- Opening proof: Muse Spark Open, Muse Wonder and the mandatory deterministic verifier are named with their roles.
 - Review export: **960×540 H.264 + AAC**, rendered with two CPU threads and GPU rendering disabled.
 - The approved timing edit remains under `video/drafts/casinoops-v2/`; the polished edit is under `video/drafts/casinoops-v3/`. Generated media is intentionally excluded from Git.
 
+The final captioned export is available locally at `video/final/CasinoOps-3-minute-submission-final-1080p.mp4`:
+
+- **1920×1080**, 25 fps, H.264 High, Rec. 709.
+- **2:56.12**, AAC 48 kHz stereo.
+- Approximately **10.8 Mbps** effective VBR video bitrate and 244 MB file size.
+- Burned-in English captions and no offline media.
+- Exported with two CPU threads and GPU rendering disabled.
+
 ## Next production step
 
-Watch the v2 review export from start to finish and note only timing, pronunciation or subtitle problems. After approval:
-
-1. Replace the local scratch voice with the final English recording or approved synthetic voice.
-2. Retime captions against that final recording and split any cue that is difficult to read.
-3. Optionally add very quiet, licensed background music only if it improves the result.
-4. Render one final **1920×1080 H.264** export at 15–20 Mbps with two CPU threads.
-5. Verify the final MP4 on another device before uploading it to the submission form.
+1. Play the final MP4 from start to finish on another device.
+2. Upload the approved file to the chosen video host or submission portal.
+3. Add the public video URL to the README Demo video section.
+4. Optionally add very quiet, licensed background music only if it materially improves the result; otherwise keep the clean narration-first mix.

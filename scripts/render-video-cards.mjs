@@ -37,6 +37,10 @@ const baseStyles = `
   .rule { width: 120px; height: 4px; margin: 38px auto; border-radius: 999px; background: #45e6a4; box-shadow: 0 0 28px rgba(69,230,164,.45); }
   .url { display: inline-block; margin-top: 26px; color: #45e6a4; font-size: 54px; font-weight: 800; letter-spacing: -.02em; }
   .meta { margin-top: 46px; color: #667974; font-size: 20px; letter-spacing: .03em; }
+  .model-roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1180px; margin: 34px auto 0; }
+  .model-role { padding: 18px 20px; border: 1px solid rgba(69,230,164,.20); border-radius: 10px; background: rgba(11,21,20,.82); }
+  .model-role strong { display: block; color: #f3f7f5; font-size: 21px; line-height: 1.2; }
+  .model-role span { display: block; margin-top: 8px; color: #98aaa5; font-size: 17px; line-height: 1.3; }
 `;
 
 async function render(name, body) {
@@ -75,6 +79,11 @@ await render("intro-card", `
     <div class="rule"></div>
     <h2>Understand what failed. Know what happens next.</h2>
     <p>Detect cascading incidents, verify their root cause, predict their impact and test recovery before touching production.</p>
+    <div class="model-roles">
+      <div class="model-role"><strong>Muse Spark Open</strong><span>Specialist investigation · Baseten</span></div>
+      <div class="model-role"><strong>Muse Wonder</strong><span>Casino Brain correlation · Meta</span></div>
+      <div class="model-role"><strong>Mandatory verifier</strong><span>Deterministic evidence checks</span></div>
+    </div>
   </main>
 `);
 
