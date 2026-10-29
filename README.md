@@ -1,10 +1,45 @@
 # CasinoOps — AI-Powered Casino Operations Digital Twin
 
-Az aktuális megvalósítási állapot és roadmap: [PROJECT_STATUS.md](PROJECT_STATUS.md)
+[Try the live demo](https://casinoops.tech) · [Watch the demo](#demo-video) · [Project status](PROJECT_STATUS.md) · [Next steps](NEXT_STEPS.md)
 
-A prioritásos hátralévő feladatok és rövid megvalósítási terv: [NEXT_STEPS.md](NEXT_STEPS.md)
+> Public demo uses deterministic mode for reliability. The same validated agent schemas have also been tested live with Baseten Muse Spark Open and Meta Muse Wonder.
 
-AI-powered casino operations digital twin. CasinoOps connects operational signals across casino systems to identify cascading incidents, verify their root cause, predict their impact and safely test recovery strategies before touching production. The judge-facing UI offers a guided demo and a full explore mode.
+CasinoOps connects operational signals across casino systems to identify cascading incidents, verify their root cause, predict their impact and safely test recovery strategies before touching production.
+
+![CasinoOps verified authentication cascade and operational dependency graph](docs/assets/casinoops-incident.png)
+
+## The problem
+
+A single degraded dependency can surface as unrelated failures across authentication, payments, KYC, cashier and player registration. Operations teams see the symptoms first; finding the shared cause and understanding the business impact takes time.
+
+CasinoOps turns that fragmented incident into one auditable operational story:
+
+1. detect the cascading failure;
+2. investigate system dependencies with specialist agents;
+3. verify the root cause against evidence;
+4. predict the impact of doing nothing;
+5. compare recovery strategies inside a digital twin;
+6. require operator approval before simulating recovery.
+
+## Meta models in the system
+
+| Model | Role |
+|---|---|
+| **Muse Spark Open via Baseten** | Specialist investigation, structured evidence gathering and operational analysis |
+| **Meta Muse Wonder** | Casino Brain correlation, verified incident synthesis and natural-language decision-support planning |
+
+All model output is schema-validated. Root-cause confidence is capped by a deterministic evidence verifier, and agents have no tool that can change a production system.
+
+## Three-minute demo story
+
+`Healthy casino → authentication degradation → downstream failures → verified root cause → +30 minute impact → mitigation comparison → operator approval → simulated recovery`
+
+Choose **Start live demo** on the public site. A six-step coach-mark tour explains each decision point and pauses before recovery until the operator explicitly approves it.
+
+<a id="demo-video"></a>
+## Demo video
+
+The final three-minute submission video will be linked here. The recording script and acceptance checklist live in [JUDGE_EXPERIENCE.md](JUDGE_EXPERIENCE.md).
 
 ## Requirements
 

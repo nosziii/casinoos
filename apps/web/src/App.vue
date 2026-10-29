@@ -5,6 +5,7 @@ import AgentTrace from "./components/AgentTrace.vue";
 import DemoSafetyNotice from "./components/DemoSafetyNotice.vue";
 import DemoProgress from "./components/DemoProgress.vue";
 import DemoModePanel from "./components/DemoModePanel.vue";
+import DependencyGraph from "./components/DependencyGraph.vue";
 import EventStream from "./components/EventStream.vue";
 import IncidentPanel from "./components/IncidentPanel.vue";
 import IncidentTimeline from "./components/IncidentTimeline.vue";
@@ -56,7 +57,7 @@ const runMitigationSimulation = (action: Parameters<typeof casino.simulateMitiga
     <DemoSafetyNotice />
     <DemoModePanel :mode="mode" :stage="stage" :busy="busy" :error="guidedError" @guided="startGuided" @explore="enterExplore" @exit="returnToLanding" @approve="approveRecovery" />
     <DemoProgress :signals="journeySignals" />
-    <div class="dashboard"><IncidentPanel :incident="casino.latestIncident" :services="casino.state.services" :evidence-count="evidenceCount" /><SystemHealth :services="casino.state.services" /><AgentActivity :event-count="casino.events.length" :reports="casino.agentReports" /><EventStream :events="casino.events" /></div>
+    <div class="dashboard"><IncidentPanel :incident="casino.latestIncident" :services="casino.state.services" :evidence-count="evidenceCount" /><SystemHealth :services="casino.state.services" /><DependencyGraph :services="casino.state.services" :root-cause="casino.latestIncident?.rootCause.service" /><AgentActivity :event-count="casino.events.length" :reports="casino.agentReports" /><EventStream :events="casino.events" /></div>
     <WhatIfPanel :enabled="Boolean(casino.latestIncident)" :busy="busy" :prediction="casino.prediction" :comparison="casino.mitigations" :query-response="casino.queryResponse" :simulation="casino.state.mitigation" @ask="askCasinoBrain" @predict="runPrediction" @compare="runMitigations" @simulate="runMitigationSimulation" />
     <AgentTrace :traces="casino.agentTraces" />
     <IncidentTimeline :events="casino.events" />

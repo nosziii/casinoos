@@ -48,12 +48,14 @@ Az E2E bevezetése két valódi integrációs hibát is feltárt és javított: 
 
 ### 3. Publikus deployment smoke teszt
 
-**Állapot: hátra van.**
+**Állapot: a teszt elkészült; az új verzió szerverre telepítése után a publikus domainen futtatandó.**
 
 - `https://casinoops.tech/health` és `/api/health` ellenőrzése;
 - főoldal, WebSocket kapcsolat és guided demo minimális smoke tesztje;
-- külön `E2E_BASE_URL` használata, hogy a publikus környezet ellenőrizhető legyen build nélkül;
+- külön `PUBLIC_DEMO_URL` használata, hogy tetszőleges publikus környezet ellenőrizhető legyen build nélkül;
 - deployment checklist HTTPS-, secret- és proxybeállításokhoz.
+
+A `pnpm test:e2e:public` ellenőrzi az API-health végpontot, a landing oldalt, a WebSocket `LIVE LINK` állapotát, a teljes pre-approval történetet és az Exit demo utáni hat healthy szolgáltatást. Lokális production image-en sikeresen lefutott.
 
 ## P1 – Backend stabilizálás és biztonság
 
@@ -121,10 +123,14 @@ A Baseten chat completion válaszból az input-, output- és total token mérhet
 
 ### 12. Egyszerű 2D dependency graph
 
+**Állapot: elkészült.**
+
 - a hat operációs rendszer és függőségeik áttekinthető megjelenítése;
 - healthy/degraded/failed állapot animáció nélkül is jól olvashatóan;
 - az aktuális root cause és terjedési út kiemelése;
 - első körben SVG-alapú, új 3D stack nélkül.
+
+A graph közvetlenül a `ServiceState.dependencies` és aktuális státuszok alapján épül fel. A Casino Brain által verifikált root cause külön jelölést kap, a recovery state machine változásai pedig automatikusan megjelennek rajta.
 
 ### 13. Mitigation history összehasonlítás
 
@@ -147,12 +153,12 @@ Ezek csak a publikus demo, API-tesztek és perzisztencia stabilizálása után k
 
 ## Javasolt megvalósítási sorrend
 
-1. Fastify `buildApp()` refaktor és API integration tesztek.
-2. Rate limiting és strukturált logging.
-3. Provider usage metrikák és container hardening.
-4. SQLite repository és incident history.
-5. Második determinisztikus scenario.
-6. Egyszerű 2D dependency graph.
+1. Az új dependency graph verzió telepítése és `pnpm test:e2e:public` futtatása.
+2. Háromperces próbafelvétel a [JUDGE_EXPERIENCE.md](JUDGE_EXPERIENCE.md) alapján.
+3. Fastify `buildApp()` refaktor és API integration tesztek.
+4. Rate limiting és strukturált logging.
+5. Provider usage metrikák és container hardening.
+6. SQLite repository és incident history.
 7. Production auth és csak utána Kubernetes/Helm.
 
 Minden mérföldkő elfogadási feltétele: lint, typecheck, unit/integration teszt, production build, releváns browser E2E és frissített dokumentáció.

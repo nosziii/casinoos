@@ -76,8 +76,9 @@ Ez a dokumentum a következő fejlesztési irányt és annak haladását követi
 - [ ] további determinisztikus scenario-k
 - [ ] provider-összehasonlítás
 - [ ] model call history
-- [ ] API- és böngészős integrációs tesztek
-- [ ] CI pipeline
+- [ ] API integration tesztek
+- [x] böngészős E2E és publikus smoke tesztek
+- [x] CI pipeline
 
 ## Aktuális mérföldkő
 
@@ -137,7 +138,7 @@ A trace kizárólag auditálható műveleti adatot tartalmaz: toolnevet, validá
 
 Az AI-mag, a judge-facing Guided Demo, a Judge Experience V2 és a teljes browser E2E journey elkészült. A hátralévő feladatokat a prioritásos [NEXT_STEPS.md](NEXT_STEPS.md) tartja karban.
 
-Következő konkrét lépés: CI pipeline a lint, typecheck, unit test, production build és Playwright E2E automatikus futtatásával.
+Következő konkrét lépés: az állapotvezérelt 2D dependency graphot tartalmazó verzió publikus telepítése, smoke tesztje, majd háromperces próbafelvétel.
 
 ## Következő munkamenet – termékesítés és judge-facing demo
 
@@ -190,6 +191,11 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
 9. **CI pipeline — elkészült**
    - lint, typecheck, unit test, production build és browser E2E;
    - később dependency- és container image scanning.
+10. **2D operational dependency graph — elkészült**
+   - a hat rendszer tényleges dependency adataiból épül;
+   - incident közben kiemeli a verifikált root cause-t és a terjedési útvonalat;
+   - recovery közben automatikusan visszaállítja a healthy vizuális állapotot;
+   - unit és browser E2E regressziós ellenőrzést kapott.
 
 ### Későbbre sorolt stabilizálási elemek
 

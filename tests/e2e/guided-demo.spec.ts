@@ -18,6 +18,10 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await expect(page.getByTestId("incident-confidence")).toHaveText(/^\d{1,3}%$/);
   await expect(page.getByText(/affected players/i)).toBeVisible();
   await expect(page.getByText(/recommended/i)).toBeVisible();
+  const dependencyGraph = page.getByTestId("dependency-graph");
+  await expect(dependencyGraph).toBeVisible();
+  await expect(dependencyGraph.locator("[data-service='auth-service']")).toHaveClass(/dependency-node--root/);
+  await expect(dependencyGraph.getByText("Cascade detected")).toBeVisible();
 
   for (const expectedStep of [1, 2, 3, 4]) {
     await judgeTour.getByRole("button", { name: "Next" }).click();
@@ -33,6 +37,7 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await expect(judgeTour).toHaveAttribute("data-step", "5");
   await expect(guidedDemo).toHaveAttribute("data-stage", "completed", { timeout: 15_000 });
   await expect(page.getByRole("heading", { name: "Incident recovered" })).toBeVisible();
+  await expect(dependencyGraph.getByText("All paths healthy")).toBeVisible();
   await judgeTour.getByRole("button", { name: "Finish tour" }).click();
   await expect(judgeTour).toBeHidden();
 

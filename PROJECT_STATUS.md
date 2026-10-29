@@ -230,6 +230,8 @@ Scenario status: recovered
 - [x] minimum 12 px technikai metadata és 15–17 px tartalmi szöveg
 - [x] kiemelt Casino Brain KPI-k és egyszerűsített investigation/agent/timeline hierarchia
 - [x] technikai monospace és trace elkülönítése az elsődleges termékfelülettől
+- [x] állapotvezérelt SVG dependency graph root-cause és cascade kiemeléssel
+- [x] recovery közben automatikusan visszazöldülő dependency állapotok
 
 ### 10. Docker és futtatás
 
@@ -315,7 +317,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **41 célzott automatikus teszt** található:
+Jelenleg **44 célzott automatikus unit teszt**, továbbá külön lokális és publikus browser journey található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -355,6 +357,9 @@ Jelenleg **41 célzott automatikus teszt** található:
 - Guided Demo tartalmi állapotai és teljes, jóváhagyásnál megálló state machine-je.
 - teljes Playwright browser journey a landingtől az approvalon és recoveryn át a healthy resetig.
 - technical trace, impact KPI-k és mitigation recommendation browser-szintű ellenőrzése.
+- dependency graph topológia, root-cause és legszigorúbb edge státusz ellenőrzése;
+- dependency graph incident → recovery állapotváltás browser-szintű ellenőrzése;
+- külön publikus health, WebSocket, pre-approval journey és reset smoke teszt.
 
 Rendszeresen futtatott ellenőrzések:
 
@@ -383,7 +388,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 | 7. What-if simulator | kész | determinisztikus 1–120 perces prediction |
 | 8. Mitigation engine | kész | ranking és recovery simulation |
 | 9. Visual polish | kész | UI/UX V2 judge-facing control-room felület |
-| 10. Digital Twin visualization | nincs kész | 2D/3D casino floor még nincs |
+| 10. Digital Twin visualization | részben kész | operációs 2D dependency graph kész; casino floor / 3D opcionális |
 | SAM 3.1 extension | nincs kész | opcionális későbbi fázis |
 
 ## Ismert korlátok és hátralévő feladatok
