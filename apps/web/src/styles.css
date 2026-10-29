@@ -25,13 +25,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 nav { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--border); }
 .brand, .nav-actions { display: flex; align-items: center; gap: 13px; }
+.nav-actions > .ai-status, .nav-actions > .status-pill { display: inline-flex; align-items: center; min-height: 38px; }
 .brand > span { display: grid; place-items: center; width: 38px; height: 38px; color: #06100d; background: var(--accent); border-radius: 8px; font: 700 12px var(--mono); }
 .brand strong { font-size: 16px; letter-spacing: .06em; }
 .brand strong span { color: var(--accent); }
 .brand small { display: block; margin-top: 3px; color: var(--text-muted); font-size: 12px; letter-spacing: .02em; }
 
 .ai-status { position: relative; }
-.ai-status summary { display: inline-flex; align-items: center; gap: 7px; color: var(--text-secondary); font-size: 12px; font-weight: 700; cursor: pointer; list-style: none; }
+.ai-status summary { display: inline-flex; align-items: center; min-height: 38px; gap: 7px; color: var(--text-secondary); font-size: 12px; font-weight: 700; line-height: 1; cursor: pointer; list-style: none; }
 .ai-status summary::-webkit-details-marker { display: none; }
 .ai-status summary i { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
 .ai-status--live summary { color: var(--accent); }
@@ -106,7 +107,7 @@ nav { min-height: 82px; display: flex; align-items: center; justify-content: spa
 .service--failed { border-left-color: var(--danger); }
 .service strong { display: block; color: var(--text); font-size: 15px; font-weight: 650; }
 .service small { display: block; margin-top: 4px; color: var(--text-muted); font: 12px var(--mono); }
-.status-pill { display: inline-flex; align-items: center; gap: 7px; color: var(--text-muted); font: 600 12px var(--mono); white-space: nowrap; text-transform: uppercase; }
+.status-pill { display: inline-flex; align-items: center; min-height: 38px; gap: 7px; color: var(--text-muted); font: 600 12px/1 var(--mono); white-space: nowrap; text-transform: uppercase; }
 .status-pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
 .status-pill--ok { color: var(--accent); }
 .status-pill--warn { color: var(--warning); }

@@ -15,7 +15,7 @@ const edgeCoordinates = (source: { x: number; y: number }, target: { x: number; 
 </script>
 
 <template>
-  <section class="panel dependency-panel" data-testid="dependency-graph">
+  <section class="panel dependency-panel" data-testid="dependency-graph" data-tour="dependencies">
     <header>
       <div><span class="section-label">Operational dependencies</span><h2>Failure propagation</h2><p>See how one degraded dependency affects critical casino operations.</p></div>
       <span class="dependency-summary" :class="{ 'dependency-summary--incident': incidentActive }">{{ incidentActive ? 'Cascade detected' : 'All paths healthy' }}</span>

@@ -13,8 +13,8 @@ let frame = 0;
 
 const step = computed(() => judgeTourSteps[stepIndex.value]);
 const investigationReady = computed(() => ["awaiting_approval", "recovering", "completed"].includes(props.stage));
-const waiting = computed(() => stepIndex.value === 0 && !investigationReady.value);
-const approvalStep = computed(() => stepIndex.value === 4);
+const waiting = computed(() => Boolean(step.value?.requiresIncident) && !investigationReady.value);
+const approvalStep = computed(() => step.value?.action === "approve");
 const finalStep = computed(() => stepIndex.value === judgeTourSteps.length - 1);
 
 function next(): void {
@@ -62,7 +62,7 @@ function updatePosition(scroll = false): void {
 const handleViewportChange = () => updatePosition(false);
 watch(stepIndex, () => updatePosition(true));
 watch(() => props.stage, (stage) => {
-  if (stepIndex.value === 4 && (stage === "recovering" || stage === "completed")) stepIndex.value = 5;
+  if (approvalStep.value && (stage === "recovering" || stage === "completed")) stepIndex.value += 1;
   else updatePosition(false);
 });
 onMounted(() => {

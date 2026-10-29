@@ -13,6 +13,7 @@ export const aiRuntimeStatusSchema = z.object({
   brain: aiProviderSchema,
   lastFailure: z.object({
     provider: z.enum(["baseten", "meta"]),
+    reason: z.enum(["authentication", "rate_limit", "timeout", "network", "invalid_response", "provider_error", "unknown"]),
     occurredAt: z.iso.datetime(),
   }).strict().optional(),
 }).strict();

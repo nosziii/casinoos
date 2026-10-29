@@ -7,6 +7,7 @@ import {
   OperationsAgent,
   RiskAgent,
   type AgentToolRegistry,
+  type FallbackEvent,
 } from "@casino-ops/agents";
 import { EventBuffer, EventBus } from "@casino-ops/events";
 import { aiRuntimeStatusSchema, type AIRuntimeStatus, type AgentAnalysis, type AgentTraceEvent, type CasinoEvent, type CasinoIncident } from "@casino-ops/shared";
@@ -40,6 +41,8 @@ export class CasinoRuntime {
   readonly #config: AppConfig;
   readonly #hooks: RuntimeHooks;
   #lastBrainCall = 0;
+  #generation = 0;
+  #activeAnalysisGeneration = 0;
 
   constructor(config: AppConfig, hooks: RuntimeHooks = {}) {
     this.#config = config;
@@ -50,12 +53,13 @@ export class CasinoRuntime {
       getEvents: () => this.simulator.getEvents(),
     });
     this.decisionTools = createDecisionSupportTools({ predictOutage, compareMitigations });
-    const clients = createAgentClients(config, ({ provider }) => this.#activateFallback(provider));
+    const clients = createAgentClients(config, (event) => this.#activateFallback(event));
     this.#infrastructureInvestigator = new InfrastructureInvestigationLoop(clients.specialist, this.agentTools, {
       maxTurns: config.MAX_INVESTIGATION_TURNS,
       maxToolCalls: config.MAX_INVESTIGATION_TOOL_CALLS,
       maxDurationMs: config.INVESTIGATION_TIMEOUT_MS,
       onTrace: (trace) => {
+        if (this.#activeAnalysisGeneration !== this.#generation) return;
         appendBounded(this.agentTraces, trace, 500);
         hooks.onAgentTrace?.(trace);
       },
@@ -67,7 +71,11 @@ export class CasinoRuntime {
     this.#buffer = new EventBuffer({
       maxSize: config.MAX_EVENT_BATCH_SIZE,
       flushIntervalMs: config.AGENT_FLUSH_INTERVAL_MS,
-      onFlush: async (events) => this.#analyzeBatch(events, config, hooks),
+      onFlush: async (events) => {
+        const generation = this.#generation;
+        this.#activeAnalysisGeneration = generation;
+        await this.#analyzeBatch(events, config, hooks, generation);
+      },
     });
     this.eventBus.subscribeAll(async (event) => {
       hooks.onEvent?.(event);
@@ -77,14 +85,17 @@ export class CasinoRuntime {
     this.#buffer.start();
   }
 
-  async #analyzeBatch(events: CasinoEvent[], config: AppConfig, hooks: RuntimeHooks): Promise<void> {
+  async #analyzeBatch(events: CasinoEvent[], config: AppConfig, hooks: RuntimeHooks, generation: number): Promise<void> {
     if (!config.AI_ENABLED) return;
     try {
+      const scenarioEvents = this.simulator.getEvents();
+      const evidenceEvents = scenarioEvents.length > 0 ? scenarioEvents : events;
       const [investigation, operations, risk] = await Promise.all([
-        this.#infrastructureInvestigator.investigate(events),
-        this.#operationsAgent.analyze(events),
-        this.#riskAgent.analyze(events),
+        this.#infrastructureInvestigator.investigate(evidenceEvents),
+        this.#operationsAgent.analyze(evidenceEvents),
+        this.#riskAgent.analyze(evidenceEvents),
       ]);
+      if (generation !== this.#generation) return;
       const infrastructure = investigation.report;
       const analyses: AgentAnalysis[] = [
         { agent: "infrastructure-agent", report: infrastructure },
@@ -113,8 +124,11 @@ export class CasinoRuntime {
           evidence: investigation.context?.evidence ?? [],
         },
       });
+      if (generation !== this.#generation) return;
       if (incident.incidentDetected) {
-        appendBounded(this.incidents, incident, 50);
+        const current = this.incidents.at(-1);
+        if (current && current.rootCause.confidence >= incident.rootCause.confidence) return;
+        this.incidents.splice(0, this.incidents.length, incident);
         hooks.onIncident?.(incident);
       }
     } catch (error) {
@@ -135,6 +149,9 @@ export class CasinoRuntime {
   }
 
   reset(): void {
+    this.#generation += 1;
+    this.#activeAnalysisGeneration = -1;
+    this.#buffer.clear();
     this.simulator.reset();
     this.agentReports.length = 0;
     this.incidents.length = 0;
@@ -149,12 +166,12 @@ export class CasinoRuntime {
     await this.#buffer.stop();
   }
 
-  #activateFallback(provider: "baseten" | "meta"): void {
+  #activateFallback({ provider, reason }: FallbackEvent): void {
     if (this.aiStatus.effectiveMode === "fallback") return;
     this.aiStatus = aiRuntimeStatusSchema.parse({
       ...this.aiStatus,
       effectiveMode: "fallback",
-      lastFailure: { provider, occurredAt: new Date().toISOString() },
+      lastFailure: { provider, reason, occurredAt: new Date().toISOString() },
     });
     this.#hooks.onAIStatus?.(this.aiStatus);
   }

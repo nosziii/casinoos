@@ -35,7 +35,7 @@ Egy zsűritag előismeret nélkül, tíz másodpercen belül értse meg a Casino
 
 - [x] publikus HTTPS demo;
 - [x] determinisztikus, kreditfüggetlen judge flow;
-- [x] hatlépcsős contextual tour;
+- [x] tízlépcsős contextual tour runtime-, progress-, health-, dependency-, evidence- és approval-magyarázattal;
 - [x] automatikus browser E2E és CI;
 - [x] vizuális dependency graph;
 - [x] látható live/deterministic/fallback AI runtime státusz;
@@ -68,7 +68,7 @@ curl https://casinoops.tech/api/runtime/ai
 pnpm test:e2e:public
 ```
 
-Az első válaszban `configuredMode: "live"` és `effectiveMode: "live"` szükséges. A browser flow közben fallback esetén a felületnek látható `AI FALLBACK` állapotot kell mutatnia.
+Az első válaszban `configuredMode: "live"` és `effectiveMode: "live"` szükséges. A browser flow közben fallback esetén a felületnek látható `AI FALLBACK` állapotot, a hibázó providert és egy biztonságos hibakategóriát kell mutatnia.
 
 ## GitHub repository metadata
 

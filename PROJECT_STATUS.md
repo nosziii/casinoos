@@ -227,7 +227,7 @@ Scenario status: recovered
 - [x] judge-facing nyitóképernyő Guided Demo és Explore belépési ponttal
 - [x] automatikus incident → verification → forecast → mitigation guided flow
 - [x] kötelező operátori jóváhagyás a guided recovery előtt
-- [x] hatlépcsős, panelhez rögzített judge tour és approval coach-mark
+- [x] tízlépcsős, az új runtime/progress/health/dependency elemeket is bemutató judge tour és approval coach-mark
 - [x] UI/UX V2 high-end operations control-room vizuális rendszer
 - [x] minimum 12 px technikai metadata és 15–17 px tartalmi szöveg
 - [x] kiemelt Casino Brain KPI-k és egyszerűsített investigation/agent/timeline hierarchia
@@ -236,6 +236,8 @@ Scenario status: recovered
 - [x] recovery közben automatikusan visszazöldülő dependency állapotok
 - [x] human-readable evidence viewer külön technikai trace nézettel
 - [x] LIVE AI / DETERMINISTIC / AI FALLBACK badge és provider-hiba notice
+- [x] biztonságos fallback-hibakategória és hibázó provider megjelenítése
+- [x] scenario-szintű aggregált evidence és stale batch/reset védelem az aktuális root cause konzisztenciájához
 
 ### 10. Docker és futtatás
 

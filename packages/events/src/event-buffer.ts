@@ -50,6 +50,10 @@ export class EventBuffer {
     await this.flush();
   }
 
+  clear(): void {
+    this.#events = [];
+  }
+
   get size(): number {
     return this.#events.length;
   }

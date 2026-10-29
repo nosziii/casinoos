@@ -9,7 +9,7 @@ const title = (id: string) => names[id] ?? id.replaceAll("-", " ").replace(/\b\w
 </script>
 
 <template>
-  <section class="panel health-panel">
+  <section class="panel health-panel" data-tour="system-health">
     <header><div><span class="section-label">Live operations</span><h2>System health</h2><p>Real-time status across critical casino operations.</p></div></header>
     <div class="service-grid">
       <article v-for="service in services" :key="service.id" class="service" :class="`service--${service.status}`">

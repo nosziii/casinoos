@@ -40,11 +40,11 @@ Az E2E bevezetése két valódi integrációs hibát is feltárt és javított: 
 **Állapot: elkészült.**
 
 - a Guided Demo indításakor automatikusan megjelenik;
-- a valódi Guided Demo, Casino Brain, Investigation, Impact és Approval elemekhez rögzül;
+- tíz lépésben a runtime módhoz, Guided Demo státuszhoz, journey progresshez, system healthhez, Casino Brainhez, dependency graphhoz, Investigationhöz, Impacthez, Approvalhoz és Recoveryhez rögzül;
 - az automatikus investigation befejezését megvárja;
 - az approval gombot csak kiemeli, nem kattint helyette;
 - a recovery eredménnyel zárul, bármikor átugorható;
-- Playwright E2E teszt végigjárja mind a hat lépést.
+- Playwright E2E teszt végigjárja mind a tíz lépést és ellenőrzi a fejléc státuszainak igazítását.
 
 ### 3. Publikus deployment smoke teszt
 

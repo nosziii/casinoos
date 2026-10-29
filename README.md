@@ -85,7 +85,7 @@ The verifier is enforced by the runtime, not selected by the model. It checks se
 
 `Healthy casino → authentication degradation → downstream failures → verified root cause → +30 minute impact → mitigation comparison → operator approval → simulated recovery`
 
-Choose **Start live demo** on the public site. A six-step coach-mark tour explains each decision point and pauses before recovery until the operator explicitly approves it.
+Choose **Start live demo** on the public site. A ten-step coach-mark tour explains the runtime mode, scenario progress, system health, verified conclusion, dependency propagation, evidence, impact and approval boundary before simulated recovery.
 
 <a id="demo-video"></a>
 ## Demo video
@@ -117,7 +117,7 @@ docker compose up --build
 
 Open `http://127.0.0.1:8088`. Stop the stack with `docker compose down`.
 
-The opening screen offers two paths: **Guided Demo** automatically runs the deterministic incident through verification, forecast and mitigation comparison before pausing for explicit recovery approval. A six-step, skippable coach-mark tour explains each highlighted panel and directs the judge to the approval action. **Explore CasinoOps** exposes all manual operator controls.
+The opening screen offers two paths: **Guided Demo** automatically runs the deterministic incident through verification, forecast and mitigation comparison before pausing for explicit recovery approval. A ten-step, skippable coach-mark tour explains each highlighted panel and directs the judge to the approval action. **Explore CasinoOps** exposes all manual operator controls.
 
 The host ports are configurable without editing the Compose file:
 
@@ -182,7 +182,7 @@ Only allow-listed mitigation actions are accepted. Recovery progresses through d
 
 Set `AI_MODE=live`, `BASETEN_API_KEY`, `META_MODEL_API_KEY`, and `META_MODEL` in the ignored `.env` file. Specialist agents use Baseten; Casino Brain uses Meta. Model responses are parsed as JSON and validated.
 
-Keep `AI_FALLBACK_ENABLED=true` for the public demo. If either live provider fails or times out, CasinoOps continues with deterministic responses using the same validated schemas and visibly changes the UI status to **AI FALLBACK**. The fallback is never presented as a live model result; resetting the demo starts a new live attempt.
+Keep `AI_FALLBACK_ENABLED=true` for the public demo. If either live provider fails or times out, CasinoOps continues with deterministic responses using the same validated schemas and visibly changes the UI status to **AI FALLBACK**. The UI identifies the failing provider and a safe error category without exposing credentials or raw provider responses. The fallback is never presented as a live model result; resetting the demo starts a new live attempt.
 
 ## Quality checks
 

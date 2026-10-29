@@ -25,17 +25,15 @@ describe("FallbackAIClient", () => {
     const client = new FallbackAIClient(failing(), fixed({ answer: "mock" }), "meta", onFallback);
 
     await expect(client.complete(request)).resolves.toEqual({ answer: "mock" });
-    expect(onFallback).toHaveBeenCalledWith({ provider: "meta", agent: "test-agent" });
+    expect(onFallback).toHaveBeenCalledWith({ provider: "meta", agent: "test-agent", reason: "unknown" });
   });
 
   it("recovers deterministically after a provider timeout abort", async () => {
-    const controller = new AbortController();
-    controller.abort(new Error("deadline"));
     const onFallback = vi.fn();
-    const client = new FallbackAIClient(failing(), fixed({ answer: "mock" }), "baseten", onFallback);
+    const client = new FallbackAIClient(failing(new Error("Request timed out")), fixed({ answer: "mock" }), "baseten", onFallback);
 
-    await expect(client.complete({ ...request, signal: controller.signal })).resolves.toEqual({ answer: "mock" });
-    expect(onFallback).toHaveBeenCalledWith({ provider: "baseten", agent: "test-agent" });
+    await expect(client.complete(request)).resolves.toEqual({ answer: "mock" });
+    expect(onFallback).toHaveBeenCalledWith({ provider: "baseten", agent: "test-agent", reason: "timeout" });
   });
 
   it("keeps fallback available after the live provider rate limit is exhausted", async () => {
@@ -46,6 +44,7 @@ describe("FallbackAIClient", () => {
     await expect(client.complete(request)).resolves.toEqual({ answer: "mock" });
     await expect(client.complete(request)).resolves.toEqual({ answer: "mock" });
     expect(onFallback).toHaveBeenCalledTimes(2);
+    expect(onFallback).toHaveBeenLastCalledWith({ provider: "baseten", agent: "test-agent", reason: "rate_limit" });
   });
 });
 
@@ -53,6 +52,6 @@ function fixed<T>(value: T): AIClient {
   return { complete: async () => value } as AIClient;
 }
 
-function failing(): AIClient {
-  return { complete: async () => { throw new Error("provider unavailable"); } };
+function failing(error = new Error("provider unavailable")): AIClient {
+  return { complete: async () => { throw error; } };
 }
