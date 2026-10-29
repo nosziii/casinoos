@@ -1,0 +1,19 @@
+Casino operations depend on many connected systems. When one fails, the visible symptom is rarely the real cause. CasinoOps is an AI-powered operational digital twin built to explain that chain.
+
+It monitors authentication, payments, KYC, cashier, player registration and customer support. This demo uses synthetic data and never connects to, or acts on, production systems.
+
+We trigger a critical authentication latency incident. Within seconds, failures propagate into every dependent player and transaction journey, while the independent support service remains available.
+
+Three specialist agents analyze the same operational evidence from infrastructure, business operations and risk perspectives. Casino Brain correlates their findings, but it does not trust an unsupported model answer. The root-cause hypothesis is checked against service degradation, dependency structure, event order and independent evidence.
+
+The result is a verified authentication root cause with a visible confidence score. Judges and operators can inspect the evidence, tool calls and verification trace instead of treating the AI as a black box.
+
+Next, the deterministic digital twin answers the operational question that matters: what happens if we do nothing? It forecasts affected players, failed deposits, blocked transaction value and the time until further systems become critical.
+
+CasinoOps then compares recovery strategies inside the twin. Each option is scored by recovery time, success probability, residual risk and business impact. The safest strategy is recommended, but nothing is executed automatically.
+
+A human operator must explicitly approve the next step. Even then, the action runs only as a simulation. This preserves human control and keeps production untouched.
+
+The selected recovery restores all six services. The same dependency graph that explained the cascade now confirms that every operational path is healthy.
+
+CasinoOps helps teams understand what failed, predict what happens next and test recovery before touching production. Try the live demo at casinoops.tech.

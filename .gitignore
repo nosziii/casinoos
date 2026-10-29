@@ -3,6 +3,9 @@ dist/
 coverage/
 playwright-report/
 test-results/
+video/raw/
+video/drafts/
+video/final/
 .turbo/
 .env
 .env.*

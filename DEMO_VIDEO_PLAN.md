@@ -102,4 +102,6 @@ FilmCraft is suitable for this edit, but it is still alpha software. Keep the pr
 
 ## Next production step
 
-Create a lightweight automated capture run for the browser story, record the English voice-over as a separate WAV file, then assemble a first low-resolution FilmCraft draft. Review that draft before adding music, captions or visual polish.
+The lightweight automated browser capture and first low-resolution FilmCraft timing draft are complete. The successful source take ran fully in live AI mode without fallback and is kept outside Git under `video/raw/`. The first 540p timing draft uses a local scratch voice and is kept under `video/drafts/`.
+
+Next, review pacing and shot selection, extend the 2:37 timing draft to 2:50–2:58 with deliberate opening and closing holds, record the final English voice-over, then add captions, restrained music and visual polish before the single final 1080p export.

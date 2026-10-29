@@ -44,7 +44,7 @@ A részletes shot list, angol narráció, FilmCraft workflow és export checklis
 - [x] látható live/deterministic/fallback AI runtime státusz;
 - [x] transzparens provider-fallback és human-readable evidence viewer;
 - [x] README első képernyőjén probléma, megoldás, screenshot és live link;
-- [ ] háromperces próbafelvétel;
+- [x] automatizált live AI próbafelvétel és első 540p FilmCraft timing draft;
 - [ ] végleges demo videó és README-link;
 - [ ] másik gépes és telefonos manuális próba;
 - [ ] beadási űrlap végleges szövege és assetjei.
