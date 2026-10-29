@@ -4,7 +4,7 @@ Utolsó frissítés: **2026-10-29**
 
 ## Cél
 
-Egy zsűritag előismeret nélkül, tíz másodpercen belül értse meg a CasinoOps értékét, majd egyetlen belépési pontból végig tudja játszani a teljes történetet. A publikus demó determinisztikus módban fut a megbízhatóság érdekében; a live modellekkel végzett validáció külön dokumentált.
+Egy zsűritag előismeret nélkül, tíz másodpercen belül értse meg a CasinoOps értékét, majd egyetlen belépési pontból végig tudja játszani a teljes történetet. A publikus demó **Live AI** módban fut: a specialist investigation feladatokat a Basetenen elérhető Muse Spark Open, a Casino Brain korrelációját pedig a Meta Muse Wonder végzi. A determinisztikus fallback csak provider-hiba, timeout, rate limit vagy sikertelen válaszvalidáció esetén aktiválódik, ezt a felület mindig látható `AI FALLBACK` állapottal jelzi. Az impact forecast, a verifier és a recovery simulation a reprodukálhatóság és a biztonság érdekében továbbra is determinisztikus.
 
 ## Háromperces narratíva
 
@@ -37,15 +37,16 @@ A részletes shot list, angol narráció, FilmCraft workflow és export checklis
 ## Submission checklist
 
 - [x] publikus HTTPS demo;
-- [x] determinisztikus, kreditfüggetlen judge flow;
+- [x] Live AI judge flow transzparens, determinisztikus vész-fallbackkel;
 - [x] tízlépcsős contextual tour runtime-, progress-, health-, dependency-, evidence- és approval-magyarázattal;
 - [x] automatikus browser E2E és CI;
 - [x] vizuális dependency graph;
 - [x] látható live/deterministic/fallback AI runtime státusz;
 - [x] transzparens provider-fallback és human-readable evidence viewer;
 - [x] README első képernyőjén probléma, megoldás, screenshot és live link;
-- [x] automatizált live AI próbafelvétel és első 540p FilmCraft timing draft;
-- [ ] végleges demo videó és README-link;
+- [x] automatizált, fallback nélküli Live AI felvétel;
+- [x] végleges, feliratozott 1080p demo videó;
+- [ ] publikus videó URL a README-ben;
 - [ ] másik gépes és telefonos manuális próba;
 - [ ] beadási űrlap végleges szövege és assetjei.
 
@@ -76,11 +77,11 @@ Az első válaszban `configuredMode: "live"` és `effectiveMode: "live"` szüks�
 
 ## GitHub repository metadata
 
-Manuálisan beállítandó a repository **About** részében:
+A repository **About** része beállítva:
 
-- Description: `CasinoOps — AI-Powered Casino Operations Digital Twin`
+- Description: `CasinoOps — AI-powered casino operations digital twin`
 - Website: `https://casinoops.tech`
-- Topics: `ai`, `agents`, `digital-twin`, `meta-ai`, `muse`, `casino`, `operations`, `typescript`, `vue`, `fastify`, `hackathon`
+- Topics: `ai-agents`, `baseten`, `casino-operations`, `digital-twin`, `meta-ai`
 
 ## Parancsok
 
