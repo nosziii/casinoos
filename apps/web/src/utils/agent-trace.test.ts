@@ -24,13 +24,23 @@ describe("agent trace presentation", () => {
   it("builds a verified judge-facing summary", () => {
     const traces = [
       trace("run-a", 1, "plan"),
-      trace("run-a", 2, "observation", { status: "success", evidenceIds: ["ev-1", "ev-2"] }),
+      trace("run-a", 2, "observation", {
+        status: "success",
+        evidenceIds: ["ev-1", "ev-2"],
+        details: { evidence: [{ id: "ev-1", kind: "service_state", summary: "Authentication is failed." }, { id: "ev-2", kind: "dependency", summary: "Payments depends on Authentication." }] },
+      }),
       trace("run-a", 3, "verification", {
         status: "success",
         evidenceIds: ["ev-1", "ev-2"],
         details: { finalConfidence: 0.98, checks: [{ check: "service_degradation", passed: true }] },
       }),
     ];
-    expect(summarizeInvestigation(traces)).toMatchObject({ status: "verified", evidenceCount: 2, confidencePercent: 98, checks: [{ check: "service_degradation", passed: true }] });
+    expect(summarizeInvestigation(traces)).toMatchObject({
+      status: "verified",
+      evidenceCount: 2,
+      confidencePercent: 98,
+      checks: [{ check: "service_degradation", passed: true }],
+      evidence: [{ id: "ev-1", kind: "service_state", summary: "Authentication is failed." }, { id: "ev-2", kind: "dependency", summary: "Payments depends on Authentication." }],
+    });
   });
 });

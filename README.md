@@ -2,11 +2,26 @@
 
 [Try the live demo](https://casinoops.tech) · [Watch the demo](#demo-video) · [Project status](PROJECT_STATUS.md) · [Next steps](NEXT_STEPS.md)
 
-> Public demo uses deterministic mode for reliability. The same validated agent schemas have also been tested live with Baseten Muse Spark Open and Meta Muse Wonder.
+**Understand what failed. Know what happens next.**
+
+> The deployment supports live AI with an explicit deterministic emergency fallback. The interface always identifies which mode produced the current run.
 
 CasinoOps connects operational signals across casino systems to identify cascading incidents, verify their root cause, predict their impact and safely test recovery strategies before touching production.
 
 ![CasinoOps verified authentication cascade and operational dependency graph](docs/assets/casinoops-incident.png)
+
+## Judge quick look
+
+| Item | Value |
+|---|---|
+| Product | AI-powered casino operations digital twin |
+| Live demo | [casinoops.tech](https://casinoops.tech) |
+| Specialist model | Muse Spark Open via Baseten |
+| Central reasoning | Muse Wonder via Meta Model API |
+| Key innovation | Tool-grounded agents with mandatory deterministic verification |
+| Source of truth | Deterministic digital twin state, dependencies and event timing |
+| Safety | Read-only AI tools, operator approval and simulation-only recovery |
+| Main demo | Authentication cascade → impact forecast → recovery |
 
 ## The problem
 
@@ -21,7 +36,7 @@ CasinoOps turns that fragmented incident into one auditable operational story:
 5. compare recovery strategies inside a digital twin;
 6. require operator approval before simulating recovery.
 
-## Meta models in the system
+## Why Meta models?
 
 | Model | Role |
 |---|---|
@@ -29,6 +44,42 @@ CasinoOps turns that fragmented incident into one auditable operational story:
 | **Meta Muse Wonder** | Casino Brain correlation, verified incident synthesis and natural-language decision-support planning |
 
 All model output is schema-validated. Root-cause confidence is capped by a deterministic evidence verifier, and agents have no tool that can change a production system.
+
+## Verifiable agent architecture
+
+```text
+Casino event stream
+        ↓
+Specialist agents
+        ↓
+PLAN → READ-ONLY TOOL → OBSERVE
+        ↓
+Evidence with provenance
+        ↓
+Mandatory deterministic verification
+        ↓
+Verified incident
+        ↓
+Casino Brain
+        ↓
+Prediction / mitigation decision support
+        ↓
+Human approval
+        ↓
+Digital Twin recovery simulation
+```
+
+The verifier is enforced by the runtime, not selected by the model. It checks service degradation, shared dependencies, temporal ordering and the evidence threshold before Casino Brain can receive an incident.
+
+## Safety boundaries
+
+- Synthetic casino data only.
+- No production casino infrastructure is connected.
+- Specialist agents use a strict read-only tool allow-list.
+- Every root cause requires deterministic verification.
+- Casino Brain can predict and compare, but cannot execute mitigation.
+- Recovery requires explicit operator approval and runs only inside the digital twin.
+- API keys remain server-side and are excluded from Git, browser payloads and images.
 
 ## Three-minute demo story
 
@@ -111,7 +162,9 @@ Only allow-listed mitigation actions are accepted. Recovery progresses through d
 
 ## Live Baseten mode
 
-Set `AI_MODE=live`, `BASETEN_API_KEY`, `META_MODEL_API_KEY`, and `META_MODEL` in the ignored `.env` file. Specialist agents use Baseten; Casino Brain uses Meta. Model responses are parsed as JSON and validated; a failed call or validation is retried once.
+Set `AI_MODE=live`, `BASETEN_API_KEY`, `META_MODEL_API_KEY`, and `META_MODEL` in the ignored `.env` file. Specialist agents use Baseten; Casino Brain uses Meta. Model responses are parsed as JSON and validated.
+
+Keep `AI_FALLBACK_ENABLED=true` for the public demo. If either live provider fails or times out, CasinoOps continues with deterministic responses using the same validated schemas and visibly changes the UI status to **AI FALLBACK**. The fallback is never presented as a live model result; resetting the demo starts a new live attempt.
 
 ## Quality checks
 

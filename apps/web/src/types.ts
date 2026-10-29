@@ -1,4 +1,4 @@
-import type { AgentAnalysis, AgentTraceEvent, CasinoEvent, CasinoIncident, MitigationComparison, MitigationSimulation, ServiceState, SimulationPrediction } from "@casino-ops/shared";
+import type { AIRuntimeStatus, AgentAnalysis, AgentTraceEvent, CasinoEvent, CasinoIncident, MitigationComparison, MitigationSimulation, ServiceState, SimulationPrediction } from "@casino-ops/shared";
 
 export interface SimulationState {
   running: boolean;
@@ -16,4 +16,5 @@ export type SocketMessage =
   | { type: "incident.detected"; payload: CasinoIncident }
   | { type: "simulation.prediction"; payload: SimulationPrediction }
   | { type: "simulation.mitigation"; payload: MitigationComparison }
+  | { type: "ai.status"; payload: AIRuntimeStatus }
   | { type: "simulation.state"; payload: SimulationState };

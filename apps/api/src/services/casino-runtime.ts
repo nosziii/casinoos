@@ -9,7 +9,7 @@ import {
   type AgentToolRegistry,
 } from "@casino-ops/agents";
 import { EventBuffer, EventBus } from "@casino-ops/events";
-import type { AgentAnalysis, AgentTraceEvent, CasinoEvent, CasinoIncident } from "@casino-ops/shared";
+import { aiRuntimeStatusSchema, type AIRuntimeStatus, type AgentAnalysis, type AgentTraceEvent, type CasinoEvent, type CasinoIncident } from "@casino-ops/shared";
 import { CasinoSimulator, compareMitigations, predictOutage } from "@casino-ops/simulator";
 import type { AppConfig } from "../config/env.js";
 import { createAgentClients } from "./ai-clients.js";
@@ -19,6 +19,7 @@ export interface RuntimeHooks {
   onAgentAnalysis?: (analysis: AgentAnalysis) => void;
   onIncident?: (incident: CasinoIncident) => void;
   onAgentTrace?: (trace: AgentTraceEvent) => void;
+  onAIStatus?: (status: AIRuntimeStatus) => void;
 }
 
 export class CasinoRuntime {
@@ -29,21 +30,27 @@ export class CasinoRuntime {
   readonly agentTraces: AgentTraceEvent[] = [];
   readonly agentTools: AgentToolRegistry;
   readonly decisionTools: AgentToolRegistry;
+  aiStatus: AIRuntimeStatus;
   readonly #buffer: EventBuffer;
   readonly #infrastructureInvestigator: InfrastructureInvestigationLoop;
   readonly #operationsAgent: OperationsAgent;
   readonly #riskAgent: RiskAgent;
   readonly #brain: CasinoBrain;
   readonly #brainQuery: CasinoBrainQueryService;
+  readonly #config: AppConfig;
+  readonly #hooks: RuntimeHooks;
   #lastBrainCall = 0;
 
   constructor(config: AppConfig, hooks: RuntimeHooks = {}) {
+    this.#config = config;
+    this.#hooks = hooks;
+    this.aiStatus = initialAIStatus(config);
     this.agentTools = createReadOnlyAgentTools({
       getServices: () => this.simulator.getState().services,
       getEvents: () => this.simulator.getEvents(),
     });
     this.decisionTools = createDecisionSupportTools({ predictOutage, compareMitigations });
-    const clients = createAgentClients(config);
+    const clients = createAgentClients(config, ({ provider }) => this.#activateFallback(provider));
     this.#infrastructureInvestigator = new InfrastructureInvestigationLoop(clients.specialist, this.agentTools, {
       maxTurns: config.MAX_INVESTIGATION_TURNS,
       maxToolCalls: config.MAX_INVESTIGATION_TOOL_CALLS,
@@ -133,12 +140,34 @@ export class CasinoRuntime {
     this.incidents.length = 0;
     this.agentTraces.length = 0;
     this.#lastBrainCall = 0;
+    this.aiStatus = initialAIStatus(this.#config);
+    this.#hooks.onAIStatus?.(this.aiStatus);
   }
 
   async close(): Promise<void> {
     this.simulator.stop();
     await this.#buffer.stop();
   }
+
+  #activateFallback(provider: "baseten" | "meta"): void {
+    if (this.aiStatus.effectiveMode === "fallback") return;
+    this.aiStatus = aiRuntimeStatusSchema.parse({
+      ...this.aiStatus,
+      effectiveMode: "fallback",
+      lastFailure: { provider, occurredAt: new Date().toISOString() },
+    });
+    this.#hooks.onAIStatus?.(this.aiStatus);
+  }
+}
+
+function initialAIStatus(config: AppConfig): AIRuntimeStatus {
+  return aiRuntimeStatusSchema.parse({
+    configuredMode: config.AI_MODE,
+    effectiveMode: config.AI_MODE,
+    fallbackEnabled: config.AI_FALLBACK_ENABLED,
+    specialists: { provider: config.AI_MODE === "live" ? "Baseten" : "Deterministic", model: config.AI_MODE === "live" ? config.BASETEN_MODEL : "Validated mock schemas" },
+    brain: { provider: config.AI_MODE === "live" ? "Meta Model API" : "Deterministic", model: config.AI_MODE === "live" ? config.META_MODEL : "Validated mock schemas" },
+  });
 }
 
 function appendBounded<T>(items: T[], item: T, maxItems: number): void {

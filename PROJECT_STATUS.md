@@ -110,6 +110,8 @@ SUPPORT_COMPLAINT_SPIKE
 - [x] perces híváskorlátozás
 - [x] input batch korlátozás
 - [x] model call logging kulcsok naplózása nélkül
+- [x] publikus live/mock/fallback AI runtime státusz modellnevekkel, kulcsok nélkül
+- [x] transzparens determinisztikus fallback provider-hiba és timeout esetére
 
 Agentek:
 
@@ -232,6 +234,8 @@ Scenario status: recovered
 - [x] technikai monospace és trace elkülönítése az elsődleges termékfelülettől
 - [x] állapotvezérelt SVG dependency graph root-cause és cascade kiemeléssel
 - [x] recovery közben automatikusan visszazöldülő dependency állapotok
+- [x] human-readable evidence viewer külön technikai trace nézettel
+- [x] LIVE AI / DETERMINISTIC / AI FALLBACK badge és provider-hiba notice
 
 ### 10. Docker és futtatás
 
@@ -317,7 +321,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **44 célzott automatikus unit teszt**, továbbá külön lokális és publikus browser journey található:
+Jelenleg **49 célzott automatikus unit/integration teszt**, továbbá külön lokális és publikus browser journey található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -360,6 +364,10 @@ Jelenleg **44 célzott automatikus unit teszt**, továbbá külön lokális és 
 - dependency graph topológia, root-cause és legszigorúbb edge státusz ellenőrzése;
 - dependency graph incident → recovery állapotváltás browser-szintű ellenőrzése;
 - külön publikus health, WebSocket, pre-approval journey és reset smoke teszt.
+- providerhiba és timeout utáni determinisztikus fallback kliens;
+- provider rate limit kimerülése után is elérhető determinisztikus fallback;
+- teljes live runtime fallback integráció verifikált incidenttel;
+- emberileg olvasható evidence adatok trace-ből történő kinyerése.
 
 Rendszeresen futtatott ellenőrzések:
 

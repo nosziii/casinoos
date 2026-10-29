@@ -20,9 +20,11 @@ const runtime = new CasinoRuntime(config, {
   onAgentAnalysis: (analysis) => broadcast("agent.analysis", analysis),
   onIncident: (incident) => broadcast("incident.detected", incident),
   onAgentTrace: (trace) => broadcast("agent.trace", trace),
+  onAIStatus: (status) => broadcast("ai.status", status),
 });
 
 app.get("/health", async () => ({ status: "ok", aiMode: config.AI_MODE }));
+app.get("/runtime/ai", async () => runtime.aiStatus);
 app.get("/simulation/state", async () => runtime.simulator.getState());
 app.get("/events", async () => runtime.simulator.getEvents());
 app.get("/agent-reports", async () => runtime.agentReports);

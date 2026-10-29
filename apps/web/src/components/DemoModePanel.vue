@@ -8,7 +8,7 @@ defineEmits<{ guided: []; explore: []; exit: []; approve: [] }>();
 
 <template>
   <section v-if="mode === 'landing'" class="mode-selector" data-testid="demo-landing">
-    <span class="product-kicker">Casino operations intelligence</span>
+    <span class="product-kicker">AI-Powered Casino Operations Digital Twin</span>
     <h1>CasinoOps</h1>
     <strong>Understand what failed. Know what happens next.</strong>
     <p>CasinoOps connects operational signals across casino systems to identify cascading incidents, verify their root cause, predict their impact and safely test recovery strategies.</p>

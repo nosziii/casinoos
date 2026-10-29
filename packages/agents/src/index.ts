@@ -1,5 +1,6 @@
 export * from "./clients/ai-client.js";
 export * from "./clients/baseten-client.js";
+export * from "./clients/fallback-client.js";
 export * from "./clients/mock-client.js";
 export * from "./clients/meta-client.js";
 export * from "./clients/rate-limited-client.js";

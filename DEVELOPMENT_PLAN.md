@@ -138,7 +138,7 @@ A trace kizárólag auditálható műveleti adatot tartalmaz: toolnevet, validá
 
 Az AI-mag, a judge-facing Guided Demo, a Judge Experience V2 és a teljes browser E2E journey elkészült. A hátralévő feladatokat a prioritásos [NEXT_STEPS.md](NEXT_STEPS.md) tartja karban.
 
-Következő konkrét lépés: az állapotvezérelt 2D dependency graphot tartalmazó verzió publikus telepítése, smoke tesztje, majd háromperces próbafelvétel.
+Következő konkrét lépés: a live AI státuszt, transzparens fallbacket, evidence viewert és dependency graphot tartalmazó verzió publikus telepítése, live smoke tesztje, majd háromperces próbafelvétel.
 
 ## Következő munkamenet – termékesítés és judge-facing demo
 
@@ -196,6 +196,16 @@ A hackathon AI-magja feature-complete állapotú. A következő munkamenetben ne
    - incident közben kiemeli a verifikált root cause-t és a terjedési útvonalat;
    - recovery közben automatikusan visszaállítja a healthy vizuális állapotot;
    - unit és browser E2E regressziós ellenőrzést kapott.
+11. **Live AI readiness — kódszinten elkészült, publikus telepítésre vár**
+   - `LIVE AI`, `DETERMINISTIC` és `AI FALLBACK` runtime státusz;
+   - Baseten és Meta modellnév biztonságos, kulcsmentes megjelenítése;
+   - providerhiba vagy timeout után transzparens determinisztikus folytatás;
+   - reset után új live provider próbálkozás;
+   - teljes provider-kiesést szimuláló API integration teszt.
+12. **Human-readable evidence viewer — elkészült**
+   - service state, dependency és event evidence közérthető összefoglalása;
+   - evidence ID csak másodlagos technikai metadata;
+   - külön Evidence és Technical trace interakció.
 
 ### Későbbre sorolt stabilizálási elemek
 

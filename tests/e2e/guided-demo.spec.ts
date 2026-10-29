@@ -4,6 +4,7 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await page.goto("/");
 
   await expect(page.getByTestId("demo-landing")).toBeVisible();
+  await expect(page.getByTestId("ai-mode")).toContainText("DETERMINISTIC");
   await expect(page.getByRole("heading", { name: "CasinoOps", exact: true })).toBeVisible();
   await expect(page.getByText("Understand what failed. Know what happens next.")).toBeVisible();
 
@@ -22,6 +23,8 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await expect(dependencyGraph).toBeVisible();
   await expect(dependencyGraph.locator("[data-service='auth-service']")).toHaveClass(/dependency-node--root/);
   await expect(dependencyGraph.getByText("Cascade detected")).toBeVisible();
+  await page.getByRole("button", { name: /View evidence/ }).click();
+  await expect(page.getByTestId("evidence-viewer").locator("article")).not.toHaveCount(0);
 
   for (const expectedStep of [1, 2, 3, 4]) {
     await judgeTour.getByRole("button", { name: "Next" }).click();

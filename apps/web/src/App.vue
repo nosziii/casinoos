@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 import AgentActivity from "./components/AgentActivity.vue";
 import AgentTrace from "./components/AgentTrace.vue";
+import AIStatusBadge from "./components/AIStatusBadge.vue";
 import DemoSafetyNotice from "./components/DemoSafetyNotice.vue";
 import DemoProgress from "./components/DemoProgress.vue";
 import DemoModePanel from "./components/DemoModePanel.vue";
@@ -10,6 +11,7 @@ import EventStream from "./components/EventStream.vue";
 import IncidentPanel from "./components/IncidentPanel.vue";
 import IncidentTimeline from "./components/IncidentTimeline.vue";
 import JudgeTour from "./components/JudgeTour.vue";
+import ProviderNotice from "./components/ProviderNotice.vue";
 import StatusPill from "./components/StatusPill.vue";
 import SystemHealth from "./components/SystemHealth.vue";
 import WhatIfPanel from "./components/WhatIfPanel.vue";
@@ -45,8 +47,9 @@ const runMitigationSimulation = (action: Parameters<typeof casino.simulateMitiga
 
 <template>
   <main class="shell">
-    <nav><div class="brand"><span>CO</span><div><strong>CASINO<span>OPS</span></strong><small>CASINO OPERATIONS INTELLIGENCE</small></div></div><div class="nav-actions"><StatusPill :label="casino.connected ? 'LIVE LINK' : 'OFFLINE'" :tone="casino.connected ? 'ok' : 'danger'" /><template v-if="mode === 'explore'"><button class="button button--ghost" :disabled="busy" @click="act(casino.reset)">Reset demo</button><button class="button" :disabled="busy || casino.state.running" @click="act(casino.runScenario)">{{ casino.state.running ? 'Scenario running' : 'Run auth cascade' }}</button></template></div></nav>
+    <nav><div class="brand"><span>CO</span><div><strong>CASINO<span>OPS</span></strong><small>CASINO OPERATIONS INTELLIGENCE</small></div></div><div class="nav-actions"><AIStatusBadge :status="casino.aiStatus" /><StatusPill :label="casino.connected ? 'LIVE LINK' : 'OFFLINE'" :tone="casino.connected ? 'ok' : 'danger'" /><template v-if="mode === 'explore'"><button class="button button--ghost" :disabled="busy" @click="act(casino.reset)">Reset demo</button><button class="button" :disabled="busy || casino.state.running" @click="act(casino.runScenario)">{{ casino.state.running ? 'Scenario running' : 'Run auth cascade' }}</button></template></div></nav>
     <div v-if="error" class="error-banner">{{ error }}</div>
+    <ProviderNotice :status="casino.aiStatus" :busy="busy" @retry="returnToLanding" />
     <template v-if="mode === 'landing'">
       <DemoModePanel :mode="mode" :stage="stage" :busy="busy" :error="guidedError" @guided="startGuided" @explore="enterExplore" @exit="returnToLanding" @approve="approveRecovery" />
       <SystemHealth :services="casino.state.services" />

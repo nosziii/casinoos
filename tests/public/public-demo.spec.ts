@@ -7,6 +7,7 @@ test("the public demo is reachable and completes the pre-approval story", async 
 
   await page.goto("/");
   await expect(page.getByTestId("demo-landing")).toBeVisible();
+  await expect(page.getByTestId("ai-mode")).toContainText(/LIVE AI|DETERMINISTIC|AI FALLBACK/);
   await expect(page.getByText("LIVE LINK")).toBeVisible();
 
   await page.getByTestId("start-guided-demo").click();

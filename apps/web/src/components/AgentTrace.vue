@@ -6,6 +6,7 @@ import StatusPill from "./StatusPill.vue";
 
 const props = defineProps<{ traces: AgentTraceEvent[] }>();
 const technicalTraceVisible = ref(false);
+const evidenceVisible = ref(false);
 const summary = computed(() => summarizeInvestigation(props.traces));
 const checklist = (trace: AgentTraceEvent): string[] => Array.isArray(trace.details.checklist)
   ? trace.details.checklist.filter((item): item is string => typeof item === "string") : [];
@@ -26,7 +27,15 @@ const statusTone = computed(() => summary.value.status === "verified" ? "ok" : s
       <div v-if="summary.checks.length" class="investigation-checks">
         <span v-for="check in summary.checks" :key="check.check" :class="{ passed: check.passed }">{{ check.passed ? '✓' : '×' }} {{ check.check.replaceAll('_', ' ') }}</span>
       </div>
-      <button class="trace-toggle" type="button" aria-controls="technical-agent-trace" :aria-expanded="technicalTraceVisible" @click="technicalTraceVisible = !technicalTraceVisible">{{ technicalTraceVisible ? 'Hide technical trace' : 'View technical trace' }}</button>
+      <div class="investigation-actions">
+        <button class="trace-toggle" type="button" aria-controls="investigation-evidence" :aria-expanded="evidenceVisible" @click="evidenceVisible = !evidenceVisible">{{ evidenceVisible ? 'Hide evidence' : `View evidence (${summary.evidenceCount})` }}</button>
+        <button class="trace-toggle" type="button" aria-controls="technical-agent-trace" :aria-expanded="technicalTraceVisible" @click="technicalTraceVisible = !technicalTraceVisible">{{ technicalTraceVisible ? 'Hide technical trace' : 'View technical trace' }}</button>
+      </div>
+      <div v-if="evidenceVisible" id="investigation-evidence" class="evidence-grid" data-testid="evidence-viewer">
+        <article v-for="item in summary.evidence" :key="item.id">
+          <span>{{ item.kind.replace('_', ' ') }}</span><p>{{ item.summary }}</p><code>{{ item.id }}</code>
+        </article>
+      </div>
       <ol v-if="technicalTraceVisible" id="technical-agent-trace" class="trace-list">
         <li v-for="trace in summary.traces" :key="trace.id" :class="`trace--${trace.status}`">
           <time>{{ new Date(trace.timestamp).toLocaleTimeString() }}</time><b>{{ trace.stage.replace('_', ' ') }}</b><span>{{ trace.summary }}</span>

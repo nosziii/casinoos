@@ -73,5 +73,9 @@ export class BasetenClient implements AIClient {
 }
 
 function safeError(error: unknown): string {
-  return error instanceof Error ? error.message : "Unknown model error";
+  if (error && typeof error === "object" && "status" in error && typeof error.status === "number") {
+    return `Provider request failed with status ${error.status}`;
+  }
+  if (error instanceof Error && error.name === "AbortError") return "Model request aborted";
+  return "Model request failed";
 }

@@ -38,11 +38,45 @@ Egy zsűritag előismeret nélkül, tíz másodpercen belül értse meg a Casino
 - [x] hatlépcsős contextual tour;
 - [x] automatikus browser E2E és CI;
 - [x] vizuális dependency graph;
+- [x] látható live/deterministic/fallback AI runtime státusz;
+- [x] transzparens provider-fallback és human-readable evidence viewer;
 - [x] README első képernyőjén probléma, megoldás, screenshot és live link;
 - [ ] háromperces próbafelvétel;
 - [ ] végleges demo videó és README-link;
 - [ ] másik gépes és telefonos manuális próba;
 - [ ] beadási űrlap végleges szövege és assetjei.
+
+## Live AI deployment checklist
+
+A szerver Gitből kizárt `.env` fájljában:
+
+```env
+AI_MODE=live
+AI_FALLBACK_ENABLED=true
+BASETEN_BASE_URL=https://inference.baseten.co/v1
+BASETEN_MODEL=meta-models/muse-spark-open-1026
+META_BASE_URL=https://api.meta.ai/v1
+META_MODEL=muse-wonder-1.0
+```
+
+A `BASETEN_API_KEY` és `META_MODEL_API_KEY` csak a szerveren tölthető ki. Telepítés után:
+
+```bash
+git pull origin main
+docker compose up -d --build
+curl https://casinoops.tech/api/runtime/ai
+pnpm test:e2e:public
+```
+
+Az első válaszban `configuredMode: "live"` és `effectiveMode: "live"` szükséges. A browser flow közben fallback esetén a felületnek látható `AI FALLBACK` állapotot kell mutatnia.
+
+## GitHub repository metadata
+
+Manuálisan beállítandó a repository **About** részében:
+
+- Description: `CasinoOps — AI-Powered Casino Operations Digital Twin`
+- Website: `https://casinoops.tech`
+- Topics: `ai`, `agents`, `digital-twin`, `meta-ai`, `muse`, `casino`, `operations`, `typescript`, `vue`, `fastify`, `hackathon`
 
 ## Parancsok
 

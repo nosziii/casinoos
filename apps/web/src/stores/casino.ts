@@ -1,4 +1,4 @@
-import type { AgentAnalysis, AgentTraceEvent, CasinoBrainQueryResponse, CasinoEvent, CasinoIncident, MitigationAction, MitigationComparison, SimulationPrediction } from "@casino-ops/shared";
+import type { AIRuntimeStatus, AgentAnalysis, AgentTraceEvent, CasinoBrainQueryResponse, CasinoEvent, CasinoIncident, MitigationAction, MitigationComparison, SimulationPrediction } from "@casino-ops/shared";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import type { SimulationState, SocketMessage } from "../types";
@@ -15,15 +15,16 @@ export const useCasinoStore = defineStore("casino", () => {
   const mitigations = ref<MitigationComparison>();
   const queryResponse = ref<CasinoBrainQueryResponse>();
   const connected = ref(false);
+  const aiStatus = ref<AIRuntimeStatus>();
   let socket: WebSocket | undefined;
 
   const latestIncident = computed(() => incidents.value.at(-1));
 
   async function initialize(): Promise<void> {
-    const [stateResponse, eventResponse, agentResponse, incidentResponse, traceResponse] = await Promise.all([
-      fetch("/api/simulation/state"), fetch("/api/events"), fetch("/api/agent-reports"), fetch("/api/incidents"), fetch("/api/agent-traces"),
+    const [stateResponse, eventResponse, agentResponse, incidentResponse, traceResponse, aiResponse] = await Promise.all([
+      fetch("/api/simulation/state"), fetch("/api/events"), fetch("/api/agent-reports"), fetch("/api/incidents"), fetch("/api/agent-traces"), fetch("/api/runtime/ai"),
     ]);
-    if (![stateResponse, eventResponse, agentResponse, incidentResponse, traceResponse].every((response) => response.ok)) {
+    if (![stateResponse, eventResponse, agentResponse, incidentResponse, traceResponse, aiResponse].every((response) => response.ok)) {
       throw new Error("CasinoOps API is unavailable");
     }
     state.value = await stateResponse.json() as SimulationState;
@@ -31,6 +32,7 @@ export const useCasinoStore = defineStore("casino", () => {
     agentReports.value = await agentResponse.json() as AgentAnalysis[];
     incidents.value = await incidentResponse.json() as CasinoIncident[];
     agentTraces.value = await traceResponse.json() as AgentTraceEvent[];
+    aiStatus.value = await aiResponse.json() as AIRuntimeStatus;
     connect();
   }
 
@@ -57,7 +59,8 @@ export const useCasinoStore = defineStore("casino", () => {
       prediction.value = message.payload;
     } else if (message.type === "simulation.mitigation") {
       mitigations.value = message.payload;
-    } else if (message.type === "simulation.state") state.value = message.payload;
+    } else if (message.type === "ai.status") aiStatus.value = message.payload;
+    else if (message.type === "simulation.state") state.value = message.payload;
   }
 
   async function refreshState(): Promise<void> {
@@ -120,5 +123,5 @@ export const useCasinoStore = defineStore("casino", () => {
     return response.json() as Promise<T>;
   }
 
-  return { state, events, agentReports, agentTraces, incidents, prediction, mitigations, queryResponse, connected, latestIncident, initialize, runScenario, reset, predict, compareMitigations, askCasinoBrain, simulateMitigation };
+  return { state, events, agentReports, agentTraces, incidents, prediction, mitigations, queryResponse, connected, aiStatus, latestIncident, initialize, runScenario, reset, predict, compareMitigations, askCasinoBrain, simulateMitigation };
 });

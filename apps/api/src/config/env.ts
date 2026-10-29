@@ -5,6 +5,7 @@ const booleanString = z.enum(["true", "false"]).transform((value) => value === "
 const envSchema = z.object({
   AI_MODE: z.enum(["mock", "live"]).default("mock"),
   AI_ENABLED: booleanString.default(true),
+  AI_FALLBACK_ENABLED: booleanString.default(true),
   BASETEN_API_KEY: z.string().default(""),
   BASETEN_BASE_URL: z.url().default("https://inference.baseten.co/v1"),
   BASETEN_MODEL: z.string().min(1).default("meta-models/muse-spark-open-1026"),

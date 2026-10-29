@@ -99,7 +99,11 @@ export class InfrastructureInvestigationLoop {
         const evidence = mapToolResultToEvidence(result, { toolName: action.toolName, toolInput: action.input, capturedAt: now() }, store);
         context = recordToolCall(context, turn, action.toolName, action.input, "succeeded", evidence.map(({ id }) => id), now());
         context = updateContext(context, { evidence: store.list() });
-        trace.emit("observation", `${action.toolName} returned ${evidence.length} evidence item(s).`, "success", evidence.map(({ id }) => id), { toolName: action.toolName, input: action.input });
+        trace.emit("observation", `${action.toolName} returned ${evidence.length} evidence item(s).`, "success", evidence.map(({ id }) => id), {
+          toolName: action.toolName,
+          input: action.input,
+          evidence: evidence.map(({ id, kind, summary }) => ({ id, kind, summary })),
+        });
       } catch (error) {
         const message = error instanceof Error ? error.message : "Unknown tool execution error";
         context = recordToolCall(context, turn, action.toolName, action.input, "failed", [], now(), message);

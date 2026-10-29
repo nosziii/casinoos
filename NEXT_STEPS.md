@@ -6,7 +6,7 @@ Ez a dokumentum a még hátralévő munkát tartja egyetlen, prioritásos listá
 
 ## Jelenlegi helyzet
 
-A determinisztikus auth cascade, a három specialist agent, az evidence-alapú verifier, a Casino Brain, az impact forecast, a mitigation comparison, az operátori jóváhagyású recovery és a Judge Experience V2 elkészült. A következő szakasz célja elsőként a publikus demo megbízhatósága, majd a backend üzembiztonsága és csak ezután az új termékfunkciók.
+A determinisztikus auth cascade, a három specialist agent, az evidence-alapú verifier, a Casino Brain, az impact forecast, a mitigation comparison, az operátori jóváhagyású recovery és a Judge Experience V2 elkészült. A live AI mód most látható runtime státuszt és transzparens determinisztikus vészfallbacket kapott. A következő szakasz célja a friss verzió live kulcsokkal történő publikus telepítése, teljes E2E validációja, majd a háromperces videó.
 
 ## P0 – Demo megbízhatóság és automatikus ellenőrzés
 
@@ -154,8 +154,8 @@ Ezek csak a publikus demo, API-tesztek és perzisztencia stabilizálása után k
 ## Javasolt megvalósítási sorrend
 
 1. Az új dependency graph verzió telepítése és `pnpm test:e2e:public` futtatása.
-2. Háromperces próbafelvétel a [JUDGE_EXPERIENCE.md](JUDGE_EXPERIENCE.md) alapján.
-3. Fastify `buildApp()` refaktor és API integration tesztek.
+2. A szerveren `AI_MODE=live`, Baseten Muse Spark Open és Meta Muse Wonder konfigurálása, majd explicit live smoke suite.
+3. Háromperces próbafelvétel a [JUDGE_EXPERIENCE.md](JUDGE_EXPERIENCE.md) alapján.
 4. Rate limiting és strukturált logging.
 5. Provider usage metrikák és container hardening.
 6. SQLite repository és incident history.
