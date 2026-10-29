@@ -238,6 +238,8 @@ Scenario status: recovered
 - [x] LIVE AI / DETERMINISTIC / AI FALLBACK badge és provider-hiba notice
 - [x] biztonságos fallback-hibakategória és hibázó provider megjelenítése
 - [x] scenario-szintű aggregált evidence és stale batch/reset védelem az aktuális root cause konzisztenciájához
+- [x] automatikus WebSocket reconnect, reconnect utáni teljes snapshot-szinkron és recovery REST polling
+- [x] Baseten strukturált JSON feldolgozás plain, Markdown-fenced és reasoning-prefixelt válaszokhoz
 
 ### 10. Docker és futtatás
 

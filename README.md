@@ -128,6 +128,8 @@ API_PORT=3000
 
 The services have independent health checks and communicate over a private Compose network. Host ports bind to localhost only and containers cannot gain new privileges. This keeps the deployment ready for a later Kubernetes migration without requiring a local cluster for MVP development.
 
+The browser automatically reconnects its WebSocket with bounded exponential backoff and reloads the authoritative runtime snapshot after reconnection. Recovery also polls the REST state endpoint until completion, so a temporary proxy or WebSocket interruption cannot leave the guided demo frozen on an already completed server-side simulation.
+
 ### Production server with Nginx Proxy Manager
 
 Keep server-specific networking out of the tracked base Compose file. The production override connects only the web container to the existing Nginx Proxy Manager network with the stable `casinoops-web` alias; the API remains on the private application network.

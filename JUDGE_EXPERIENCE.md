@@ -27,6 +27,7 @@ Egy zsűritag előismeret nélkül, tíz másodpercen belül értse meg a Casino
 - [ ] az authentication root cause és a terjedési út olvasható a dependency graphon;
 - [ ] az impact KPI-k 1080p videóban is olvashatók;
 - [ ] recovery csak explicit operátori jóváhagyás után indul;
+- [x] WebSocket-megszakítás mellett is befejeződik a recovery, majd automatikusan visszaáll a `LIVE LINK`;
 - [ ] az **Exit demo** teljesen healthy kezdőállapotot állít vissza;
 - [ ] telefonon nincs vízszintes oldal-scroll, a graph saját területén görgethető;
 - [ ] `pnpm test:e2e:public` sikeresen lefut.

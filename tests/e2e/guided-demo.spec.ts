@@ -1,6 +1,25 @@
 import { expect, test } from "@playwright/test";
 
 test("a judge can complete and safely reset the guided incident journey", async ({ page }) => {
+  await page.addInitScript(() => {
+    const NativeWebSocket = window.WebSocket;
+    const sockets: WebSocket[] = [];
+    let blocked = false;
+    window.WebSocket = class extends NativeWebSocket {
+      constructor(url: string | URL, protocols?: string | string[]) {
+        super(url, protocols);
+        sockets.push(this);
+        this.addEventListener("open", () => { if (blocked) this.close(); });
+      }
+    };
+    (window as unknown as { __casinoSocketControl: { disconnect: () => void; reconnect: () => void } }).__casinoSocketControl = {
+      disconnect: () => {
+        blocked = true;
+        for (const socket of sockets) socket.close();
+      },
+      reconnect: () => { blocked = false; },
+    };
+  });
   await page.goto("/");
 
   await expect(page.getByTestId("demo-landing")).toBeVisible();
@@ -40,11 +59,15 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await expect(page.locator("#technical-agent-trace")).toBeVisible();
   await expect(page.locator("#technical-agent-trace > li")).not.toHaveCount(0);
 
+  await page.evaluate(() => (window as unknown as { __casinoSocketControl: { disconnect: () => void } }).__casinoSocketControl.disconnect());
+  await expect(page.getByText("OFFLINE", { exact: true })).toBeVisible();
   await page.getByTestId("approve-recovery").click();
   await expect(judgeTour).toHaveAttribute("data-step", "9");
   await expect(guidedDemo).toHaveAttribute("data-stage", "completed", { timeout: 15_000 });
   await expect(page.getByRole("heading", { name: "Incident recovered" })).toBeVisible();
   await expect(dependencyGraph.getByText("All paths healthy")).toBeVisible();
+  await page.evaluate(() => (window as unknown as { __casinoSocketControl: { reconnect: () => void } }).__casinoSocketControl.reconnect());
+  await expect(page.getByText("LIVE LINK", { exact: true })).toBeVisible({ timeout: 15_000 });
   await judgeTour.getByRole("button", { name: "Finish tour" }).click();
   await expect(judgeTour).toBeHidden();
 

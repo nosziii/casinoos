@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import type { AIClient, CompletionRequest } from "./ai-client.js";
+import { parseStructuredJSON } from "./structured-json.js";
 
 export interface BasetenClientOptions {
   apiKey: string;
@@ -49,7 +50,7 @@ export class BasetenClient implements AIClient {
       }, { signal: request.signal });
       const content = response.choices[0]?.message.content;
       if (!content) throw new Error("Model returned no content");
-      const result = request.schema.parse(JSON.parse(content));
+      const result = request.schema.parse(parseStructuredJSON(content));
       this.#log(request.agent, startedAt, true, response.usage?.prompt_tokens, response.usage?.completion_tokens);
       return result;
     } catch (error) {
