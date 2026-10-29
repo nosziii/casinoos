@@ -63,7 +63,7 @@ A `BASETEN_API_KEY` és `META_MODEL_API_KEY` csak a szerveren tölthető ki. Tel
 
 ```bash
 git pull origin main
-docker compose up -d --build
+docker compose -f compose.yaml -f compose.production.yaml up -d --build
 curl https://casinoops.tech/api/runtime/ai
 pnpm test:e2e:public
 ```

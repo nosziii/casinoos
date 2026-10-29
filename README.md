@@ -128,6 +128,24 @@ API_PORT=3000
 
 The services have independent health checks and communicate over a private Compose network. Host ports bind to localhost only and containers cannot gain new privileges. This keeps the deployment ready for a later Kubernetes migration without requiring a local cluster for MVP development.
 
+### Production server with Nginx Proxy Manager
+
+Keep server-specific networking out of the tracked base Compose file. The production override connects only the web container to the existing Nginx Proxy Manager network with the stable `casinoops-web` alias; the API remains on the private application network.
+
+Set the server port in the ignored `.env` file:
+
+```env
+WEB_PORT=9006
+```
+
+Start or rebuild with both files:
+
+```bash
+docker compose -f compose.yaml -f compose.production.yaml up -d --build
+```
+
+Configure Nginx Proxy Manager to forward `casinoops.tech` to `http://casinoops-web:8080`. Do not publish the API on `0.0.0.0`; browser API and WebSocket traffic pass through the web container's internal reverse proxy.
+
 Start the deterministic scenario:
 
 ```bash
