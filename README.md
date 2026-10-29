@@ -23,6 +23,10 @@ CasinoOps connects operational signals across casino systems to identify cascadi
 | Safety | Read-only AI tools, operator approval and simulation-only recovery |
 | Main demo | Authentication cascade → impact forecast → recovery |
 
+## Hackathon Development
+
+CasinoOps was developed from scratch during the Meta Global AI Developer Hackathon 2026. The submitted repository contains the project implementation created for this event, with no pre-existing CasinoOps application or codebase.
+
 ## The problem
 
 A single degraded dependency can surface as unrelated failures across authentication, payments, KYC, cashier and player registration. Operations teams see the symptoms first; finding the shared cause and understanding the business impact takes time.
