@@ -13,7 +13,7 @@ The video must show a real, successful run of `https://casinoops.tech`, keep eve
 ## Delivery format
 
 - Duration: **2:50–2:58**; never exceed 3:00.
-- Canvas: **1920×1080**, 16:9, 30 fps.
+- Canvas: **1920×1080**, 16:9, 25 fps (matching the successful source capture).
 - Export: **H.264 MP4 + AAC**, 15–20 Mbps video, 48 kHz audio.
 - Voice-over: English, calm and confident, approximately 125–135 words per minute.
 - Captions: burned-in English subtitles, maximum two lines.
@@ -100,8 +100,24 @@ FilmCraft is suitable for this edit, but it is still alpha software. Keep the pr
 - [ ] No secret, API key, server console, personal notification or unrelated browser tab appears.
 - [ ] Final MP4 plays correctly from start to finish on another device.
 
+## Production status
+
+The second FilmCraft edit is complete as a low-load review build:
+
+- Runtime: **2:56.12**.
+- Source: one uninterrupted **1920×1080 live-AI run without fallback**.
+- Structure: six-second opening card, slowed full demo, eight-second closing card.
+- Audio: complete English scratch narration, paced for judge comprehension.
+- Captions: ten burned-in summary cues, styled at 34 px with a restrained lower background.
+- Review export: **960×540 H.264 + AAC**, rendered with two CPU threads and GPU rendering disabled.
+- FilmCraft project and generated media remain under `video/drafts/casinoops-v2/` and are intentionally excluded from Git.
+
 ## Next production step
 
-The lightweight automated browser capture and first low-resolution FilmCraft timing draft are complete. The successful source take ran fully in live AI mode without fallback and is kept outside Git under `video/raw/`. The first 540p timing draft uses a local scratch voice and is kept under `video/drafts/`.
+Watch the v2 review export from start to finish and note only timing, pronunciation or subtitle problems. After approval:
 
-Next, review pacing and shot selection, extend the 2:37 timing draft to 2:50–2:58 with deliberate opening and closing holds, record the final English voice-over, then add captions, restrained music and visual polish before the single final 1080p export.
+1. Replace the local scratch voice with the final English recording or approved synthetic voice.
+2. Retime captions against that final recording and split any cue that is difficult to read.
+3. Optionally add very quiet, licensed background music only if it improves the result.
+4. Render one final **1920×1080 H.264** export at 15–20 Mbps with two CPU threads.
+5. Verify the final MP4 on another device before uploading it to the submission form.
