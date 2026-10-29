@@ -242,6 +242,9 @@ Scenario status: recovered
 - [x] Baseten strukturált JSON feldolgozás plain, Markdown-fenced és reasoning-prefixelt válaszokhoz
 - [x] egyetlen rate-limited schema-repair live retry Muse Spark nem kikényszerített JSON válaszaihoz
 - [x] fallback státuszban provider, agent lépés és biztonságos hibakategória
+- [x] teljes phase-three evidence snapshotig halasztott agent pipeline, felesleges köztes live hívások nélkül
+- [x] 30 hívás/perces belső provider budget a schema-repair és gyors demo újrafuttatás támogatására
+- [x] külön Casino Brain `ANALYZING` állapot a cascade és a verifikált incident közötti live várakozáshoz
 
 ### 10. Docker és futtatás
 

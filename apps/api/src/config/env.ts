@@ -12,7 +12,7 @@ const envSchema = z.object({
   META_MODEL_API_KEY: z.string().default(""),
   META_BASE_URL: z.url().default("https://api.meta.ai/v1"),
   META_MODEL: z.string().default(""),
-  MAX_AGENT_CALLS_PER_MINUTE: z.coerce.number().int().positive().default(12),
+  MAX_AGENT_CALLS_PER_MINUTE: z.coerce.number().int().positive().default(30),
   MAX_EVENT_BATCH_SIZE: z.coerce.number().int().positive().max(100).default(20),
   AGENT_FLUSH_INTERVAL_MS: z.coerce.number().int().positive().default(5000),
   CASINO_BRAIN_COOLDOWN_MS: z.coerce.number().int().nonnegative().default(15000),

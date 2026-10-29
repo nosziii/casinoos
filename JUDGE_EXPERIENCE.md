@@ -54,6 +54,7 @@ A szerver Gitből kizárt `.env` fájljában:
 ```env
 AI_MODE=live
 AI_FALLBACK_ENABLED=true
+MAX_AGENT_CALLS_PER_MINUTE=30
 BASETEN_BASE_URL=https://inference.baseten.co/v1
 BASETEN_MODEL=meta-models/muse-spark-open-1026
 META_BASE_URL=https://api.meta.ai/v1

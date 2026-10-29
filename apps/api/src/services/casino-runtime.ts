@@ -87,6 +87,7 @@ export class CasinoRuntime {
 
   async #analyzeBatch(events: CasinoEvent[], config: AppConfig, hooks: RuntimeHooks, generation: number): Promise<void> {
     if (!config.AI_ENABLED) return;
+    if (this.simulator.getState().phase < 3) return;
     try {
       const scenarioEvents = this.simulator.getEvents();
       const evidenceEvents = scenarioEvents.length > 0 ? scenarioEvents : events;

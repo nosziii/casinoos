@@ -188,6 +188,8 @@ Keep `AI_FALLBACK_ENABLED=true` for the public demo. If either live provider fai
 
 Baseten Muse Spark Open accepts JSON and JSON Schema response settings but does not enforce them server-side. CasinoOps therefore validates every response locally and makes one rate-limited schema-repair attempt before activating fallback. The runtime notice identifies the provider, agent stage and safe failure category so recurrent model-format issues remain diagnosable without exposing model output or secrets.
 
+The agent pipeline waits for the complete phase-three scenario snapshot before calling live providers. The default internal safety budget is 30 calls per provider per minute, enough for schema repair and quick demo reruns while still bounding accidental request bursts.
+
 ## Quality checks
 
 ```bash

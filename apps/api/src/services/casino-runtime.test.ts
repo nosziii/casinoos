@@ -3,6 +3,30 @@ import { loadConfig } from "../config/env.js";
 import { CasinoRuntime } from "./casino-runtime.js";
 
 describe("CasinoRuntime live fallback", () => {
+  it("defers agent calls until the scenario has a complete evidence snapshot", async () => {
+    const runtime = new CasinoRuntime(loadConfig({
+      AI_MODE: "mock",
+      AI_ENABLED: "true",
+      AGENT_FLUSH_INTERVAL_MS: "60000",
+      CASINO_BRAIN_COOLDOWN_MS: "0",
+    }));
+
+    try {
+      await runtime.simulator.advance();
+      await runtime.flush();
+      expect(runtime.agentReports).toHaveLength(0);
+      expect(runtime.incidents).toHaveLength(0);
+
+      await runtime.simulator.advance();
+      await runtime.simulator.advance();
+      await runtime.flush();
+      expect(runtime.agentReports).toHaveLength(3);
+      expect(runtime.incidents.at(-1)?.rootCause.service).toBe("auth-service");
+    } finally {
+      await runtime.close();
+    }
+  });
+
   it("completes a verified incident transparently when providers are unavailable", async () => {
     const statuses: string[] = [];
     const runtime = new CasinoRuntime(loadConfig({
