@@ -18,15 +18,29 @@ export class FallbackAIClient implements AIClient {
     try {
       return await this.primary.complete(request);
     } catch (error) {
-      this.onFallback({ provider: this.provider, agent: request.agent, reason: classifyFallback(error) });
-      const fallbackRequest: CompletionRequest<T> = {
-        agent: request.agent,
-        systemPrompt: request.systemPrompt,
-        userPrompt: request.userPrompt,
-        schema: request.schema,
-      };
-      return this.fallback.complete(fallbackRequest);
+      const reason = classifyFallback(error);
+      if (reason === "invalid_response") {
+        try {
+          return await this.primary.complete({
+            ...request,
+            systemPrompt: `${request.systemPrompt}\nYour previous response failed strict application validation. Return exactly one complete JSON object matching the requested shape. Do not include markdown, commentary, omitted fields or additional properties.`,
+          });
+        } catch (retryError) {
+          return this.completeWithFallback(request, classifyFallback(retryError));
+        }
+      }
+      return this.completeWithFallback(request, reason);
     }
+  }
+
+  private completeWithFallback<T>(request: CompletionRequest<T>, reason: FallbackEvent["reason"]): Promise<T> {
+    this.onFallback({ provider: this.provider, agent: request.agent, reason });
+    return this.fallback.complete({
+      agent: request.agent,
+      systemPrompt: request.systemPrompt,
+      userPrompt: request.userPrompt,
+      schema: request.schema,
+    });
   }
 }
 

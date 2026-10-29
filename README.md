@@ -186,6 +186,8 @@ Set `AI_MODE=live`, `BASETEN_API_KEY`, `META_MODEL_API_KEY`, and `META_MODEL` in
 
 Keep `AI_FALLBACK_ENABLED=true` for the public demo. If either live provider fails or times out, CasinoOps continues with deterministic responses using the same validated schemas and visibly changes the UI status to **AI FALLBACK**. The UI identifies the failing provider and a safe error category without exposing credentials or raw provider responses. The fallback is never presented as a live model result; resetting the demo starts a new live attempt.
 
+Baseten Muse Spark Open accepts JSON and JSON Schema response settings but does not enforce them server-side. CasinoOps therefore validates every response locally and makes one rate-limited schema-repair attempt before activating fallback. The runtime notice identifies the provider, agent stage and safe failure category so recurrent model-format issues remain diagnosable without exposing model output or secrets.
+
 ## Quality checks
 
 ```bash

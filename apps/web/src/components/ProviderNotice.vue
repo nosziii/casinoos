@@ -8,6 +8,14 @@ const reason = computed(() => {
   const failure = props.status?.lastFailure;
   if (!failure) return "A live provider request failed.";
   const provider = failure.provider === "baseten" ? "Baseten" : "Meta Model API";
+  const agents: Record<string, string> = {
+    "infrastructure-agent": "infrastructure analysis",
+    "infrastructure-investigator": "evidence investigation",
+    "operations-agent": "operations analysis",
+    "risk-agent": "risk analysis",
+    "casino-brain": "Casino Brain correlation",
+    "casino-brain-query": "Casino Brain query",
+  };
   const labels: Record<typeof failure.reason, string> = {
     authentication: "rejected authentication",
     rate_limit: "reached its rate limit",
@@ -17,7 +25,7 @@ const reason = computed(() => {
     provider_error: "returned a provider error",
     unknown: "returned an unknown error",
   };
-  return `${provider} ${labels[failure.reason]}.`;
+  return `${provider} ${agents[failure.agent] ?? failure.agent} ${labels[failure.reason]}.`;
 });
 </script>
 

@@ -36,6 +36,29 @@ describe("FallbackAIClient", () => {
     expect(onFallback).toHaveBeenCalledWith({ provider: "baseten", agent: "test-agent", reason: "timeout" });
   });
 
+  it("repairs one invalid structured response before activating fallback", async () => {
+    const onFallback = vi.fn();
+    const primary = vi.fn(async (current: CompletionRequest<{ answer: string }>) => {
+      if (primary.mock.calls.length === 1) throw new SyntaxError("invalid JSON");
+      expect(current.systemPrompt).toContain("failed strict application validation");
+      return { answer: "repaired-live" };
+    });
+    const client = new FallbackAIClient({ complete: primary }, fixed({ answer: "mock" }), "baseten", onFallback);
+
+    await expect(client.complete(request)).resolves.toEqual({ answer: "repaired-live" });
+    expect(primary).toHaveBeenCalledTimes(2);
+    expect(onFallback).not.toHaveBeenCalled();
+  });
+
+  it("falls back when the repaired response is still invalid", async () => {
+    const onFallback = vi.fn();
+    const primary = failing(new SyntaxError("invalid JSON"));
+    const client = new FallbackAIClient(primary, fixed({ answer: "mock" }), "baseten", onFallback);
+
+    await expect(client.complete(request)).resolves.toEqual({ answer: "mock" });
+    expect(onFallback).toHaveBeenCalledWith({ provider: "baseten", agent: "test-agent", reason: "invalid_response" });
+  });
+
   it("keeps fallback available after the live provider rate limit is exhausted", async () => {
     const onFallback = vi.fn();
     const live = new RateLimitedAIClient(failing(), 1);

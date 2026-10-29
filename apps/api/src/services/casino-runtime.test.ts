@@ -27,6 +27,7 @@ describe("CasinoRuntime live fallback", () => {
 
       expect(runtime.aiStatus.effectiveMode).toBe("fallback");
       expect(runtime.aiStatus.lastFailure?.provider).toBe("baseten");
+      expect(runtime.aiStatus.lastFailure?.agent).toBe("infrastructure-agent");
       expect(runtime.aiStatus.lastFailure?.reason).toBe("network");
       expect(statuses).toContain("fallback");
       expect(runtime.incidents.at(-1)?.rootCause.service).toBe("auth-service");

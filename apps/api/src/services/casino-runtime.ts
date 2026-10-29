@@ -166,12 +166,12 @@ export class CasinoRuntime {
     await this.#buffer.stop();
   }
 
-  #activateFallback({ provider, reason }: FallbackEvent): void {
+  #activateFallback({ provider, agent, reason }: FallbackEvent): void {
     if (this.aiStatus.effectiveMode === "fallback") return;
     this.aiStatus = aiRuntimeStatusSchema.parse({
       ...this.aiStatus,
       effectiveMode: "fallback",
-      lastFailure: { provider, reason, occurredAt: new Date().toISOString() },
+      lastFailure: { provider, agent, reason, occurredAt: new Date().toISOString() },
     });
     this.#hooks.onAIStatus?.(this.aiStatus);
   }

@@ -240,6 +240,8 @@ Scenario status: recovered
 - [x] scenario-szintű aggregált evidence és stale batch/reset védelem az aktuális root cause konzisztenciájához
 - [x] automatikus WebSocket reconnect, reconnect utáni teljes snapshot-szinkron és recovery REST polling
 - [x] Baseten strukturált JSON feldolgozás plain, Markdown-fenced és reasoning-prefixelt válaszokhoz
+- [x] egyetlen rate-limited schema-repair live retry Muse Spark nem kikényszerített JSON válaszaihoz
+- [x] fallback státuszban provider, agent lépés és biztonságos hibakategória
 
 ### 10. Docker és futtatás
 
