@@ -102,15 +102,17 @@ FilmCraft is suitable for this edit, but it is still alpha software. Keep the pr
 
 ## Production status
 
-The second FilmCraft edit is complete as a low-load review build:
+The third FilmCraft edit is complete as a low-load review build:
 
 - Runtime: **2:56.12**.
 - Source: one uninterrupted **1920×1080 live-AI run without fallback**.
 - Structure: six-second opening card, slowed full demo, eight-second closing card.
 - Audio: complete English scratch narration, paced for judge comprehension.
 - Captions: ten burned-in summary cues, styled at 34 px with a restrained lower background.
+- Visual polish: controlled zooms around incident detection, verification, impact KPIs, approval and recovery.
+- Chapters: short `DETECT`, `VERIFY`, `PREDICT` and `TEST RECOVERY` overlays.
 - Review export: **960×540 H.264 + AAC**, rendered with two CPU threads and GPU rendering disabled.
-- FilmCraft project and generated media remain under `video/drafts/casinoops-v2/` and are intentionally excluded from Git.
+- The approved timing edit remains under `video/drafts/casinoops-v2/`; the polished edit is under `video/drafts/casinoops-v3/`. Generated media is intentionally excluded from Git.
 
 ## Next production step
 

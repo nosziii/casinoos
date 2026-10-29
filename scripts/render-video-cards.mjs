@@ -44,6 +44,30 @@ async function render(name, body) {
   await page.screenshot({ path: resolve(outputDir, `${name}.png`) });
 }
 
+async function renderChapter(name, label) {
+  await page.setContent(`<!doctype html><html><head><style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: transparent; }
+    body { position: relative; font-family: Inter, "Segoe UI", Arial, sans-serif; }
+    .chapter {
+      position: absolute;
+      top: 112px;
+      left: 72px;
+      min-width: 260px;
+      padding: 18px 26px 16px;
+      color: #07100f;
+      background: #45e6a4;
+      border-radius: 8px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .34), 0 0 26px rgba(69, 230, 164, .20);
+      font-size: 30px;
+      font-weight: 850;
+      letter-spacing: .10em;
+      line-height: 1;
+    }
+  </style></head><body><div class="chapter">${label}</div></body></html>`);
+  await page.screenshot({ path: resolve(outputDir, `${name}.png`), omitBackground: true });
+}
+
 await render("intro-card", `
   <main>
     <div class="eyebrow">AI-POWERED CASINO OPERATIONS DIGITAL TWIN</div>
@@ -64,6 +88,11 @@ await render("end-card", `
     <div class="meta">Synthetic environment · No production systems connected · No autonomous production actions</div>
   </main>
 `);
+
+await renderChapter("chapter-detect", "DETECT");
+await renderChapter("chapter-verify", "VERIFY");
+await renderChapter("chapter-predict", "PREDICT");
+await renderChapter("chapter-recovery", "TEST RECOVERY");
 
 await browser.close();
 process.stdout.write(`${outputDir}\n`);
