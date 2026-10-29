@@ -31,7 +31,12 @@ export function buildDependencyGraph(services: ServiceState[], rootCause?: strin
   const serviceById = new Map(services.map((service) => [service.id, service]));
   const nodes = services.flatMap((service) => {
     const position = positions[service.id];
-    return position ? [{ id: service.id, status: service.status, rootCause: service.id === rootCause, ...position }] : [];
+    return position ? [{
+      id: service.id,
+      status: service.status,
+      rootCause: service.id === rootCause && service.status !== "healthy",
+      ...position,
+    }] : [];
   });
   const nodeById = new Map(nodes.map((node) => [node.id, node]));
   const edges = services.flatMap((service) => service.dependencies.flatMap((dependencyId) => {

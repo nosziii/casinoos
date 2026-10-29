@@ -66,6 +66,8 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await expect(guidedDemo).toHaveAttribute("data-stage", "completed", { timeout: 15_000 });
   await expect(page.getByRole("heading", { name: "Incident recovered" })).toBeVisible();
   await expect(dependencyGraph.getByText("All paths healthy")).toBeVisible();
+  await expect(dependencyGraph.locator("[data-service='auth-service']")).not.toHaveClass(/dependency-node--root/);
+  await expect(dependencyGraph.locator("[data-service='auth-service'] .dependency-node__status")).toHaveText("HEALTHY");
   await page.evaluate(() => (window as unknown as { __casinoSocketControl: { reconnect: () => void } }).__casinoSocketControl.reconnect());
   await expect(page.getByText("LIVE LINK", { exact: true })).toBeVisible({ timeout: 15_000 });
   await judgeTour.getByRole("button", { name: "Finish tour" }).click();
@@ -75,4 +77,23 @@ test("a judge can complete and safely reset the guided incident journey", async 
   await expect(page.getByTestId("demo-landing")).toBeVisible();
   await expect(page.getByRole("heading", { name: "System health" })).toBeVisible();
   await expect(page.locator(".service .status-pill--ok")).toHaveCount(6);
+});
+
+test("early operator approval moves the tour directly to the recovery explanation", async ({ page }) => {
+  await page.goto("/");
+  await page.getByTestId("start-guided-demo").click();
+
+  const guidedDemo = page.getByTestId("guided-demo");
+  const judgeTour = page.getByTestId("judge-tour");
+  await expect(guidedDemo).toHaveAttribute("data-stage", "awaiting_approval", { timeout: 30_000 });
+
+  for (const expectedStep of [1, 2, 3, 4]) {
+    await judgeTour.getByRole("button", { name: "Next" }).click();
+    await expect(judgeTour).toHaveAttribute("data-step", String(expectedStep));
+  }
+
+  await page.getByTestId("approve-recovery").click();
+  await expect(judgeTour).toHaveAttribute("data-step", "9");
+  await expect(guidedDemo).toHaveAttribute("data-stage", "completed", { timeout: 15_000 });
+  await expect(judgeTour.getByRole("heading", { name: "Recovery stays inside the twin" })).toBeVisible();
 });

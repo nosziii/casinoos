@@ -1,6 +1,6 @@
 # CasinoOps – projektstátusz
 
-Utolsó frissítés: **2026-10-28**
+Utolsó frissítés: **2026-10-29**
 
 Ez a dokumentum a CasinoOps aktuális megvalósítási állapotának elsődleges nyilvántartása. Minden érdemi új funkció, architekturális változás vagy elkészült mérföldkő után frissítendő.
 
@@ -105,7 +105,7 @@ SUPPORT_COMPLAINT_SPIKE
 - [x] Baseten OpenAI-compatible kliens
 - [x] Meta OpenAI-compatible kliens
 - [x] determinisztikus mock kliens
-- [x] közös structured completion és egyszeri retry
+- [x] közös structured completion és célzott sémajavító retry
 - [x] Zod-validált modellválaszok
 - [x] perces híváskorlátozás
 - [x] input batch korlátozás
@@ -330,7 +330,7 @@ simulation.mitigation
 
 ## Tesztek és ellenőrzések
 
-Jelenleg **49 célzott automatikus unit/integration teszt**, továbbá külön lokális és publikus browser journey található:
+Jelenleg **59 célzott automatikus unit/integration teszt**, továbbá külön lokális és publikus browser journey található:
 
 - Event Bus delivery;
 - Infrastructure Agent root-cause detection;
@@ -456,7 +456,7 @@ A legutóbbi ellenőrzéskor mindkét Compose service `healthy` állapotban futo
 
 ### Opcionális termékfunkciók
 
-- [ ] egyszerű 2D dependency graph
+- [x] egyszerű 2D dependency graph
 - [ ] 2D/3D casino operations visualization
 - [ ] több determinisztikus incident scenario
 - [ ] természetes nyelvű operátori kérdések

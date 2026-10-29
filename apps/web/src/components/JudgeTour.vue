@@ -16,6 +16,7 @@ const investigationReady = computed(() => ["awaiting_approval", "recovering", "c
 const waiting = computed(() => Boolean(step.value?.requiresIncident) && !investigationReady.value);
 const approvalStep = computed(() => step.value?.action === "approve");
 const finalStep = computed(() => stepIndex.value === judgeTourSteps.length - 1);
+const recoveryStepIndex = judgeTourSteps.findIndex(({ target }) => target === "[data-tour='recovery']");
 
 function next(): void {
   if (waiting.value || approvalStep.value) return;
@@ -62,7 +63,9 @@ function updatePosition(scroll = false): void {
 const handleViewportChange = () => updatePosition(false);
 watch(stepIndex, () => updatePosition(true));
 watch(() => props.stage, (stage) => {
-  if (approvalStep.value && (stage === "recovering" || stage === "completed")) stepIndex.value += 1;
+  if ((stage === "recovering" || stage === "completed") && stepIndex.value < recoveryStepIndex) {
+    stepIndex.value = recoveryStepIndex;
+  }
   else updatePosition(false);
 });
 onMounted(() => {

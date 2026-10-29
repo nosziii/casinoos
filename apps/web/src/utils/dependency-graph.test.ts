@@ -21,4 +21,11 @@ describe("buildDependencyGraph", () => {
 
     expect(graph.edges.every(({ status }) => status === "failed")).toBe(true);
   });
+
+  it("clears the verified root-cause marker after the service recovers", () => {
+    const recovered = services.map((service) => ({ ...service, status: "healthy" as const }));
+    const graph = buildDependencyGraph(recovered, "auth-service");
+
+    expect(graph.nodes.find(({ id }) => id === "auth-service")?.rootCause).toBe(false);
+  });
 });

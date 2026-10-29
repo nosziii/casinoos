@@ -21,6 +21,9 @@ export async function completeWithRetry<T>(client: AIClient, input: StructuredCo
     return await client.complete(request);
   } catch {
     if (input.signal?.aborted) throw input.signal.reason;
-    return client.complete(request);
+    return client.complete({
+      ...request,
+      systemPrompt: `${request.systemPrompt}\n\nYour previous response failed schema validation. Return only the requested JSON object with the exact field names and JSON types. Do not include markdown, reasoning, comments or additional fields.`,
+    });
   }
 }
