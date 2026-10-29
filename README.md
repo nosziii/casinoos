@@ -1,6 +1,6 @@
 # CasinoOps — AI-Powered Casino Operations Digital Twin
 
-[Try the live demo](https://casinoops.tech) · [Watch the demo](#demo-video) · [Project status](PROJECT_STATUS.md) · [Next steps](NEXT_STEPS.md)
+[Try the live demo](https://casinoops.tech) · [Watch the 3-minute demo](https://www.youtube.com/watch?v=uFieyACO8lk) · [Project status](PROJECT_STATUS.md) · [Next steps](NEXT_STEPS.md)
 
 **Understand what failed. Know what happens next.**
 
@@ -90,7 +90,11 @@ Choose **Start live demo** on the public site. A ten-step coach-mark tour explai
 <a id="demo-video"></a>
 ## Demo video
 
-The final three-minute submission video will be linked here. The recording script and acceptance checklist live in [JUDGE_EXPERIENCE.md](JUDGE_EXPERIENCE.md).
+[![Watch the CasinoOps three-minute demo](https://img.youtube.com/vi/uFieyACO8lk/hqdefault.jpg)](https://www.youtube.com/watch?v=uFieyACO8lk)
+
+**[Watch the three-minute CasinoOps demo on YouTube](https://www.youtube.com/watch?v=uFieyACO8lk).** It shows the complete Live AI story: healthy baseline, cascading authentication failure, evidence-backed verification, impact forecast, mitigation comparison, explicit operator approval and simulated recovery.
+
+The recording script and acceptance checklist live in [JUDGE_EXPERIENCE.md](JUDGE_EXPERIENCE.md).
 
 ## Requirements
 

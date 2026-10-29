@@ -46,7 +46,7 @@ A részletes shot list, angol narráció, FilmCraft workflow és export checklis
 - [x] README első képernyőjén probléma, megoldás, screenshot és live link;
 - [x] automatizált, fallback nélküli Live AI felvétel;
 - [x] végleges, feliratozott 1080p demo videó;
-- [ ] publikus videó URL a README-ben;
+- [x] publikus videó URL a README-ben;
 - [ ] másik gépes és telefonos manuális próba;
 - [ ] beadási űrlap végleges szövege és assetjei.
 

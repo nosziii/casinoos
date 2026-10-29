@@ -123,9 +123,10 @@ The final captioned export is available locally at `video/final/CasinoOps-3-minu
 - Burned-in English captions and no offline media.
 - Exported with two CPU threads and GPU rendering disabled.
 
+Public video: [CasinoOps | AI-Powered Casino Operations Digital Twin | Meta AI Hackathon 2026](https://www.youtube.com/watch?v=uFieyACO8lk)
+
 ## Next production step
 
-1. Play the final MP4 from start to finish on another device.
-2. Upload the approved file to the chosen video host or submission portal.
-3. Add the public video URL to the README Demo video section.
-4. Optionally add very quiet, licensed background music only if it materially improves the result; otherwise keep the clean narration-first mix.
+1. Play the public YouTube video from start to finish on another device.
+2. Add the public video URL to the final submission form.
+3. Optionally add very quiet, licensed background music only if it materially improves the result; otherwise keep the clean narration-first mix.
